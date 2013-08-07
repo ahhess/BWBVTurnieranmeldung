@@ -1,0 +1,32 @@
+<?php
+function spielklasse_berechnen($mysql_date)
+{
+	$year=substr($mysql_date,0,4);
+	$d=(date("Y")-$year+1);
+	if (ceil($d/2) == $d/2) $d++;
+	if ($d>19) return "ERW";
+	return "U".$d;
+}
+
+// für smarty
+$spielklasse["U9"]="U9";
+$spielklasse["U11"]="U11";
+$spielklasse["U13"]="U13";
+$spielklasse["U15"]="U15";
+$spielklasse["U17"]="U17";
+$spielklasse["U19"]="U19";
+$spielklasse["ERW"]="ERW";
+
+
+/*
+echo "86".spielklasse_berechnen("1986-12-12")."<br>";
+echo "87".spielklasse_berechnen("1987-12-12")."<br>";
+echo "94".spielklasse_berechnen("1994-12-12")."<br>";
+echo "95".spielklasse_berechnen("1995-12-12")."<br>";
+echo "96".spielklasse_berechnen("1996-12-12")."<br>";
+echo "97".spielklasse_berechnen("1997-12-12")."<br>";
+
+//1994 u11
+//1995 u11
+*/
+?>
