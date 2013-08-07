@@ -83,8 +83,10 @@ if ($_POST["doMeldungSubmit"])
 		//echo $text;
 
 		// email an den turnierbeauftragten
-		if ($turnier["ba_email"]) mail($turnier["ba_email"],$ueberschrift,$text,"FROM: ".$_SESSION["verein"]["ansprechpartner_name"]." <".$_SESSION["verein"]["ansprechpartner_email"].">");
-		else mail("dirk.morgenroth@gmx.net",$turnier["name_lang"]." hat keine Email des Beauftragten!!! Korrigieren!");
+		if ($turnier["ba_email"]) 
+			mail($turnier["ba_email"],$ueberschrift,$text,"FROM: ".$_SESSION["verein"]["ansprechpartner_name"]." <".$_SESSION["verein"]["ansprechpartner_email"].">");
+		else 
+			mail("sportwart-nw@bwbv.de",$turnier["name_lang"]." hat keine Email des Beauftragten!!! Korrigieren!");
 
 		// email an den verein
 		if ($_SESSION["verein"]["ansprechpartner_email"]) {
@@ -93,13 +95,14 @@ if ($_POST["doMeldungSubmit"])
 				if($email[$i] <> "")
 					mail($email[$i],$ueberschrift,$text,"FROM: ".$turnier["ba_vorname"]." ".$turnier["ba_nachname"]."<".$turnier["ba_email"].">");
 			}
-			}
+		}
 		else {
-die("Noch keine Email zur Benachrichtigung eingetragen. Schnell ins <a href='index.php'>Hauptmenü</a>, eintragen und Meldung noch einmal tätigen!!!");
+	die("Noch keine Email zur Benachrichtigung eingetragen. Schnell ins <a href='index.php'>Hauptmenü</a>, eintragen und Meldung noch einmal tätigen!!!");
 }
 
-		// email an die zusatzperson aus db -> tas_turnier.email_an
-		if ($turnier["email_an"]) mail($turnier["email_an"],"(Kopie) ".$ueberschrift,"Guten Tag. Sie wurden als Empfänger einer Kopie dieser Mail eingetragen!\n---\n\n".$text,"FROM: ".$turnier["ba_vorname"]." ".$turnier["ba_nachname"]."<".$turnier["ba_email"].">");
+	// email an die zusatzperson aus db -> tas_turnier.email_an
+	if ($turnier["email_an"]) 
+		mail($turnier["email_an"],"(Kopie) ".$ueberschrift,"Guten Tag. Sie wurden als Empfänger einer Kopie dieser Mail eingetragen!\n---\n\n".$text,"FROM: ".$turnier["ba_vorname"]." ".$turnier["ba_nachname"]."<".$turnier["ba_email"].">");
 		//else die("Noch keine Email zur Benachrichtigung eingetragen. Schnell ins <a href='index.php'>Hauptmenü</a>, eintragen und Meldung noch einmal tätigen!!!");
 	}
 }
