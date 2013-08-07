@@ -207,7 +207,7 @@ $workbook->send('turniermeldung_nb_'.$t["datum"].'.xls');
 
 $worksheet =& $workbook->addWorksheet('Teilnehmerübersicht');
 
-$worksheet->setHeader("Teilnehmerübersicht\nwww.esentri.de/turnieranmeldung");
+$worksheet->setHeader("BWBV Turnieranmeldung Teilnehmerübersicht");
 
 $worksheet->setFooter($t["name_lang"].", ".$t["datum"]."\nStand ".date("d.m.Y - H:i")." Uhr");
 
@@ -247,7 +247,7 @@ for ($i=0;$i<count($index2verein);$i++) {
 
 
 
-	$worksheet_v[$i]->setHeader("Teilnehmerübersicht und Startgeldaufstellung für ".$index2verein[$i]."\nwww.esentri.de/turnieranmeldung");
+	$worksheet_v[$i]->setHeader("Teilnehmerübersicht und Startgeldaufstellung für ".$index2verein[$i]);
 
 	$worksheet_v[$i]->setFooter($t["name_lang"].", ".$t["datum"]."\nStand ".date("d.m.Y - H:i")." Uhr");
 

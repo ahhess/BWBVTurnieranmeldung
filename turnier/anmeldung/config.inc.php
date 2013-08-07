@@ -6,9 +6,9 @@ $user="root";
 $password="";
 $database="anmeldung";
 */
-$host="localhost";
-$user="";
-$password="";
-$database="";
+$host="rdbms.strato.de";
+$user="U1226375";
+$password="qwertz88";
+$database="DB1226375";
 
 ?>
