@@ -88,7 +88,10 @@ loop=$turniere_abgelaufen} </p>
       <td width="100" class="mittel">Turnier:</td>
       <td width="400" class="mittel"><strong><font color=#777777>{$turniere_abgelaufen[t].name_lang} </strong></td>
       <td width="10">&nbsp;</td>
-      <td width="140" rowspan="3" valign="top"><span class="klein">Meldungen aller Vereine einsehen (<a href="anzeige.php?id={$turniere_abgelaufen[t].id}" target="_blank">HTML</a>, <a href="excel.php?id={$turniere_abgelaufen[t].id}">EXCEL</a>) </span> </td>
+      <td width="140" rowspan="3" valign="top"><span class="klein">Meldungen aller Vereine einsehen 
+	  (<a href="anzeige.php?id={$turniere_abgelaufen[t].id}" target="_blank">HTML</a>, 
+	  <a href="anzeige.php?id={$turniere_abgelaufen[t].id}&format=csv" target="_blank">CSV</a>, 
+	  <a href="excel.php?id={$turniere_abgelaufen[t].id}">EXCEL</a>) </span> </td>
     </tr>
     <tr>
       <td width="100" class="klein">Beauftragter:</td>
