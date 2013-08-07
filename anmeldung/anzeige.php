@@ -68,8 +68,10 @@ $smarty->assign('turniername',$turniername);
 $smarty->assign('datum',date('d.m.Y'));
 $smarty->assign('zeit',date('G:i'));
 
-
-$smarty->display('anzeige.tpl.htm');
+if ($_GET["format"] == "csv")
+	$smarty->display('csv.tpl.htm');
+else
+	$smarty->display('anzeige.tpl.htm');
 //print_r($meldungen);
 
 $conn->Close(); # optional
