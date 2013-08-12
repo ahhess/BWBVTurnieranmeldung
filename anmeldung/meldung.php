@@ -79,7 +79,7 @@ if ($_POST["doMeldungSubmit"])
 		$text.="\n\nAnsprechpartner zu dieser Meldung sind:\n\n";
 		$text.="Turnierbeauftragter:\n".$adresse_turnierbeauftragter."\n\n";
 		$text.="Meldender Verein:\n".$adresse_rueckfrage_an_verein."\n\n";
-		$text.="Das Anmeldesystem finden Sie unter http://www.turnier.biz.\n\nMit freundlichen Grüßen,\nDirk Morgenroth";
+		$text.="http://www.bwbv.de/turnier/anmeldung\n\n";
 		//echo $text;
 
 		// email an den turnierbeauftragten
