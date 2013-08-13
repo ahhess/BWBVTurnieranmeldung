@@ -12,13 +12,7 @@ $conn->PConnect($host,$user,$password,$database);   # connect to MS-Access, nort
 $ADODB_FETCH_MODE = ADODB_FETCH_ASSOC;
 
 require('../smarty/libs/Smarty.class.php');
-$smarty = new Smarty;
-
-$smarty->template_dir = '';
-$smarty->compile_dir = '../smarty/templates_c/';
-$smarty->config_dir = '../smarty/configs/';
-$smarty->cache_dir = '../smarty/cache/';
-
+$smarty = get_new_smarty();
 
 // aktuelle ausschreibungen holen - für login- und übersichtsseite
 

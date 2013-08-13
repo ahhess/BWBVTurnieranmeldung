@@ -14,14 +14,6 @@ $conn = &ADONewConnection('mysql');	# create a connection
 $conn->PConnect($host,$user,$password,$database);   # connect to MS-Access, northwind dsn
 $ADODB_FETCH_MODE = ADODB_FETCH_ASSOC;
 
-require('../smarty/libs/Smarty.class.php');
-$smarty = new Smarty;
-
-$smarty->template_dir = '';
-$smarty->compile_dir = '../smarty/templates_c/';
-$smarty->config_dir = '../smarty/configs/';
-$smarty->cache_dir = '../smarty/cache/';
-
 // turnierdaten holen
 unset($recordSet);
 $sql='select tas_turnier.*,tas_turnierbeauftragter.vorname as ba_vorname, tas_turnierbeauftragter.nachname as ba_nachname, tas_turnierbeauftragter.strasse as ba_strasse, tas_turnierbeauftragter.plz as ba_plz, tas_turnierbeauftragter.ort as ba_ort, tas_turnierbeauftragter.telefon_priv as ba_telefon_priv, tas_turnierbeauftragter.telefon_gesch as ba_telefon_gesch, tas_turnierbeauftragter.fax as ba_fax, tas_turnierbeauftragter.email as ba_email, tas_turnierbeauftragter.mobil as ba_mobil FROM tas_turnier,tas_turnierbeauftragter WHERE tas_turnier.turnierbeauftragter_id=tas_turnierbeauftragter.id AND tas_turnier.id='.$_SESSION["tid"];
@@ -140,6 +132,9 @@ $recordSet->Close(); # optional
 
 for ($i=0;$i<$countS;$i++) $s[$i]["spielklasse"]=spielklasse_berechnen($s[$i]["geburtstag"]);
 
+
+require('../smarty/libs/Smarty.class.php');
+$smarty = get_new_smarty();
 
 $smarty->assign('fehlermeldung',$fehlermeldung);
 $smarty->assign('systemmeldung',$systemmeldung);

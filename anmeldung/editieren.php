@@ -12,14 +12,6 @@ $conn = &ADONewConnection('mysql');	# create a connection
 $conn->PConnect($host,$user,$password,$database);   # connect to MS-Access, northwind dsn
 $ADODB_FETCH_MODE = ADODB_FETCH_ASSOC;
 
-require('../smarty/libs/Smarty.class.php');
-$smarty = new Smarty;
-
-$smarty->template_dir = '';
-$smarty->compile_dir = '../smarty/templates_c/';
-$smarty->config_dir = '../smarty/configs/';
-$smarty->cache_dir = '../smarty/cache/';
-
 if (!session_is_registered("verein")) 
 {
 	die ('Sie sind nicht angemeldet. Bitte <a href=index.php>anmelden</a>');
@@ -90,7 +82,8 @@ $recordSet->Close(); # optional
 
 for ($i=0;$i<$countS;$i++) $s[$i]["spielklasse"]=spielklasse_berechnen($s[$i]["geburtstag"]);
 
-
+require('../smarty/libs/Smarty.class.php');
+$smarty = get_new_smarty();
 $smarty->assign('fehlermeldung',$fehlermeldung);
 $smarty->assign('systemmeldung',$systemmeldung);
 $smarty->assign('meldung',$meldung);
