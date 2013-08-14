@@ -12,7 +12,7 @@ $ADODB_FETCH_MODE = ADODB_FETCH_ASSOC;
 
 unset($recordSet);
 //$sql='SELECT id, davor, name, kurz, passwort, region, ansprechpartner_email FROM tas_vereine ORDER BY name, davor';
-$sql='SELECT * FROM tas_vereine ORDER BY name, davor';
+$sql='SELECT * FROM tas_vereine ORDER BY region, name, davor';
 $recordSet = &$conn->Execute($sql);
 $verein=$recordSet->getArray();
 //$verein=$verein[0];
