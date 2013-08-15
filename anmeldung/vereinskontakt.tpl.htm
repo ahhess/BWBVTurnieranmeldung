@@ -1,0 +1,62 @@
+{include file="header.tpl.htm" title=&Uuml;bersicht}
+{include file="menu.tpl.htm"}
+    <div class="row-fluid">
+        <div class="span12">
+
+			<h3>Vereinskontaktdaten</h3>
+			<p>Ansprechpartner f&uuml;r R&uuml;ckfragen:</p>
+
+			<form class="form-horizontal" method="post">
+				<div class="control-group">
+					<label class="control-label" for="inputEmail">Name:</label>
+					<div class="controls">
+						<input name="ansprechpartner_name" type="text" id="email27" value="{$smarty.session.verein.ansprechpartner_name}" size="30">
+					</div>
+				</div>
+				<div class="control-group">
+					<label class="control-label" for="inputPassword">Strasse:</label>
+					<div class="controls">
+						<input name="ansprechpartner_strasse" type="text" id="email222" value="{$smarty.session.verein.ansprechpartner_strasse}" size="30">
+					</div>
+				</div>
+				<div class="control-group">
+					<label class="control-label" for="inputPassword">Plz/Ort:</label>
+					<div class="controls">
+						<input name="ansprechpartner_plz_ort" type="text" id="email233" value="{$smarty.session.verein.ansprechpartner_plz_ort}" size="30">
+					</div>
+				</div>
+				<div class="control-group">
+					<label class="control-label" for="inputPassword">Telefon:</label>
+					<div class="controls">
+						<input name="ansprechpartner_telefon" type="text" id="email232" value="{$smarty.session.verein.ansprechpartner_telefon}" size="30">
+					</div>
+				</div>
+				<div class="control-group">
+					<label class="control-label" for="inputPassword">Mobil:</label>
+					<div class="controls">
+						<input name="ansprechpartner_mobil" type="text" id="email242" value="{$smarty.session.verein.ansprechpartner_mobil}" size="30">
+					</div>
+				</div>
+				<div class="control-group">
+					<label class="control-label" for="inputPassword">Email:</label>
+					<div class="controls">
+						<input name="ansprechpartner_email" type="text" id="email5" value="{$smarty.session.verein.ansprechpartner_email}" size="30">
+						<p>Mehrere Email-Adressen sind durch Strichpunkt (;) zu trennen.</p>
+					</div>
+				</div>
+				<div class="control-group">
+					<label class="control-label" for="inputPassword">Bemerkung:</label>
+					<div class="controls">
+						<textarea name="ansprechpartner_bemerkung" cols="30" rows="3" id="ansprechpartner_bemerkung">{$smarty.session.verein.ansprechpartner_bemerkung}</textarea>
+					</div>
+				</div>				
+				<div class="control-group">
+					<div class="controls">
+						<button type="submit" class="btn">Speichern</button>
+					</div>
+				</div>
+			</form>
+			
+		</div>
+    </div>
+{include file="footer.tpl.htm"}
