@@ -1,46 +1,9 @@
-<!DOCTYPE html>
-<html lang="de">
-  <head>
-	<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-    <meta charset="utf-8">
-    <title>Turnieranmeldung - Vereine</title>
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta name="description" content="">
-    <meta name="author" content="">
-
-    <!-- Le styles -->
-    <link href="css/bootstrap.css" rel="stylesheet">
-    <link href="css/turnieradmin.css" rel="stylesheet">
-
-    <!-- HTML5 shim, for IE6-8 support of HTML5 elements -->
-    <!--[if lt IE 9]>
-      <script src="../assets/js/html5shiv.js"></script>
-    <![endif]-->
-  </head>
-
-  <body>
-
-    <div class="container">
-
-      <div class="masthead">
-        <h3 class="muted">Turnieranmeldung</h3>
-        <div class="navbar">
-          <div class="navbar-inner">
-            <div class="container">
-              <ul class="nav">
-                <li class="active"><a href="#">Vereine</a></li>
-                <li><a href="turniere.php">Turniere</a></li>
-                <li><a href="spieler.php">Spieler</a></li>
-              </ul>
-            </div>
-          </div>
-        </div><!-- /.navbar -->
-      </div>
-
+{include file="header.tpl.htm" title=Vereine}
+{include file="admin_menu.tpl.htm"}
       <div class="row-fluid">
         <div class="span12">
 			<h2>Vereine</h2>
-			<table class="table-bordered table-striped">
+			<table class="table table-hover">
 			  <tbody>
 				<tr>
 				  <th>Nr</td>
@@ -53,13 +16,20 @@
 				</tr>
 				{section name=zeile loop=$verein}
 				<tr>
-				  <td><a class="btn" href="#">{$verein[zeile].id}</a></td>
+				  <td>{$verein[zeile].id}</td>
 				  <td>{$verein[zeile].davor}</td>
 				  <td>{$verein[zeile].name}</td>
 				  <td>{$verein[zeile].kurz}</td>
 				  <!--<td>{$verein[zeile].passwort}</td>-->
 				  <td>{$verein[zeile].region}</td>
-				  <td><a class="btn" href="#">X</a></td>
+				  <td>
+					<div class="btn-toolbar">
+						<div class="btn-group">
+							<a class="btn" href="#"><i class="icon-pencil"></i></a>
+							<a class="btn" href="#" onClick=><i class="icon-trash"></i></a>
+						</div>
+					</div>
+				  </td>
 				</tr>
 				{/section}
 				<!--
@@ -77,23 +47,8 @@
 				-->
 			  </tbody>
 			</table>
-			<p><a class="btn" href="#">Neu</a></p>
+			<p><a class="btn" href="#"><i class="icon-edit"></i></a></p>
         </div>
       </div>
-
-      <hr>
-
-      <div class="footer">
-        <p>(C) BWBV 2013</p>
-      </div>
-
-    </div> <!-- /container -->
-
-    <!-- Le javascript
-    ================================================== -->
-    <!-- Placed at the end of the document so the pages load faster -->
-    <script src="js/bootstrap.min.js"></script>
-    <script src="js/jquery.min.js"></script>
-
-  </body>
-</html>
+	  
+{include file="footer.tpl.htm"}
