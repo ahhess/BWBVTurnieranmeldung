@@ -4,10 +4,10 @@
           <div class="navbar-inner">
 			<div class="container">
               <ul class="nav">
-                <li><a href="index.php">Home</a></li>
-                <li><a href="#">Vereine</a></li>
-                <li><a href="turniere.php">Turniere</a></li>
-                <li><a href="spieler.php">Spieler</a></li>
+                <li><a href="index.php"><i class="icon-home"></i> Home</a></li>
+                <li{if $menuakt == 'turniere.php'} class="active"{/if}><a href="turniere.php">Turniere</a></li>
+                <li{if $menuakt == 'turnierbeauftragte.php'} class="active"{/if}><a href="turnierbeauftragte.php">Turnierbeauftragte</a></li>
+                <li{if $menuakt == 'vereine.php'} class="active"{/if}><a href="vereine.php">Vereine</a></li>
               </ul>
             </div>
           </div>
