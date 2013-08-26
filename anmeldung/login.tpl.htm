@@ -1,63 +1,100 @@
-<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
-<html>
-<head>
-<title>Badminton Turnieranmeldesystem</title>
-<meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
-<link href="style.css" rel="stylesheet" type="text/css">
-</head>
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <title>BWBV Turnieranmeldung</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-<body>
+    <link href="css/bootstrap.min.css" rel="stylesheet">
+	{literal}
+    <style type="text/css">
+      body {
+        padding-top: 60px;
+        padding-bottom: 40px;
+      }
+    </style>
+	{/literal}
+  </head>
 
-<form name="form1" method="post" action="">
-  <p>&nbsp;</p>
-  <p>&nbsp;</p>
-  <p>&nbsp;</p>
-  <p>&nbsp;</p>
-  <table width="400" border="0" align="center" cellpadding="4" cellspacing="1">
-    <tr>
-      <td colspan="2"><p class="gross"><strong>Badminton Turnieranmeldung via
-            Internet </strong><span class="mittel">Geben Sie an dieser Stelle
-            bitte Ihre Zugangsdaten ein.</span></p>
-          <p class="gross">&nbsp;</p></td>
-    </tr>
-    <tr bgcolor="#EEEEEE">
-      <td width="85">Benutzername</td>
-      <td width="305"><input name="benutzer" type="text" id="benutzer"></td>
-    </tr>
-    <tr bgcolor="#EEEEEE">
-      <td>Kennwort </td>
-      <td>
-        <input name="passwort" type="password" id="passwort"></td>
-    </tr>
-    <tr>
-      <td><p><img src="img/fbaelle.jpg" width="100" height="69"><br>
-        <br>
-      </p>      </td>
-      <td valign="top"><p>
-        <input name="doLoginSubmit" type="submit" id="doLoginSubmit" value="Abschicken">
-      </p>
-      <p><font color="red" class="klein">{$fehlermeldung_zugang}</font><br>
-      </p></td>
-    </tr>
-    <tr bgcolor="#f8f8f8">
-      <td colspan="2"><p class="mittel">&Uuml;bersicht aktuelle Turniere:</p>
-        <p class="klein"> {section name=t loop=$turniere}<strong>- {$turniere[t].name_lang}</strong><br>
-          {if $turniere[t].datum_anmelden_ab!=0000-00-00}Meldung m&ouml;glich
-          bis {$turniere[t].datum_anmelden_bis}{/if}</p>
-        <p class="klein">{sectionelse}- Derzeit keine Turniere
-       f&uuml;r Meldung verf&uuml;gbar -{/section}</p>
-       <p class="mittel">Turniere mit abgelaufener Meldefrist:</p>
-       <p class="klein">{section name=t loop=$turniere_abgelaufen}<strong>- {$turniere_abgelaufen[t].name_lang}</strong> </span><br>
-         {sectionelse}- Derzeit keine
-      Turniere mit abgelaufener Meldefrist verf&uuml;gbar -{/section} </p>       </td>
-    </tr>
-  </table>
-</form>
-<center>
-<table bgcolor="#aaffaa" width="300"><tr><td class="klein">Neu: Um als Verein Bestätigungsmails an mehrere Kontakte zu erhalten, im Profil Email-Adressen durch Strichpunkt trennen (;)</td></tr></table>
-<br>
-<table bgcolor="#eeeeff" width="300"><tr><td class="klein">Hinweis: Vereine ohne bekannte Zugangsdaten können ihre <b>Zugangsdaten</b> bei <a href="mailto:sportwart-nw@bwbv.de">Andreas Hess, Sportwart NW</a> <b>beantragen</b>. Notwendige Informationen in der Email: genauer Name des Vereins, Email des Ansprechpartners für Turniermeldungen.</td></tr></table>
+  <body>
 
-</center>
-</body>
-</html>
+    <div class="navbar navbar-inverse navbar-fixed-top">
+      <div class="navbar-inner">
+        <div class="container">
+          <button type="button" class="btn btn-navbar" data-toggle="collapse" data-target=".nav-collapse">
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+          </button>
+          <a class="brand" href="#">BWBV Turnieranmeldung</a>
+          <div class="nav-collapse collapse">
+            <form class="navbar-form pull-right" method="post">
+              <input class="span2" type="text" placeholder="Benutzer" name="benutzer">
+              <input class="span2" type="password" placeholder="Passwort" name="passwort">
+              <button type="submit" class="btn" name="doLoginSubmit" value="doLoginSubmit">Anmelden</button>
+            </form>
+          </div><!--/.nav-collapse -->
+        </div>
+      </div>
+    </div>
+
+    <div class="container">
+
+	  {if $fehlermeldung_zugang}
+	  <div class="alert">
+	    <button type="button" class="close" data-dismiss="alert">&times;</button>
+		{$fehlermeldung_zugang}
+	  </div>
+	  {/if}
+
+      <div class="hero-unit">
+        <h1>BWBV Turnieranmeldung</h1>
+      </div>
+	  
+      <div class="row-fluid">
+        <div class="span12">
+			<h3>&Uuml;bersicht aktuelle Turniere:</h3>
+			<table class="table table-hover">
+			  <tbody>
+				<tr>
+				  <th>Turnier</td>
+				  <th>Datum</td>
+				  <th>Meldezeitraum</td>
+				</tr>
+				{section name=t loop=$turniere}
+				<tr>
+				  <td>{$turniere[t].name_lang}</td>
+				  <td>{$turniere[t].datum|date_format:"%d.%m.%Y"}</td>
+				  <td>
+				    {if $turniere[t].datum_anmelden_ab != 0000-00-00}
+						{$turniere[t].datum_anmelden_ab|date_format:"%d.%m.%Y"}
+				    {/if}
+                    bis {$turniere[t].datum_anmelden_bis|date_format:"%d.%m.%Y"}
+				  </td>
+				</tr>
+				{/section}
+			  </tbody>
+			</table>
+			<form name="meldungform" method="post" action="meldung.php">
+				<input type="hidden" name="tid">
+			</form>
+
+			<h3>Turniere mit abgelaufener Meldefrist:</h3>
+			<table class="table table-hover">
+			  <tbody>
+				<tr>
+				  <th>Turnier</td>
+				  <th>Datum</td>
+				</tr>
+				{section name=t loop=$turniere_abgelaufen}
+				<tr>
+				  <td>{$turniere_abgelaufen[t].name_lang}</td>
+				  <td>{$turniere_abgelaufen[t].datum|date_format:"%d.%m.%Y"}</td>
+				</tr>
+				{/section}
+			  </tbody>
+			</table>
+        </div>
+      </div>
+
+{include file="footer.tpl.htm"}
