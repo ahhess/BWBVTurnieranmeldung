@@ -1,10 +1,9 @@
 <?php
 session_start();
-if (!session_is_registered("verein")) header("location: index.php");
-
 include("config.inc.php");
 include("funktionen.inc.php");
 include("../adodb/adodb.inc.php");
+check_login();
 
 $conn = &ADONewConnection('mysql');	
 $conn->PConnect($host,$user,$password,$database);
@@ -15,12 +14,11 @@ unset($recordSet);
 $sql='SELECT * FROM tas_vereine ORDER BY region, name, davor';
 $recordSet = &$conn->Execute($sql);
 $verein=$recordSet->getArray();
-//$verein=$verein[0];
+$conn->Close();
 
 require('../smarty/libs/Smarty.class.php');
 $smarty = get_new_smarty();
 $smarty->assign('verein',$verein);
+$smarty->assign('menuakt','vereine.php');
 $smarty->display('vereine.tpl.htm');
-
-$conn->Close();
 ?>

@@ -13,6 +13,7 @@ $ADODB_FETCH_MODE = ADODB_FETCH_ASSOC;
 
 require('../smarty/libs/Smarty.class.php');
 $smarty = get_new_smarty();
+$smarty->assign('menuakt','index.php');
 
 // aktuelle ausschreibungen holen - für login- und übersichtsseite
 

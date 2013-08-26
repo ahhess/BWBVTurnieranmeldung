@@ -12,6 +12,11 @@ function spielklasse_berechnen($mysql_date)
 	return "U".$ak_correct;
 }
 
+function check_login() {
+	if (!session_is_registered("verein")) 
+		header("location: index.php");
+}
+
 function get_new_smarty() {
 	$smarty = new Smarty;
 	$smarty->template_dir = '';

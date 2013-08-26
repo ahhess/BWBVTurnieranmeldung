@@ -1,23 +1,18 @@
 <?php
 session_start();
-if ($_POST["tid"]) $_SESSION["tid"]=$_POST["tid"];  //turnier id persistent
-
 include("config.inc.php");
 include("funktionen.inc.php");
+check_login();
 
-// tas_vereine holen
+if ($_POST["tid"]) 
+	$_SESSION["tid"]=$_POST["tid"];  //turnier id in session merken
+
 include("../adodb/adodb.inc.php");
-$conn = &ADONewConnection('mysql');	# create a connection
-//$conn->debug=true;
-$conn->PConnect($host,$user,$password,$database);   # connect to MS-Access, northwind dsn
+$conn = &ADONewConnection('mysql');
+$conn->PConnect($host,$user,$password,$database);
 $ADODB_FETCH_MODE = ADODB_FETCH_ASSOC;
 
-if (!session_is_registered("verein")) 
-{
-	die ('Sie sind nicht angemeldet. Bitte <a href=index.php>anmelden</a>');
-}
-
-elseif ($_POST["doInsertSubmit"])
+if ($_POST["doInsertSubmit"])
 {
 	if (!trim($_POST["nachname"]) && !trim($_POST["vorname"]) )
 	{
@@ -32,7 +27,6 @@ elseif ($_POST["doInsertSubmit"])
 		else $fehlermeldung="Fehler beim Hinzufügen des Spielers";
 	}
 }
-
 
 elseif ($_POST["doSpielerAktualisieren"])
 {
@@ -79,6 +73,7 @@ else
 $countS=count($s);
 
 $recordSet->Close(); # optional
+$conn->Close(); # optional
 
 for ($i=0;$i<$countS;$i++) $s[$i]["spielklasse"]=spielklasse_berechnen($s[$i]["geburtstag"]);
 
@@ -90,14 +85,11 @@ $smarty->assign('meldung',$meldung);
 $smarty->assign('spieler',$s);
 $smarty->assign('turnier',$turnier);
 $smarty->assign('spielklasse',$spielklasse);
+$smarty->assign('menuakt','editieren.php');
 
 $smarty->display('editieren.tpl.htm');
-
-$conn->Close(); # optional
 
 //print "<pre>";
 //print_r($_POST);
 //print_r($s);
-
-
 ?>
