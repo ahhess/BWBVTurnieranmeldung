@@ -1,58 +1,96 @@
-{include file="header.tpl.htm" title=&Uuml;bersicht}
+{include file="header.tpl.htm" title=Vereinskontakt}
 {include file="menu.tpl.htm"}
     <div class="row-fluid">
         <div class="span12">
 
-			<h3>Vereinskontaktdaten</h3>
-			<p>Ansprechpartner f&uuml;r R&uuml;ckfragen:</p>
+			<h3>Ihre Vereinskontaktdaten</h3>
 
 			<form class="form-horizontal" method="post">
+			
+				<p>Verein:</p>
+				
 				<div class="control-group">
-					<label class="control-label" for="inputEmail">Name:</label>
+					<label class="control-label" for="davor">K&uuml;rzel:</label>
 					<div class="controls">
-						<input name="ansprechpartner_name" type="text" id="email27" value="{$smarty.session.verein.ansprechpartner_name}" size="30">
+						<input name="davor" type="text" value="{$smarty.session.verein.davor}" size="6">
 					</div>
 				</div>
 				<div class="control-group">
-					<label class="control-label" for="inputPassword">Strasse:</label>
+					<label class="control-label" for="name">Name:</label>
 					<div class="controls">
-						<input name="ansprechpartner_strasse" type="text" id="email222" value="{$smarty.session.verein.ansprechpartner_strasse}" size="30">
-					</div>
-				</div>
-				<div class="control-group">
-					<label class="control-label" for="inputPassword">Plz/Ort:</label>
-					<div class="controls">
-						<input name="ansprechpartner_plz_ort" type="text" id="email233" value="{$smarty.session.verein.ansprechpartner_plz_ort}" size="30">
-					</div>
-				</div>
-				<div class="control-group">
-					<label class="control-label" for="inputPassword">Telefon:</label>
-					<div class="controls">
-						<input name="ansprechpartner_telefon" type="text" id="email232" value="{$smarty.session.verein.ansprechpartner_telefon}" size="30">
-					</div>
-				</div>
-				<div class="control-group">
-					<label class="control-label" for="inputPassword">Mobil:</label>
-					<div class="controls">
-						<input name="ansprechpartner_mobil" type="text" id="email242" value="{$smarty.session.verein.ansprechpartner_mobil}" size="30">
-					</div>
-				</div>
-				<div class="control-group">
-					<label class="control-label" for="inputPassword">Email:</label>
-					<div class="controls">
-						<input name="ansprechpartner_email" type="text" id="email5" value="{$smarty.session.verein.ansprechpartner_email}" size="30">
-						<p>Mehrere Email-Adressen sind durch Strichpunkt (;) zu trennen.</p>
-					</div>
-				</div>
-				<div class="control-group">
-					<label class="control-label" for="inputPassword">Bemerkung:</label>
-					<div class="controls">
-						<textarea name="ansprechpartner_bemerkung" cols="30" rows="3" id="ansprechpartner_bemerkung">{$smarty.session.verein.ansprechpartner_bemerkung}</textarea>
+						<input name="name" type="text" value="{$smarty.session.verein.name}" size="30">
 					</div>
 				</div>				
 				<div class="control-group">
+					<label class="control-label" for="region">Region:</label>
 					<div class="controls">
-						<button type="submit" class="btn">Speichern</button>
+						<input name="region" type="text" value="{$smarty.session.verein.region}" size="2">
+					</div>
+				</div>
+			
+				<p>Ansprechpartner f&uuml;r R&uuml;ckfragen:</p>
+				
+				<div class="control-group">
+					<label class="control-label" for="ansprechpartner_name">Name:</label>
+					<div class="controls">
+						<input name="ansprechpartner_name" type="text" value="{$smarty.session.verein.ansprechpartner_name}" size="30">
+					</div>
+				</div>
+				<div class="control-group">
+					<label class="control-label" for="ansprechpartner_strasse">Strasse:</label>
+					<div class="controls">
+						<input name="ansprechpartner_strasse" type="text" value="{$smarty.session.verein.ansprechpartner_strasse}" size="30">
+					</div>
+				</div>
+				<div class="control-group">
+					<label class="control-label" for="ansprechpartner_plz_ort">Plz/Ort:</label>
+					<div class="controls">
+						<input name="ansprechpartner_plz_ort" type="text" value="{$smarty.session.verein.ansprechpartner_plz_ort}" size="30">
+					</div>
+				</div>
+				<div class="control-group">
+					<label class="control-label" for="ansprechpartner_telefon">Telefon:</label>
+					<div class="controls">
+						<input name="ansprechpartner_telefon" type="text" value="{$smarty.session.verein.ansprechpartner_telefon}" size="30">
+					</div>
+				</div>
+				<div class="control-group">
+					<label class="control-label" for="ansprechpartner_mobil">Mobil:</label>
+					<div class="controls">
+						<input name="ansprechpartner_mobil" type="text" value="{$smarty.session.verein.ansprechpartner_mobil}" size="30">
+					</div>
+				</div>
+				<div class="control-group">
+					<label class="control-label" for="ansprechpartner_email">Email:</label>
+					<div class="controls">
+						<input name="ansprechpartner_email" type="text" value="{$smarty.session.verein.ansprechpartner_email}" size="30">
+						Mehrere Email-Adressen sind durch Strichpunkt (;) zu trennen.
+					</div>
+				</div>
+				<div class="control-group">
+					<label class="control-label" for="ansprechpartner_bemerkung">Bemerkung:</label>
+					<div class="controls">
+						<textarea name="ansprechpartner_bemerkung" cols="30" rows="3">{$smarty.session.verein.ansprechpartner_bemerkung}</textarea>
+					</div>
+				</div>				
+			
+				<p>Benutzer:</p>
+				
+				<div class="control-group">
+					<label class="control-label" for="kurz">Benutzer:</label>
+					<div class="controls">
+						<input name="kurz" type="text" value="{$smarty.session.verein.kurz}" size="30">
+					</div>
+				</div>
+				<div class="control-group">
+					<label class="control-label" for="passwort">Passwort:</label>
+					<div class="controls">
+						<input name="passwort" type="password" value="{$smarty.session.verein.passwort}" size="30">
+					</div>
+				</div>
+				<div class="control-group">
+					<div class="controls">
+						<button type="submit" class="btn" name="doSubmitEmail" value="1">Speichern</button>
 					</div>
 				</div>
 			</form>
