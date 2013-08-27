@@ -1,0 +1,180 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<html>
+<head>
+<title>BWBV Turnieranmeldesystem</title>
+<meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
+<link href="style.css" rel="stylesheet" type="text/css">
+{popup_init src="js/overlib.js"} 
+</head> 
+<body marginheight="20px" marginwidth="20px">
+<table width="650" border="0" cellpadding="0" cellspacing="10" style="border-style:dashed;border-width:2px;border-color:#ffcc00">
+  <tr>
+    <td align="center"><span class="gross">BWBV Turnieranmeldung &Uuml;bersicht</span><br>
+      <span class="klein">Derzeit ausgeschriebene Turniere</span></td>
+  </tr>
+</table>
+<p>
+<div class="klein"><font color=green>Zum ersten mal hier? Andere Probleme mit der Plattform? Die <a href="faq.html">ersten Schritte im System und weitere Fragen</a> werden in den <a href="faq.html">FAQ</a> erläutert.<p></font color></div>
+<p>
+<table width="400" border="0" cellpadding="2" cellspacing="0" bgcolor="#ECFFEC">
+  <tr>
+    <td><span class="mittel">Aktuell f&uuml;r eine <strong>Meldung</strong> zur Verf&uuml;gung
+    stehende Turniere: </span></td>
+  </tr>
+</table>
+<p class="mittel">{section name=t loop=$turniere} </p>
+<form action="meldung.php" method="post" name="f" id="f">
+  <table width="650" border="0" cellspacing="0" cellpadding="0">
+    <tr>
+      <td width="100" class="mittel">Turnier:</td>
+      <td width="400" class="mittel"><strong>{$turniere[t].name_lang} </strong></td>
+      <td width="10"> </td>
+      <td width="140" rowspan="3" valign="top"> <input name="doSubmitMeldebildschirm" type="submit" class="mittel" id="doSubmitMeldebildschirm" value="{$button_meldebildschirm}" style="height:50px"></td>
+    </tr>
+    <tr>
+      <td width="100" class="klein">Beauftragter:</td>
+      <td width="400" class="klein">{$turniere[t].ba_vorname} {$turniere[t].ba_nachname}</td>
+      <td width="10">&nbsp;</td>
+    </tr>
+    <tr>
+      <td width="100" class="klein">Datum:</td>
+      <td width="400" class="klein"><strong>{$turniere[t].datum} </strong></td>
+      <td width="10"> </td>
+    </tr>
+    <tr>
+      <td width="100" class="klein">Ort:</td>
+      <td width="400" class="klein">{$turniere[t].ort} </td>
+      <td width="10"> </td>
+    </tr>
+    <tr>
+      <td width="100" class="klein">Meldezeitraum:&nbsp;&nbsp;</td>
+      <td width="400" class="klein">{if $turniere[t].datum_anmelden_ab!=0000-00-00}von {$turniere[t].datum_anmelden_ab}{/if}
+        bis {$turniere[t].datum_anmelden_bis}</td>
+      <td width="10"> </td>
+      <td width="140"><span class="klein">Bisherige
+      Meldungen aller Vereine einsehen 
+	  (<a href="anzeige.php?id={$turniere[t].id}" target="_blank">HTML</a>, 
+	  <a href="anzeige.php?id={$turniere[t].id}&format=csv" target="_blank">CSV</a>, 
+	  <a href="excel.php?id={$turniere[t].id}">EXCEL</a>)</span></td>
+    </tr>
+    <tr>
+      <td width="100" class="klein">&nbsp;</td>
+      <td width="400" class="klein">{if $turniere[t].infobox}Sie haben derzeit <a href="#" {popup text=$turniere[t].infobox}>{$turniere[t].anzahl_anmeldungen}
+        Spieler</a> gemeldet{/if}</td>
+      <td width="10">&nbsp;</td>
+      <td width="140">&nbsp;</td>
+    </tr>
+  </table>
+  <input type="hidden" name="tid" value="{$turniere[t].id}">
+</form>
+<p>{sectionelse}<span class="klein">- Es stehen derzeit keine Turniere zur Meldung
+    zur Verf&uuml;gung -</span>{/section} </p>
+<p>&nbsp;</p>
+<table width="400" border="0" cellpadding="2" cellspacing="0" bgcolor="#FFF7F2">
+  <tr>
+    <td><span class="mittel">Anstehende Turniere, bei welchen die <strong>Online-Meldefrist
+    abgelaufen </strong>ist:</span></td>
+  </tr>
+</table>
+<p class="mittel"><font color="777777">Eine <em>Abmeldung</em> ist bei diesen
+    Turnieren nur &uuml;ber den <em>Turnierverantwortlichen</em> m&ouml;glich
+    !</font color> <br>
+</p>
+<p class="mittel">{section name=t
+loop=$turniere_abgelaufen} </p>
+<form action="meldung.php" method="post" name="f" id="f">
+  <table width="650" border="0" cellspacing="0" cellpadding="0">
+    <tr>
+      <td width="100" class="mittel">Turnier:</td>
+      <td width="400" class="mittel"><strong><font color=#777777>{$turniere_abgelaufen[t].name_lang} </strong></td>
+      <td width="10">&nbsp;</td>
+      <td width="140" rowspan="3" valign="top"><span class="klein">Meldungen aller Vereine einsehen 
+	  (<a href="anzeige.php?id={$turniere_abgelaufen[t].id}" target="_blank">HTML</a>, 
+	  <a href="anzeige.php?id={$turniere_abgelaufen[t].id}&format=csv" target="_blank">CSV</a>, 
+	  <a href="excel.php?id={$turniere_abgelaufen[t].id}">EXCEL</a>) </span> </td>
+    </tr>
+    <tr>
+      <td width="100" class="klein">Beauftragter:</td>
+      <td width="400" class="klein"><a href="mailto:{$turniere_abgelaufen[t].ba_email}">{$turniere_abgelaufen[t].ba_vorname} {$turniere_abgelaufen[t].ba_nachname}</a></td>
+      <td width="10">&nbsp;</td>
+    </tr>
+    <tr>
+      <td width="100" class="klein">Datum:</td>
+      <td width="400" class="klein"><strong><font color=#777777>{$turniere_abgelaufen[t].datum} </strong></td>
+      <td width="10">&nbsp;</td>
+    </tr>
+    <tr>
+      <td width="100" class="klein">Ort:</td>
+      <td width="400" class="klein">{$turniere_abgelaufen[t].ort} </td>
+      <td width="10">&nbsp;</td>
+    </tr>
+    <tr>
+      <td width="100" class="klein">Meldezeitraum:&nbsp;&nbsp;</td>
+      <td width="400" class="klein">{if $turniere_abgelaufen[t].datum_anmelden_ab!=0000-00-00}von
+        {$turniere_abgelaufen[t].datum_anmelden_ab}{/if} <strong>bis {$turniere_abgelaufen[t].datum_anmelden_bis}</strong></td>
+      <td width="10">&nbsp;</td>
+      <td width="140">&nbsp;</td>
+    </tr>
+    <tr>
+      <td width="100" class="klein">&nbsp;</td>
+      <td width="400" class="klein">{if $turniere_abgelaufen[t].infobox}Ihr letzter
+        Meldestand: <a href="#" {popup text=$turniere_abgelaufen[t].infobox}>{$turniere_abgelaufen[t].anzahl_anmeldungen}
+          Spieler</a> gemeldet{/if}</td>
+      <td width="10">&nbsp;</td>
+      <td width="140">&nbsp;</td>
+    </tr>
+  </table>
+  <input type="hidden" name="tid2" value="{$turniere[t].id}">
+</form>
+<p>{sectionelse}<span class="klein">- Es stehen derzeit keine zuk&uuml;nftige Turniere
+mit abgelaufener Meldefrist zur Verf&uuml;gung -</span>{/section} </p>
+<p>&nbsp; </p>
+<form name="form1" method="post" action="">
+  <span class="mittel"><strong>WICHTIG! </strong>Ansprechpartner f&uuml;r R&uuml;ckfragen:  <br>
+  <br>
+  </span>
+  <table border="0" class="mittel">
+    <tr>
+      <td valign="top">Name:</td>
+      <td>        <input name="ansprechpartner_name" type="text" id="email27" value="{$smarty.session.verein.ansprechpartner_name}" size="30">      </td>
+    </tr>
+    <tr>
+      <td valign="top">Strasse:</td>
+      <td>        <input name="ansprechpartner_strasse" type="text" id="email222" value="{$smarty.session.verein.ansprechpartner_strasse}" size="30">      </td>
+    </tr>
+    <tr>
+      <td valign="top">Plz/Ort:</td>
+      <td>        <input name="ansprechpartner_plz_ort" type="text" id="email233" value="{$smarty.session.verein.ansprechpartner_plz_ort}" size="30">      </td>
+    </tr>
+    <tr>
+      <td valign="top">Telefon:</td>
+      <td>        <input name="ansprechpartner_telefon" type="text" id="email232" value="{$smarty.session.verein.ansprechpartner_telefon}" size="30">      </td>
+    </tr>
+    <tr>
+      <td valign="top">Mobil:</td>
+      <td>        <input name="ansprechpartner_mobil" type="text" id="email242" value="{$smarty.session.verein.ansprechpartner_mobil}" size="30">      </td>
+    </tr>
+    <tr>
+      <td valign="top">Email:<br>
+        (<font color="#FF0000">Wichtig!!</font>)</td>
+      <td>        <input name="ansprechpartner_email" type="text" id="email5" value="{$smarty.session.verein.ansprechpartner_email}" size="30"><br><font color="#bbbbbb">Mehrere Email-Adressen sind durch Strichpunkt (;) trennen.</font color></td>
+    </tr>
+    <tr>
+      <td valign="top">Bemerkung:</td>
+      <td><textarea name="ansprechpartner_bemerkung" cols="30" rows="3" id="ansprechpartner_bemerkung">{$smarty.session.verein.ansprechpartner_bemerkung}</textarea></td>
+    </tr>
+    <tr>
+      <td valign="top">&nbsp;</td>
+      <td>        <input name="doSubmitEmail" type="submit" id="doSubmitEmail2" value="Ansprechpartnerdaten aktualisieren">      </td>
+    </tr>
+  </table>
+  <span class="mittel"><br>
+  <br>
+  <br>
+  <br>
+  </span>
+</form>
+<p><a href="logoff.php" class="mittel"><strong>Ausloggen</strong></a> | <a href="editieren.php" class="mittel">Spielerdaten
+des {$smarty.session.verein.davor} {$smarty.session.verein.name} <strong>editieren</strong></a> </p>
+</body>
+</html>
