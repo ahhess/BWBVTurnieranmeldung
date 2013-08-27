@@ -3,21 +3,22 @@
       <div class="row-fluid">
         <div class="span12">
 			<h3>Aktuell f&uuml;r eine <strong>Meldung</strong> zur Verf&uuml;gung stehende Turniere:</h3>
-			<table class="table table-hover">
-			  <tbody>
+			<table class="table table-hover tablbe-condensed">
+			  <thead>
 				<tr>
 				  <th>Turnier</td>
-				  <th>Beauftragter</td>
 				  <th>Datum</td>
 				  <th>Ort</td>
 				  <th>Meldezeitraum</td>
 				  <th>Anzahl Meldungen</td>
+				  <th>Beauftragter</td>
 				  <th></td>
 				</tr>
+			  </thead>
+			  <tbody>
 				{section name=t loop=$turniere}
 				<tr>
 				  <td>{$turniere[t].name_lang}</td>
-				  <td>{$turniere[t].ba_vorname} {$turniere[t].ba_nachname}</td>
 				  <td>{$turniere[t].datum|date_format:"%d.%m.%Y"}</td>
 				  <td>{$turniere[t].ort}</td>
 				  <td>
@@ -27,14 +28,15 @@
                     bis {$turniere[t].datum_anmelden_bis|date_format:"%d.%m.%Y"}
 				  </td>
 				  <td>{$turniere[t].anzahl_anmeldungen}</td>
+				  <td>{$turniere[t].ba_vorname} {$turniere[t].ba_nachname}</td>
 				  <td>
 					<div class="btn-toolbar">
 						<div class="btn-group">
-							<a class="btn" href="#" onclick="document.meldungform.tid.value='{$turniere[t].id}';document.meldungform.submit()">Meldung</a>
-							<a class="btn" href="anzeige.php?id={$turniere[t].id}">Liste</a>
-							<a class="btn" href="excel.php?id={$turniere[t].id}">Excel</a>
+							<a class="btn" href="#" onclick="document.meldungform.tid.value='{$turniere[t].id}';document.meldungform.submit()">Anmeldung</a>
+							<a class="btn" href="anzeige.php?id={$turniere[t].id}">Meldeliste</a>
+					{*		<a class="btn" href="excel.php?id={$turniere[t].id}">Excel</a>
 							<a class="btn" href="anzeige.php?format=csv&id={$turniere[t].id}" target="_blank">CSV</a>
-						</div>
+					*}	</div>
 					</div>
 				  </td>
 				</tr>
