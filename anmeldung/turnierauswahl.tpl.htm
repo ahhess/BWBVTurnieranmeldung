@@ -11,7 +11,7 @@
 				  <th>Ort</td>
 				  <th>Meldezeitraum</td>
 				  <th>Anzahl Meldungen</td>
-				  <th>Beauftragter</td>
+				  <th>Verantwortlicher</td>
 				  <th></td>
 				</tr>
 			  </thead>
@@ -34,8 +34,8 @@
 						<div class="btn-group">
 							<a class="btn" href="#" onclick="document.meldungform.tid.value='{$turniere[t].id}';document.meldungform.submit()">Anmeldung</a>
 							<a class="btn" href="anzeige.php?id={$turniere[t].id}">Meldeliste</a>
-					{*		<a class="btn" href="excel.php?id={$turniere[t].id}">Excel</a>
-							<a class="btn" href="anzeige.php?format=csv&id={$turniere[t].id}" target="_blank">CSV</a>
+							<a class="btn" href="excel.php?id={$turniere[t].id}">Excel</a>
+					{*		<a class="btn" href="anzeige.php?format=csv&id={$turniere[t].id}" target="_blank">CSV</a>
 					*}	</div>
 					</div>
 				  </td>
@@ -49,21 +49,20 @@
 
 			<h3>Anstehende Turniere, deren <strong>Online-Meldefrist abgelaufen </strong>ist:</h3>
 			<p><em>Hinweis:</em> Eine <em>Abmeldung</em> ist bei diesen Turnieren nur &uuml;ber den <em>Turnierverantwortlichen</em> m&ouml;glich!</p>
-			<table class="table table-hover">
+			<table class="table table-hover tablbe-condensed">
 			  <tbody>
 				<tr>
 				  <th>Turnier</td>
-				  <th>Beauftragter</td>
 				  <th>Datum</td>
 				  <th>Ort</td>
 				  <th>Meldezeitraum</td>
 				  <th>Anzahl Meldungen</td>
+				  <th>Verantwortlicher</td>
 				  <th></td>
 				</tr>
 				{section name=t loop=$turniere_abgelaufen}
 				<tr>
 				  <td>{$turniere_abgelaufen[t].name_lang}</td>
-				  <td>{$turniere_abgelaufen[t].ba_vorname} {$turniere_abgelaufen[t].ba_nachname}</td>
 				  <td>{$turniere_abgelaufen[t].datum|date_format:"%d.%m.%Y"}</td>
 				  <td>{$turniere_abgelaufen[t].ort}</td>
 				  <td>
@@ -73,13 +72,14 @@
                     bis {$turniere_abgelaufen[t].datum_anmelden_bis|date_format:"%d.%m.%Y"}
 				  </td>
 				  <td>{$turniere_abgelaufen[t].anzahl_anmeldungen}</td>
+				  <td>{$turniere_abgelaufen[t].ba_vorname} {$turniere_abgelaufen[t].ba_nachname}</td>
 				  <td>
 					<div class="btn-toolbar">
 						<div class="btn-group">
-							<a class="btn" href="anzeige.php?id={$turniere_abgelaufen[t].id}">Liste</a>
+							<a class="btn" href="anzeige.php?id={$turniere_abgelaufen[t].id}">Meldeliste</a>
 							<a class="btn" href="excel.php?id={$turniere_abgelaufen[t].id}">Excel</a>
-							<a class="btn" href="anzeige.php?format=csv&id={$turniere_abgelaufen[t].id}" target="_blank">CSV</a>
-						</div>
+					{*		<a class="btn" href="anzeige.php?format=csv&id={$turniere_abgelaufen[t].id}" target="_blank">CSV</a>
+					*}	</div>
 					</div>
 				  </td>
 				</tr>

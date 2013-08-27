@@ -3,51 +3,37 @@
       <div class="row-fluid">
         <div class="span12">
 			<h2>Vereine</h2>
-			<table class="table table-hover">
-			  <tbody>
+			<table class="table table-hover table-condensed">
+			  <thead>
 				<tr>
 				  <th>Nr</td>
 				  <th>K&uuml;rzel</td>
 				  <th>Name</td>
 				  <th>Benutzer</td>
-				  <!--<th>Passwort</td>-->
 				  <th>Region</td>
-				  <th><a class="btn" href="#"><i class="icon-edit"></i></a></td>
+				  <th><a class="btn btn-mini" href="#"><i class="icon-edit"></i></a></td>
 				</tr>
-				{section name=zeile loop=$verein}
+			  </thead>
+			  <tbody>
+				{section name=i loop=$liste}
 				<tr>
-				  <td>{$verein[zeile].id}</td>
-				  <td>{$verein[zeile].davor}</td>
-				  <td>{$verein[zeile].name}</td>
-				  <td>{$verein[zeile].kurz}</td>
-				  <!--<td>{$verein[zeile].passwort}</td>-->
-				  <td>{$verein[zeile].region}</td>
+				  <td>{$liste[i].id}</td>
+				  <td>{$liste[i].davor}</td>
+				  <td>{$liste[i].name}</td>
+				  <td>{$liste[i].kurz}</td>
+				  <td>{$liste[i].region}</td>
 				  <td>
 					<div class="btn-toolbar">
 						<div class="btn-group">
-							<a class="btn" href="#"><i class="icon-pencil"></i></a>
-							<a class="btn" href="#" onClick=><i class="icon-trash"></i></a>
+							<a class="btn btn-mini" href="#"><i class="icon-pencil"></i></a>
+							<a class="btn btn-mini" href="#" onClick=><i class="icon-trash"></i></a>
 						</div>
 					</div>
 				  </td>
 				</tr>
 				{/section}
-				<!--
-				<tr>
-					<form action="#" method="post">
-					  <td><input type="text" name="id"></td>
-					  <td><input type="text" name="davor"></td>
-					  <td><input type="text" name="name"></td>
-					  <td><input type="text" name="kurz"></td>
-					  <td><input type="password" name="passwort"></td>
-					  <td><input type="text" name="region"></td>
-					  <td><input type="submit" value="Speichern"></td>
-					</form>
-				</tr>
-				-->
 			  </tbody>
 			</table>
         </div>
       </div>
-	  
 {include file="footer.tpl.htm"}
