@@ -9,9 +9,9 @@
 				  <th>Turnier</td>
 				  <th>Datum</td>
 				  <th>Ort</td>
-				  <th>Meldezeitraum</td>
-				  <th>Anzahl Meldungen</td>
-				  <th>Verantwortlicher</td>
+				  <th>Meldefrist</td>
+				  <th>Meldungen Verein / Gesamt</td>
+				  <th>Verantw.</td>
 				  <th></td>
 				</tr>
 			  </thead>
@@ -21,13 +21,9 @@
 				  <td>{$turniere[t].name_lang}</td>
 				  <td>{$turniere[t].datum|date_format:"%d.%m.%Y"}</td>
 				  <td>{$turniere[t].ort}</td>
-				  <td>
-				    {if $turniere[t].datum_anmelden_ab != 0000-00-00}
-					von {$turniere[t].datum_anmelden_ab|date_format:"%d.%m.%Y"}
-				    {/if}
-                    bis {$turniere[t].datum_anmelden_bis|date_format:"%d.%m.%Y"}
+				  <td>{$turniere[t].datum_anmelden_bis|date_format:"%d.%m.%Y"}</td>
+				  <td>{$turniere[t].anzahl_anmeldungen} / {$turniere[t].anmeldungen_gesamt}
 				  </td>
-				  <td>{$turniere[t].anzahl_anmeldungen}</td>
 				  <td>{$turniere[t].ba_vorname} {$turniere[t].ba_nachname}</td>
 				  <td>
 					<div class="btn-toolbar">
@@ -55,9 +51,9 @@
 				  <th>Turnier</td>
 				  <th>Datum</td>
 				  <th>Ort</td>
-				  <th>Meldezeitraum</td>
+				  <th>Meldefrist</td>
 				  <th>Anzahl Meldungen</td>
-				  <th>Verantwortlicher</td>
+				  <th>Verantw.</td>
 				  <th></td>
 				</tr>
 				{section name=t loop=$turniere_abgelaufen}
@@ -65,13 +61,8 @@
 				  <td>{$turniere_abgelaufen[t].name_lang}</td>
 				  <td>{$turniere_abgelaufen[t].datum|date_format:"%d.%m.%Y"}</td>
 				  <td>{$turniere_abgelaufen[t].ort}</td>
-				  <td>
-				    {if $turniere_abgelaufen[t].datum_anmelden_ab != 0000-00-00}
-					von {$turniere_abgelaufen[t].datum_anmelden_ab|date_format:"%d.%m.%Y"}
-				    {/if}
-                    bis {$turniere_abgelaufen[t].datum_anmelden_bis|date_format:"%d.%m.%Y"}
-				  </td>
-				  <td>{$turniere_abgelaufen[t].anzahl_anmeldungen}</td>
+				  <td>{$turniere_abgelaufen[t].datum_anmelden_bis|date_format:"%d.%m.%Y"}</td>
+				  <td>{$turniere_abgelaufen[t].anzahl_anmeldungen} / {$turniere_abgelaufen[t].anmeldungen_gesamt}
 				  <td>{$turniere_abgelaufen[t].ba_vorname} {$turniere_abgelaufen[t].ba_nachname}</td>
 				  <td>
 					<div class="btn-toolbar">

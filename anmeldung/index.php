@@ -5,9 +5,9 @@ include("config.inc.php");
 include("funktionen.inc.php");
 
 include("../adodb/adodb.inc.php");
-$conn = &ADONewConnection('mysql');	# create a connection
+$conn = &ADONewConnection('mysql');
 //$conn->debug=true;
-$conn->PConnect($host,$user,$password,$database);   # connect to MS-Access, northwind dsn
+$conn->PConnect($host,$user,$password,$database);
 $ADODB_FETCH_MODE = ADODB_FETCH_ASSOC;
 
 require('../smarty/libs/Smarty.class.php');
@@ -16,9 +16,25 @@ $smarty->assign('menuakt','index.php');
 
 // aktuelle ausschreibungen holen - für login- und übersichtsseite
 
-$sql='select tas_turnier.*,tas_turnierbeauftragter.vorname as ba_vorname, tas_turnierbeauftragter.nachname as ba_nachname, tas_turnierbeauftragter.strasse as ba_strasse, tas_turnierbeauftragter.plz as ba_plz, tas_turnierbeauftragter.ort as ba_ort, tas_turnierbeauftragter.telefon_priv as ba_telefon_priv, tas_turnierbeauftragter.telefon_gesch as ba_telefon_gesch, tas_turnierbeauftragter.fax as ba_fax, tas_turnierbeauftragter.email as ba_email, tas_turnierbeauftragter.mobil as ba_mobil FROM tas_turnier,tas_turnierbeauftragter WHERE tas_turnier.turnierbeauftragter_id=tas_turnierbeauftragter.id AND datum_anmelden_ab<NOW() AND datum_anmelden_bis>=NOW() ORDER BY datum';
+$sql='select tas_turnier.*,tas_turnierbeauftragter.vorname as ba_vorname, tas_turnierbeauftragter.nachname as ba_nachname, tas_turnierbeauftragter.strasse as ba_strasse, tas_turnierbeauftragter.plz as ba_plz, tas_turnierbeauftragter.ort as ba_ort, tas_turnierbeauftragter.telefon_priv as ba_telefon_priv, tas_turnierbeauftragter.telefon_gesch as ba_telefon_gesch, tas_turnierbeauftragter.fax as ba_fax, tas_turnierbeauftragter.email as ba_email, tas_turnierbeauftragter.mobil as ba_mobil 
+	FROM tas_turnier,tas_turnierbeauftragter 
+	WHERE tas_turnier.turnierbeauftragter_id=tas_turnierbeauftragter.id 
+	AND datum_anmelden_ab<NOW() 
+	AND datum_anmelden_bis>=NOW() 
+	ORDER BY datum';
 
-//$sql ='SELECT * FROM tas_turnier WHERE datum_anmelden_ab<NOW() AND datum_anmelden_bis>NOW()';
+function countMeldungen($conn, $turnierid, $vereinid) {
+	$sql2='SELECT COUNT(*) as anzahl FROM tas_meldung WHERE turnier_id='.$turnierid;
+	if ($vereinid != null) {
+		$sql2=$sql2.' AND verein_id='.$vereinid;
+	}
+	$rs2=&$conn->Execute($sql2);
+	$count=$rs2->getArray();
+	$count=$count[0];
+	//print_r("<pre>".$sql2." : ".$count["anzahl"]."</pre>");
+	return $count["anzahl"];
+}
+
 $rs = &$conn->Execute($sql);
 if ($rs)
 {
@@ -29,32 +45,21 @@ if ($rs)
 	{
 		for ($i=0;$i<count($turniere);$i++)
 		{
-			unset($sql2);
-			unset($rs2);
-			$sql2='SELECT tas_spieler.nachname,tas_spieler.vorname,tas_spieler.geschlecht,tas_meldung.ak FROM tas_spieler,tas_meldung WHERE tas_spieler.id_vereine='.$_SESSION["verein"]["id"].' AND tas_spieler.id=tas_meldung.spieler_id AND tas_meldung.turnier_id='.$turniere[$i]["id"].' ORDER BY tas_meldung.ak,tas_spieler.nachname,tas_spieler.vorname';
-			$rs2=&$conn->Execute($sql2);
-			$angemeldet=$rs2->getArray();
-			$turniere[$i]["anzahl_anmeldungen"]=count($angemeldet);
-			$turniere[$i]["infobox"]="";
-			for ($j=0;$j<count($angemeldet);$j++)
-			{
-				$turniere[$i]["infobox"].=$angemeldet[$j]["nachname"].', '.$angemeldet[$j]["vorname"].' ('.$angemeldet[$j]["ak"].")<br>";
-			}
+			$turniere[$i]["anzahl_anmeldungen"]=countMeldungen($conn, $turniere[$i]["id"], $_SESSION["verein"]["id"]);
+			$turniere[$i]["anmeldungen_gesamt"]=countMeldungen($conn, $turniere[$i]["id"], null);
 		}
 	}
 }
-else
-{
-	$fehlermeldung="Derzeit keine Turniere ausgeschrieben.";
-}
-
 
 // alte ausschreibungen holen
 
-$sql_abgelaufen='select tas_turnier.*,tas_turnierbeauftragter.vorname as ba_vorname, tas_turnierbeauftragter.nachname as ba_nachname, tas_turnierbeauftragter.strasse as ba_strasse, tas_turnierbeauftragter.plz as ba_plz, tas_turnierbeauftragter.ort as ba_ort, tas_turnierbeauftragter.telefon_priv as ba_telefon_priv, tas_turnierbeauftragter.telefon_gesch as ba_telefon_gesch, tas_turnierbeauftragter.fax as ba_fax, tas_turnierbeauftragter.email as ba_email, tas_turnierbeauftragter.mobil as ba_mobil FROM tas_turnier,tas_turnierbeauftragter WHERE tas_turnier.turnierbeauftragter_id=tas_turnierbeauftragter.id AND datum>=NOW() AND datum_anmelden_bis<NOW() ORDER BY datum';
-//$sql_abgelaufen='select tas_turnier.*,tas_turnierbeauftragter.vorname as ba_vorname, tas_turnierbeauftragter.nachname as ba_nachname, tas_turnierbeauftragter.strasse as ba_strasse, tas_turnierbeauftragter.plz as ba_plz, tas_turnierbeauftragter.ort as ba_ort, tas_turnierbeauftragter.telefon_priv as ba_telefon_priv, tas_turnierbeauftragter.telefon_gesch as ba_telefon_gesch, tas_turnierbeauftragter.fax as ba_fax, tas_turnierbeauftragter.email as ba_email, tas_turnierbeauftragter.mobil as ba_mobil FROM tas_turnier,tas_turnierbeauftragter WHERE tas_turnier.turnierbeauftragter_id=tas_turnierbeauftragter.id AND datum_anmelden_ab<NOW() AND datum_anmelden_bis>NOW() ORDER BY datum';
+$sql_abgelaufen='select tas_turnier.*,tas_turnierbeauftragter.vorname as ba_vorname, tas_turnierbeauftragter.nachname as ba_nachname, tas_turnierbeauftragter.strasse as ba_strasse, tas_turnierbeauftragter.plz as ba_plz, tas_turnierbeauftragter.ort as ba_ort, tas_turnierbeauftragter.telefon_priv as ba_telefon_priv, tas_turnierbeauftragter.telefon_gesch as ba_telefon_gesch, tas_turnierbeauftragter.fax as ba_fax, tas_turnierbeauftragter.email as ba_email, tas_turnierbeauftragter.mobil as ba_mobil 
+	FROM tas_turnier,tas_turnierbeauftragter 
+	WHERE tas_turnier.turnierbeauftragter_id=tas_turnierbeauftragter.id 
+	AND datum>=NOW() 
+	AND datum_anmelden_bis<NOW() 
+	ORDER BY datum';
 
-//$sql ='SELECT * FROM tas_turnier WHERE datum_anmelden_ab<NOW() AND datum_anmelden_bis>NOW()';
 $rs = &$conn->Execute($sql_abgelaufen);
 
 //print "<pre>";print_r($rs);
@@ -65,24 +70,10 @@ if ($rs)
 	{
 		for ($i=0;$i<count($turniere_abgelaufen);$i++)
 		{
-			unset($sql2);
-			unset($rs2);
-			unset($angemeldet);
-			$sql2='SELECT tas_spieler.nachname,tas_spieler.vorname,tas_spieler.geschlecht,tas_meldung.ak FROM tas_spieler,tas_meldung WHERE tas_spieler.id_vereine='.$_SESSION["verein"]["id"].' AND tas_spieler.id=tas_meldung.spieler_id AND tas_meldung.turnier_id='.$turniere_abgelaufen[$i]["id"].' ORDER BY tas_meldung.ak,tas_spieler.nachname,tas_spieler.vorname';
-			$rs2=&$conn->Execute($sql2);
-			$angemeldet=$rs2->getArray();
-			$turniere_abgelaufen[$i]["anzahl_anmeldungen"]=count($angemeldet);
-			$turniere_abgelaufen[$i]["infobox"]="";
-			for ($j=0;$j<count($angemeldet);$j++)
-			{
-				$turniere_abgelaufen[$i]["infobox"].=$angemeldet[$j]["nachname"].', '.$angemeldet[$j]["vorname"].' ('.$angemeldet[$j]["ak"].")<br>";
-			}
+			$turniere_abgelaufen[$i]["anzahl_anmeldungen"]=countMeldungen($conn, $turniere_abgelaufen[$i]["id"], $_SESSION["verein"]["id"]);
+			$turniere_abgelaufen[$i]["anmeldungen_gesamt"]=countMeldungen($conn, $turniere_abgelaufen[$i]["id"], null);
 		}
 	}
-}
-else
-{
-	$fehlermeldung_abgelaufen="Derzeit keine Turniere mit abgelaufener Meldefrist verfügbar.";
 }
 
 // LOGIN Check
