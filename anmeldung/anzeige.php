@@ -20,20 +20,25 @@ $conn = &ADONewConnection('mysql');	# create a connection
 $conn->PConnect($host,$user,$password,$database);   # connect to MS-Access, northwind dsn
 $ADODB_FETCH_MODE = ADODB_FETCH_ASSOC;
 
-$sql='select tas_spieler.*, tas_vereine.davor, tas_vereine.name as verein, tas_meldung.ak as ak, tas_turnier.name_lang as turnier from tas_meldung,tas_spieler,tas_vereine,tas_turnier where tas_meldung.spieler_id=tas_spieler.id and ';
-$sql.='tas_meldung.turnier_id='.$_GET["id"].' and tas_meldung.verein_id=tas_vereine.id and tas_turnier.id=tas_meldung.turnier_id order by tas_spieler.geschlecht asc, tas_meldung.ak asc, tas_spieler.nachname';
+$sql='select tas_spieler.*, tas_vereine.davor, tas_vereine.name as verein, tas_meldung.ak as ak, tas_turnier.name_lang as turnier 
+	from tas_meldung,tas_spieler,tas_vereine,tas_turnier 
+	where tas_meldung.spieler_id=tas_spieler.id 
+	and tas_meldung.turnier_id='.$_GET["id"].' 
+	and tas_meldung.verein_id=tas_vereine.id 
+	and tas_turnier.id=tas_meldung.turnier_id 
+	order by tas_meldung.ak asc, tas_spieler.geschlecht asc, tas_spieler.nachname';
 $recordSetSpieler = &$conn->Execute($sql);
-
 $meldungen=$recordSetSpieler->GetArray();
 $turniername=$meldungen[0]["turnier"];
 
 //vereine holen
-$sqlV='select DISTINCT tas_vereine.davor, tas_vereine.name from tas_meldung,tas_spieler,tas_vereine where tas_meldung.spieler_id=tas_spieler.id and ';
-$sqlV.='tas_meldung.turnier_id='.$_GET["id"].' and tas_meldung.verein_id=tas_vereine.id';
+$sqlV='select DISTINCT tas_vereine.davor, tas_vereine.name 
+	from tas_meldung,tas_spieler,tas_vereine 
+	where tas_meldung.spieler_id=tas_spieler.id 
+	and tas_meldung.turnier_id='.$_GET["id"].' 
+	and tas_meldung.verein_id=tas_vereine.id';
 $recordSetVereine = &$conn->Execute($sqlV);
-
 $vereine=$recordSetVereine->GetArray();
-
 //print "<pre>";print_r($meldungen);
 
 require('../smarty/libs/Smarty.class.php');
