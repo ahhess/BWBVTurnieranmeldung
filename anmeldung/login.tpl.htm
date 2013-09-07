@@ -47,6 +47,7 @@
 	  
       <div class="row-fluid">
         <div class="span12">
+			{if $turniere}
 			<h3>&Uuml;bersicht aktuelle Turniere:</h3>
 			<table class="table table-hover">
 			  <tbody>
@@ -72,7 +73,9 @@
 			<form name="meldungform" method="post" action="meldung.php">
 				<input type="hidden" name="tid">
 			</form>
+			{/if}
 
+			{if $turniere_abgelaufen}
 			<h3>Turniere mit abgelaufener Meldefrist:</h3>
 			<table class="table table-hover">
 			  <tbody>
@@ -88,6 +91,7 @@
 				{/section}
 			  </tbody>
 			</table>
+			{/if}
         </div>
       </div>
 

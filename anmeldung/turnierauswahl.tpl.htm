@@ -43,6 +43,7 @@
 				<input type="hidden" name="tid">
 			</form>
 
+			{if $turniere_abgelaufen}
 			<h3>Anstehende Turniere, deren <strong>Online-Meldefrist abgelaufen </strong>ist:</h3>
 			<p><em>Hinweis:</em> Eine <em>Abmeldung</em> ist bei diesen Turnieren nur &uuml;ber den <em>Turnierverantwortlichen</em> m&ouml;glich!</p>
 			<table class="table table-hover tablbe-condensed">
@@ -77,6 +78,7 @@
 				{/section}
 			  </tbody>
 			</table>
+			{/if}
         </div>
       </div>
 {include file="footer.tpl.htm"}
