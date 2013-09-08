@@ -143,7 +143,7 @@ $smarty->assign('spieler',$s);
 $smarty->assign('anmerkung',$anmerkung);
 $smarty->assign('turnier',$turnier);
 $smarty->assign('spielklasse',$spielklasse);
-$smarty->display('auswahl.tpl.htm');
+$smarty->display('meldung.tpl.htm');
 
 $conn->Close(); # optional
 
