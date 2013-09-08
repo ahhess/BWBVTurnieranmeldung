@@ -39,7 +39,6 @@ $rs = &$conn->Execute($sql);
 if ($rs)
 {
 	$turniere=$rs->getArray();
-	$button_meldebildschirm="Spieler anmelden / \nMeldung bearbeiten";
 
 	if (is_array($_SESSION["verein"]))    // nicht bei Login!
 	{
@@ -99,33 +98,23 @@ if (!session_is_registered("verein")) // keine session, d.h. noch nicht angemeld
 		// keine übereinstimmung user/pw
 		$smarty->assign('fehlermeldung_zugang',"Ihre Zugangsdaten scheinen leider nicht korrekt zu sein. Bitte versuchen Sie es ggf. erneut.");
 	}
+	$conn->Close();
 	$smarty->display('login.tpl.htm');
 	exit;
 }
+
+$conn->Close();
 
 //smarty
 
 $smarty->assign('fehlermeldung',$fehlermeldung);
 $smarty->assign('systemmeldung',$systemmeldung);
 $smarty->assign('meldung',$meldung);
-$smarty->assign('button_meldebildschirm',$button_meldebildschirm);
 $smarty->assign('turniere',$turniere);
 $smarty->assign('turniere_abgelaufen',$turniere_abgelaufen);
-$smarty->assign('infobox',$infobox);
 
 $smarty->assign('gmxuser',0);
 if (strstr("gmx.",$_SESSION["email"]) ) $smarty->assign('gmxuser',1);
-//$smarty->assign('infobox',$infobox_abgelaufen);
 
-//$smarty->assign('spieler',$s);
-//$smarty->assign('spielklasse',$spielklasse);
-
-$smarty->display('turnierauswahl.tpl.htm');
-
-$conn->Close(); # optional
-
-//print "<pre>";
-//print_r($_POST);
-//print_r($s);
-
+$smarty->display('index.tpl.htm');
 ?>
