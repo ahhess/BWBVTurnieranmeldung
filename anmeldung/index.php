@@ -99,7 +99,7 @@ if (!session_is_registered("verein")) // keine session, d.h. noch nicht angemeld
 		$smarty->assign('fehlermeldung_zugang',"Ihre Zugangsdaten scheinen leider nicht korrekt zu sein. Bitte versuchen Sie es ggf. erneut.");
 	}
 	$conn->Close();
-	$smarty->display('login.tpl.htm');
+	$smarty->display('login2.tpl.htm');
 	exit;
 }
 

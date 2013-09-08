@@ -87,7 +87,7 @@ $smarty->assign('turnier',$turnier);
 $smarty->assign('spielklasse',$spielklasse);
 $smarty->assign('menuakt','editieren.php');
 
-$smarty->display('editieren.tpl.htm');
+$smarty->display('editieren2.tpl.htm');
 
 //print "<pre>";
 //print_r($_POST);
