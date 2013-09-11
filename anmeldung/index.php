@@ -85,7 +85,7 @@ if (!session_is_registered("verein")) // keine session, d.h. noch nicht angemeld
 	{
 		unset($rs);
 		if ( $_POST["benutzer"] <> "" and $_POST["passwort"] <> "" ) {
-		$sql='select * from tas_vereine where kurz="'.$_POST["benutzer"].'" AND passwort="'.$_POST["passwort"].'"';
+		$sql='select * from tas_vereine where kurz="'.substr($_POST["benutzer"],0,10).'" AND passwort="'.$_POST["passwort"].'"';
 		$rs = &$conn->Execute($sql);
 		$v=$rs->GetArray();
 }
@@ -108,13 +108,9 @@ $conn->Close();
 //smarty
 
 $smarty->assign('fehlermeldung',$fehlermeldung);
-$smarty->assign('systemmeldung',$systemmeldung);
 $smarty->assign('meldung',$meldung);
 $smarty->assign('turniere',$turniere);
 $smarty->assign('turniere_abgelaufen',$turniere_abgelaufen);
-
-$smarty->assign('gmxuser',0);
-if (strstr("gmx.",$_SESSION["email"]) ) $smarty->assign('gmxuser',1);
 
 $smarty->display('index.tpl.htm');
 ?>
