@@ -10,8 +10,14 @@ $conn->PConnect($host,$user,$password,$database);   # connect to MS-Access, nort
 $ADODB_FETCH_MODE = ADODB_FETCH_ASSOC;
 
 // tas_vereine holen
-$sql='select tas_spieler.*, tas_vereine.davor, tas_vereine.name as verein, tas_meldung.ak as ak, tas_turnier.name_lang as turnier, tas_meldung.anmerkung as anmerkung from tas_meldung,tas_spieler,tas_vereine,tas_turnier where tas_meldung.spieler_id=tas_spieler.id and ';
-$sql.='tas_meldung.turnier_id='.$_GET["id"].' and tas_meldung.verein_id=tas_vereine.id and tas_turnier.id=tas_meldung.turnier_id order by tas_spieler.geschlecht asc, tas_meldung.ak asc, tas_spieler.nachname';
+$sql='select tas_spieler.*, tas_vereine.davor, tas_vereine.name as verein, tas_meldung.ak as ak, tas_turnier.name_lang as turnier, tas_meldung.anmerkung as anmerkung 
+	from tas_meldung,tas_spieler,tas_vereine,tas_turnier 
+	where tas_meldung.spieler_id=tas_spieler.id 
+	and tas_meldung.turnier_id='.$_GET["id"].' 
+	and tas_meldung.verein_id=tas_vereine.id 
+	and tas_turnier.id=tas_meldung.turnier_id 
+	order by tas_spieler.geschlecht asc, tas_meldung.ak asc, tas_spieler.nachname';
+	
 $recordSetSpieler = &$conn->Execute($sql);
 $meldungen=$recordSetSpieler->GetArray();
 
@@ -27,7 +33,6 @@ $turnier=$turnier[0];
 
 $conn->Close(); # optional
 
-
 $j=0;
 $index2verein=array();
 
@@ -41,6 +46,10 @@ for ($i=0;$i<count($meldungen);$i++) {
 	$spieler[$verein2index[$meldungen[$i]["verein"]]][]=$i;
 }
 
+function getBoeDatum($geb) {
+	return substr($geb,8,2).'.'.substr($geb,5,2).'.'.substr($geb,2,2);
+}
+
 require_once 'Spreadsheet/Excel/Writer.php';
 
 // Creating a workbook
@@ -50,7 +59,7 @@ $fett=& $workbook->addFormat();
 $fett->setBold();
 
 // sending HTTP headers
-$workbook->send('turniermeldung_nb_'.$turnier["datum"].'.xls');
+$workbook->send('bwbv_turniermeldung_'.$turnier["id"].'_'.$turnier["datum"].'.xls');
 
 // Creating a worksheet Teilnehmeruebersicht
 $worksheet =& $workbook->addWorksheet('Teilnehmerübersicht');
@@ -75,7 +84,7 @@ for ($i=0;$i<count($meldungen);$i++) {
 	$worksheet->write($i+2, 3, $meldungen[$i]["verein"]);
 	$worksheet->write($i+2, 4, $meldungen[$i]["ak"]);
 	$worksheet->write($i+2, 5, $meldungen[$i]["passnummer"]);
-	$worksheet->write($i+2, 6, $meldungen[$i]["geburtstag"]);
+	$worksheet->write($i+2, 6, getBoeDatum($meldungen[$i]["geburtstag"]));
 	$worksheet->write($i+2, 7, $meldungen[$i]["geschlecht"]);
 }
 
@@ -98,24 +107,27 @@ for ($i=0;$i<count($index2verein);$i++) {
 	$worksheet_v[$i]->write(2, 4, "Geburtstag");
 	$worksheet_v[$i]->write(2, 5, "Geschlecht");
 
+	$zeile = 3;
 	for ($j=0;$j<count($spieler[$i]);$j++) {
-		$worksheet_v[$i]->write($j+3, 0, $meldungen[$spieler[$i][$j]]["nachname"]);
-		$worksheet_v[$i]->write($j+3, 1, $meldungen[$spieler[$i][$j]]["vorname"]);
-		$worksheet_v[$i]->write($j+3, 2, $meldungen[$spieler[$i][$j]]["ak"]);
-		$worksheet_v[$i]->write($j+3, 3, $meldungen[$spieler[$i][$j]]["passnummer"]);
-		$worksheet_v[$i]->write($j+3, 4, $meldungen[$spieler[$i][$j]]["geburtstag"]);
-		$worksheet_v[$i]->write($j+3, 5, $meldungen[$spieler[$i][$j]]["geschlecht"]);
-		//$aktuelle_anmerkung=$meldungen[$spieler[$i][$j]]["anmerkung"];	//not used yet	
+		$worksheet_v[$i]->write($zeile, 0, $meldungen[$spieler[$i][$j]]["nachname"]);
+		$worksheet_v[$i]->write($zeile, 1, $meldungen[$spieler[$i][$j]]["vorname"]);
+		$worksheet_v[$i]->write($zeile, 2, $meldungen[$spieler[$i][$j]]["ak"]);
+		$worksheet_v[$i]->write($zeile, 3, $meldungen[$spieler[$i][$j]]["passnummer"]);
+		$worksheet_v[$i]->write($zeile, 4, getBoeDatum($meldungen[$spieler[$i][$j]]["geburtstag"]));
+		$worksheet_v[$i]->write($zeile, 5, $meldungen[$spieler[$i][$j]]["geschlecht"]);
+		$zeile++;
 	}
-
-	//$summe= "Summe = ".count($spieler[$i])." x 5 EURO = ".(count($spieler[$i])*5)." EURO";
-	//$zeile_summe=count($spieler[$i])+$versatz2+1;
-	//$worksheet_v[$i]->write($zeile_summe-1, 0,"-------------------------------");
-	//$worksheet_v[$i]->write($zeile_summe, 0,$summe);
-	//$worksheet_v[$i]->write($zeile_summe+2, 0,"* Voraussichtlich zu entrichten. Startgelder können je nach Meldestand zum Termin variieren.");
-	//$worksheet_v[$i]->write($zeile_summe+4, 0,$aktuelle_anmerkung); 
-	//$aktuelle_anmerkung="";
-
+	$zeile++;
+	$summe= "Summe = ".count($spieler[$i])." x 5 EURO = ".(count($spieler[$i])*5)." EURO";
+	$worksheet_v[$i]->write($zeile++, 0,"-------------------------------");
+	$worksheet_v[$i]->write($zeile++, 0,$summe);
+	$worksheet_v[$i]->write($zeile++, 0,"* Voraussichtlich zu entrichten. Startgelder können je nach Meldestand zum Termin variieren.");
+	
+	$zeile++;
+	if ($meldungen[$spieler[$i][0]]["anmerkung"]) {
+		$worksheet_v[$i]->write($zeile++, 0, "Anmerkungen des Vereins:");
+		$worksheet_v[$i]->write($zeile++, 0, $meldungen[$spieler[$i][0]]["anmerkung"]);
+	}
 }
 
 $workbook->close();
