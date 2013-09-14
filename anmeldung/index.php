@@ -83,20 +83,22 @@ if (!session_is_registered("verein")) // keine session, d.h. noch nicht angemeld
 
 	if ($_POST["doLoginSubmit"])
 	{
-		unset($rs);
-		if ( $_POST["benutzer"] <> "" and $_POST["passwort"] <> "" ) {
-		$sql='select * from tas_vereine where kurz="'.substr($_POST["benutzer"],0,10).'" AND passwort="'.$_POST["passwort"].'"';
-		$rs = &$conn->Execute($sql);
-		$v=$rs->GetArray();
-}
-		if (count($v))
+		//$smarty->assign('fehlermeldung_zugang',"Die Anmeldung ist im Moment nicht moeglich.");
+		/***/
+		if ( $_POST["benutzer"] <> "" and $_POST["passwort"] <> "" ) 
 		{
-			$_SESSION["verein"]=$v[0];
-			$_SESSION["meldung[0]"]=158;
-			header("location:index.php");   //alles klar. session da. index neu aufrufen!
+			$sql='select * from tas_vereine where kurz="'.substr($_POST["benutzer"],0,10).'" AND passwort="'.$_POST["passwort"].'"';
+			$rs = &$conn->Execute($sql);
+			$v=$rs->GetArray();
+			if (count($v))
+			{
+				$_SESSION["verein"]=$v[0];
+				header("location:index.php");   //alles klar. session da. index neu aufrufen!
+			}
 		}
 		// keine übereinstimmung user/pw
-		$smarty->assign('fehlermeldung_zugang',"Ihre Zugangsdaten scheinen leider nicht korrekt zu sein. Bitte versuchen Sie es ggf. erneut.");
+		$smarty->assign('fehlermeldung_zugang',"Ihre Zugangsdaten scheinen leider nicht korrekt zu sein. Bitte versuchen Sie es ggf. erneut. ");
+		/***/
 	}
 	$conn->Close();
 	$smarty->display('login2.tpl.htm');
@@ -108,7 +110,6 @@ $conn->Close();
 //smarty
 
 $smarty->assign('fehlermeldung',$fehlermeldung);
-$smarty->assign('meldung',$meldung);
 $smarty->assign('turniere',$turniere);
 $smarty->assign('turniere_abgelaufen',$turniere_abgelaufen);
 

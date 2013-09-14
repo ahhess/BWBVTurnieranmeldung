@@ -30,7 +30,7 @@
     <td width="300"><img src="img/logo_bwbv.gif" width="245" height="83"></td>
     <td rowspan="3" valign="top"><ul>
       <li><strong class="mittel">Verein</strong><br>
-        <span class="mittel">{$smarty.session.verein.davor} {$smarty.session.verein.name}</span> <br>
+        <span class="mittel">{$verein.davor} {$verein.name}</span> <br>
         <br>
 </li>
       <li><strong class="mittel">Turnier</strong><br>
@@ -43,31 +43,31 @@
         <table width="300" border="0" cellpadding="1" cellspacing="0" class="mittel">
           <tr>
             <td>Name:</td>
-            <td><strong>{$smarty.session.verein.ansprechpartner_name} </strong></td>
+            <td><strong>{$verein.ansprechpartner_name} </strong></td>
           </tr>
           <tr>
             <td>Strasse:</td>
-            <td>{$smarty.session.verein.ansprechpartner_strasse}</td>
+            <td>{$verein.ansprechpartner_strasse}</td>
           </tr>
           <tr>
             <td>Plz/Ort:</td>
-            <td>{$smarty.session.verein.ansprechpartner_plz_ort} </td>
+            <td>{$verein.ansprechpartner_plz_ort} </td>
           </tr>
           <tr>
             <td>Telefon:</td>
-            <td>{$smarty.session.verein.ansprechpartner_telefon}</td>
+            <td>{$verein.ansprechpartner_telefon}</td>
           </tr>
           <tr>
             <td>Mobil:</td>
-            <td>{$smarty.session.verein.ansprechpartner_mobil}</td>
+            <td>{$verein.ansprechpartner_mobil}</td>
           </tr>
           <tr>
             <td>E-Mail:</td>
-            <td>{$smarty.session.verein.ansprechpartner_email}</td>
+            <td>{$verein.ansprechpartner_email}</td>
           </tr>
-          {if $smarty.session.verein.ansprechpartner_bemerkung!=""}<tr>
+          {if $verein.ansprechpartner_bemerkung!=""}<tr>
             <td>Bemerkung:</td>
-            <td>{$smarty.session.verein.ansprechpartner_bemerkung}</td>
+            <td>{$verein.ansprechpartner_bemerkung}</td>
           </tr>
 		  {/if}
         </table>
@@ -117,7 +117,7 @@
     </tr>
     {section name=zeile loop=$spieler}
     <tr bgcolor="{cycle values="#eeeeee,#d0d0d0"}">
-      <td> <input name="meldung[]" type="checkbox" class="mittel" id="meldung[]" value="{$spieler[zeile].id}" {if $spieler[zeile].turnier_id==$smarty.session.tid}CHECKED{/if}></td>
+      <td> <input name="meldung[]" type="checkbox" class="mittel" id="meldung[]" value="{$spieler[zeile].id}" {if $spieler[zeile].turnier_id==$turnier.id}CHECKED{/if}></td>
       <td class="mittel">{$spieler[zeile].nachname}</td>
       <td class="mittel">{$spieler[zeile].vorname}</td>
       <td class="mittel">{$spieler[zeile].geburtstag}</td>
@@ -135,7 +135,8 @@
     {/section}
     <tr bgcolor="#FFFFFF">
       <td>&nbsp;</td>
-      <td colspan="5" align="center"> <br>        <input name="doMeldungSubmit" type="submit" class="mittel" id="doMeldungSubmit" value="Meldung aktualisieren" style="height:50px;font-weight:bold">
+      <td colspan="5" align="center"> <br>        
+		<input name="doMeldungSubmit" type="submit" class="mittel" id="doMeldungSubmit" value="Meldung aktualisieren" style="height:50px;font-weight:bold">
         <br>
         <br>
       </td>
@@ -144,6 +145,7 @@
   <div align="center"><br>
       <span class="klein">Bei technischen Problemen oder sonstigen Fragen wenden Sie sich bitte an <a href="mailto:sportwart-nw@bwbv.de">Andreas Hess, Sportwart NW</a> </span>
   </div>
+  <input type="hidden" name="tid" value="{$turnier.id}">
 </form>
 
 </td>  </tr>
