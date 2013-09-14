@@ -3,28 +3,31 @@
     <div class="row-fluid">
         <div class="span12">
 
-			<h3>Ihre Vereinskontaktdaten</h3>
+			{if $systemmeldung}<div class="alert alert-success"><strong>{$systemmeldung}</strong></div>{/if}
+			
+			<h3>Vereinskontaktdaten</h3>
 
 			<form class="form-horizontal" method="post">
+				<input name="id" type="hidden" value="{$verein.id}">
 			
 				<p>Verein:</p>
 				
 				<div class="control-group">
 					<label class="control-label" for="davor">K&uuml;rzel:</label>
 					<div class="controls">
-						<input name="davor" type="text" value="{$smarty.session.verein.davor}" size="6">
+						<input name="davor" type="text" value="{$verein.davor}" size="6">
 					</div>
 				</div>
 				<div class="control-group">
 					<label class="control-label" for="name">Name:</label>
 					<div class="controls">
-						<input name="name" type="text" value="{$smarty.session.verein.name}" size="30">
+						<input name="name" type="text" value="{$verein.name}" size="30">
 					</div>
 				</div>				
 				<div class="control-group">
 					<label class="control-label" for="region">Region:</label>
 					<div class="controls">
-						<input name="region" type="text" value="{$smarty.session.verein.region}" size="2">
+						<input name="region" type="text" value="{$verein.region}" size="2">
 					</div>
 				</div>
 			
@@ -33,44 +36,44 @@
 				<div class="control-group">
 					<label class="control-label" for="ansprechpartner_name">Name:</label>
 					<div class="controls">
-						<input name="ansprechpartner_name" type="text" value="{$smarty.session.verein.ansprechpartner_name}" size="30">
+						<input name="ansprechpartner_name" type="text" value="{$verein.ansprechpartner_name}" size="30">
 					</div>
 				</div>
 				<div class="control-group">
 					<label class="control-label" for="ansprechpartner_strasse">Strasse:</label>
 					<div class="controls">
-						<input name="ansprechpartner_strasse" type="text" value="{$smarty.session.verein.ansprechpartner_strasse}" size="30">
+						<input name="ansprechpartner_strasse" type="text" value="{$verein.ansprechpartner_strasse}" size="30">
 					</div>
 				</div>
 				<div class="control-group">
 					<label class="control-label" for="ansprechpartner_plz_ort">Plz/Ort:</label>
 					<div class="controls">
-						<input name="ansprechpartner_plz_ort" type="text" value="{$smarty.session.verein.ansprechpartner_plz_ort}" size="30">
+						<input name="ansprechpartner_plz_ort" type="text" value="{$verein.ansprechpartner_plz_ort}" size="30">
 					</div>
 				</div>
 				<div class="control-group">
 					<label class="control-label" for="ansprechpartner_telefon">Telefon:</label>
 					<div class="controls">
-						<input name="ansprechpartner_telefon" type="text" value="{$smarty.session.verein.ansprechpartner_telefon}" size="30">
+						<input name="ansprechpartner_telefon" type="text" value="{$verein.ansprechpartner_telefon}" size="30">
 					</div>
 				</div>
 				<div class="control-group">
 					<label class="control-label" for="ansprechpartner_mobil">Mobil:</label>
 					<div class="controls">
-						<input name="ansprechpartner_mobil" type="text" value="{$smarty.session.verein.ansprechpartner_mobil}" size="30">
+						<input name="ansprechpartner_mobil" type="text" value="{$verein.ansprechpartner_mobil}" size="30">
 					</div>
 				</div>
 				<div class="control-group">
 					<label class="control-label" for="ansprechpartner_email">Email:</label>
 					<div class="controls">
-						<input name="ansprechpartner_email" type="text" value="{$smarty.session.verein.ansprechpartner_email}" size="30">
+						<input name="ansprechpartner_email" type="text" value="{$verein.ansprechpartner_email}" size="30">
 						Mehrere Email-Adressen sind durch Strichpunkt (;) zu trennen.
 					</div>
 				</div>
 				<div class="control-group">
 					<label class="control-label" for="ansprechpartner_bemerkung">Bemerkung:</label>
 					<div class="controls">
-						<textarea name="ansprechpartner_bemerkung" cols="30" rows="3">{$smarty.session.verein.ansprechpartner_bemerkung}</textarea>
+						<textarea name="ansprechpartner_bemerkung" cols="30" rows="3">{$verein.ansprechpartner_bemerkung}</textarea>
 					</div>
 				</div>				
 			
@@ -79,13 +82,13 @@
 				<div class="control-group">
 					<label class="control-label" for="kurz">Benutzer:</label>
 					<div class="controls">
-						<input name="kurz" type="text" value="{$smarty.session.verein.kurz}" size="30">
+						<input name="kurz" type="text" value="{$verein.kurz}" size="30">
 					</div>
 				</div>
 				<div class="control-group">
 					<label class="control-label" for="passwort">Passwort:</label>
 					<div class="controls">
-						<input name="passwort" type="password" value="{$smarty.session.verein.passwort}" size="30">
+						<input name="passwort" type="password" value="{$verein.passwort}" size="30">
 					</div>
 				</div>
 				<div class="control-group">
