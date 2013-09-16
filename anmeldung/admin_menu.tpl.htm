@@ -3,17 +3,22 @@
         <div class="container">
           <button type="button" class="btn btn-navbar" data-toggle="collapse" data-target=".nav-collapse">
             <span class="icon-bar"></span>
-            <span class="icon-bar"></span>
-            <span class="icon-bar"></span>
           </button>
-		  <a class="brand" href="#">BWBV Turnieranmeldung - Administration</a>
+		  <a class="brand" href="#">BWBV TurnierAdmin</a>
           <div class="nav-collapse collapse">
+		    {if $admin}
 			<ul class="nav">
-                <li><a href="index.php">Home</a></li>
                 <li{if $menuakt == 'turniere.php'} class="active"{/if}><a href="turniere.php">Turniere</a></li>
                 <li{if $menuakt == 'turnierbeauftragte.php'} class="active"{/if}><a href="turnierbeauftragte.php">Turnierbeauftragte</a></li>
                 <li{if $menuakt == 'vereine.php'} class="active"{/if}><a href="vereine.php">Vereine</a></li>
 			</ul>
+			{else}
+            <form class="navbar-form pull-right" method="post">
+              <input class="span2" type="text" placeholder="Benutzer" name="benutzer">
+              <input class="span2" type="password" placeholder="Passwort" name="passwort">
+              <button type="submit" class="btn" name="doLoginSubmit" value="doLoginSubmit">Anmelden</button>
+            </form>
+			{/if}
           </div><!--/.nav-collapse -->
         </div>
       </div>

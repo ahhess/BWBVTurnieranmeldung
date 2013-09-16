@@ -1,6 +1,6 @@
 <?php
-function spielklasse_berechnen($mysql_date)
-{
+
+function spielklasse_berechnen($mysql_date) {
 	$year=substr($mysql_date,0,4);
 //
 	if (date("m")>7) $ak_correct=date("Y")-$year+2;
@@ -15,6 +15,11 @@ function spielklasse_berechnen($mysql_date)
 function check_login() {
 	if (!session_is_registered("verein")) 
 		header("location: index.php");
+}
+
+function check_admin_login() {
+	if (!session_is_registered("admin")) 
+		header("location: admin.php");
 }
 
 function get_new_smarty() {

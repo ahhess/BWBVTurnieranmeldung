@@ -5,7 +5,7 @@ include("config.inc.php");
 include("funktionen.inc.php");
 include("../adodb/adodb.inc.php");
 
-check_login();
+check_admin_login();
 
 $conn = &ADONewConnection('mysql');	
 $conn->PConnect($host,$user,$password,$database);
@@ -25,5 +25,6 @@ require('../smarty/libs/Smarty.class.php');
 $smarty = get_new_smarty();
 $smarty->assign('liste',$liste);
 $smarty->assign('menuakt','turniere.php');
+$smarty->assign('admin',$_SESSION["admin"]);
 $smarty->display('turniere.tpl.htm');
 ?>
