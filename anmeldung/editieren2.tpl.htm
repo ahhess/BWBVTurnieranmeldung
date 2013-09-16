@@ -1,5 +1,7 @@
 {include file="header.tpl.htm" title="Spielerdaten editieren"}
-{include file="menu.tpl.htm"}
+{if $admin=="admin"}{include file="admin_menu.tpl.htm"}
+{else}{include file="menu.tpl.htm"}{/if}
+
       <div class="row-fluid">
         <div class="span12">
 
@@ -17,19 +19,19 @@
 					  <th>Nachname</th>
 					  <th>Vorname</th>
 					  <th class="input-medium">Geburtsdatum</th>
-					  <th>Passnummer</th>
 					  <th>Geschlecht</th>
+					  <th>Passnummer</th>
 					</tr>
 				</thead>
 				<tbody>
 					{section name=zeile loop=$spieler} 
 					<tr> 
-					  <td><input name="nachname[{$spieler[zeile].id}]" type="text" id="nachname[{$spieler[zeile].id}]" value="{$spieler[zeile].nachname}"></td>
-					  <td><input name="vorname[{$spieler[zeile].id}]" type="text" id="vorname[{$spieler[zeile].id}]" value="{$spieler[zeile].vorname}"></td>
-					  <td><input name="geburtstag[{$spieler[zeile].id }]" type="text" id="geburtstag[{$spieler[zeile].id }]" value="{$spieler[zeile].geburtstag}" class="input-small" placeholder="JJJJ-MM-TT"></td>
-					  <td><input name="passnummer[{$spieler[zeile].id}]" type="text" id="passnummer[{$spieler[zeile].id}]" value="{$spieler[zeile].passnummer}" class="input-small"></td>
+					  <td><input name="nachname[{$spieler[zeile].id}]" type="text" value="{$spieler[zeile].nachname}"></td>
+					  <td><input name="vorname[{$spieler[zeile].id}]" type="text" value="{$spieler[zeile].vorname}"></td>
+					  <td><input name="geburtstag[{$spieler[zeile].id }]" type="text" value="{$spieler[zeile].geburtstag}" class="input-small" placeholder="JJJJ-MM-TT"></td>					  
+					  <td><input name="passnummer[{$spieler[zeile].id}]" type="text" value="{$spieler[zeile].passnummer}" class="input-small"></td>
 					  <td>
-						<select name="geschlecht[{$spieler[zeile].id }]" id="geschlecht[{$spieler[zeile].id }]" class="input-medium">
+						<select name="geschlecht[{$spieler[zeile].id }]" class="input-medium">
 						  <option value="m" {if $spieler[zeile].geschlecht==m}SELECTED{/if}>M&auml;nnlich</option>
 						  <option value="w" {if $spieler[zeile].geschlecht==w}SELECTED{/if}>Weiblich</option>
 						</select>
@@ -38,7 +40,7 @@
 					{/section} 
 				</tbody>
 			  </table>
-			  <input name="doSpielerAktualisieren" type="submit" id="doSpielerAktualisieren" value="Spielerdaten aktualisieren" class="btn">
+			  <input name="doSpielerAktualisieren" type="submit" value="Spielerdaten aktualisieren" class="btn">
 			</form>
 
 			<h5>Neuen Spieler hinzuf&uuml;gen:</h5>
@@ -50,21 +52,22 @@
 					  <th>Nachname</th>
 					  <th>Vorname</th>
 					  <th>Geburtsdatum</th>
-					  <th>Passnummer</th>
+					  {*<th>Passnummer</th>*}
 					  <th>Geschlecht</th>
 					  <th>&nbsp;</th>
 					</tr>
 				</thead>
 				<tbody>
 					<tr> 
-					  <td valign="top"><input name="nachname" type="text" id="nachname3" size="20"></td>
-					  <td valign="top"><input name="vorname" type="text" id="vorname3" size="20"></td>
+					  <input name="vid" type="hidden" value="{$verein.id}"></td>
+					  <td valign="top"><input name="nachname" type="text"></td>
+					  <td valign="top"><input name="vorname" type="text"></td>
 					  <td valign="top"> 
-						<input name="tag" type="text" id="tag3" class="input-mini" maxlength="2" placeholder="TT">
-						<input name="monat" type="text" id="monat3" class="input-mini" maxlength="2" placeholder="MM">
-						<input name="jahr" type="text" id="jahr3" class="input-mini" maxlength="4" placeholder="JJJJ">
+						<input name="tag" type="text" class="input-mini" maxlength="2" placeholder="TT">
+						<input name="monat" type="text" class="input-mini" maxlength="2" placeholder="MM">
+						<input name="jahr" type="text" class="input-mini" maxlength="4" placeholder="JJJJ">
 					  </td>
-					  <td valign="top"><input name="passnummer" type="text" id="passnummer3" size="20" class="input-small"></td>
+					  {*<td valign="top"><input name="passnummer" type="text" class="input-small"></td>*}
 					  <td valign="top">
 						<select name="geschlecht" id="select2" class="input-medium">
 						  <option value="m">M&auml;nnlich</option>
@@ -74,7 +77,8 @@
 					</tr>
 				</tbody>
 			  </table>
-			  <input name="doInsertSubmit" type="submit" id="doInsertSubmit2" value="Spieler hinzuf&uuml;gen" class="btn">
+			  <p><input name="doInsertSubmit" type="submit" value="Spieler hinzuf&uuml;gen" class="btn">
+			  (Die Passnummer wird gfs. vom BWBV später ergänzt.)</p>
 			</form>
 			
 		</div>

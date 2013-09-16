@@ -2,7 +2,11 @@
 session_start();
 include("config.inc.php");
 include("funktionen.inc.php");
-check_login();
+
+if ($_POST["admin"])
+	check_admin_login();
+else
+	check_login();
 
 include("../adodb/adodb.inc.php");
 $conn = &ADONewConnection('mysql');
@@ -15,8 +19,10 @@ if ($_POST["doInsertSubmit"])
 		$fehlermeldung="Vorname und Nachname eingeben!";
 	else
 	{
-		$sql ='INSERT INTO tas_spieler (vorname,nachname,geschlecht,geburtstag,passnummer,id_vereine) ';
-		$sql.='VALUES ("'.trim($_POST["vorname"]).'","'.trim($_POST["nachname"]).'","'.trim($_POST["geschlecht"]).'","'.trim($_POST["jahr"]).'-'.trim($_POST["monat"]).'-'.trim($_POST["tag"]).'","'.trim($_POST["passnummer"]).'","'.$_SESSION["verein"]["id"].'")';
+		//$sql ='INSERT INTO tas_spieler (vorname,nachname,geschlecht,geburtstag,passnummer,id_vereine) ';
+		//$sql.='VALUES ("'.trim($_POST["vorname"]).'","'.trim($_POST["nachname"]).'","'.trim($_POST["geschlecht"]).'","'.trim($_POST["jahr"]).'-'.trim($_POST["monat"]).'-'.trim($_POST["tag"]).'","'.trim($_POST["passnummer"]).'","'.$_POST["vid"].'")';
+		$sql ='INSERT INTO tas_spieler (vorname,nachname,geschlecht,geburtstag,id_vereine) ';
+		$sql.='VALUES ("'.trim($_POST["vorname"]).'","'.trim($_POST["nachname"]).'","'.trim($_POST["geschlecht"]).'","'.trim($_POST["jahr"]).'-'.trim($_POST["monat"]).'-'.trim($_POST["tag"]).'","'.$_POST["vid"].'")';
 		$rs = &$conn->Execute($sql);
 		if ($rs) $systemmeldung="Spieler wurde hinzugefügt.";
 		else $fehlermeldung="Fehler beim Hinzufügen des Spielers";
@@ -56,9 +62,9 @@ elseif ($_POST["doSpielerAktualisieren"])
 
 unset($recordSet);
 
-if ($_GET["vid"])
+if ($_POST["vid"])
 {
-	$sql="select * from tas_vereine where id=".$_GET["vid"];
+	$sql="select * from tas_vereine where id=".$_POST["vid"];
 	$recordSet = &$conn->Execute($sql);
 	if (!$recordSet)
 		print $conn->ErrorMsg();
@@ -87,6 +93,7 @@ $smarty->assign('systemmeldung',$systemmeldung);
 $smarty->assign('verein',$verein);
 $smarty->assign('spieler',$s);
 $smarty->assign('menuakt','editieren.php');
+$smarty->assign('admin','$_POST["admin"]');
 
 $smarty->display('editieren2.tpl.htm');
 ?>
