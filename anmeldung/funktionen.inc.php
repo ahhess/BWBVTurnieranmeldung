@@ -13,7 +13,7 @@ function spielklasse_berechnen($mysql_date) {
 }
 
 function check_login() {
-	if (!session_is_registered("verein")) 
+	if (!session_is_registered("verein") && !session_is_registered("admin")) 
 		header("location: index.php");
 }
 

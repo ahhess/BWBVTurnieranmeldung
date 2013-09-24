@@ -1,10 +1,10 @@
 <?php
 // Anzeige der Spieleranmeldungen für ein bestimmtes Turnier
 session_start();
-if (!session_is_registered("verein")) header("location: index.php");
-
 include("config.inc.php");
 include("funktionen.inc.php");
+
+check_login();
 
 function spieler_markiert($id)
 {
@@ -13,13 +13,13 @@ function spieler_markiert($id)
 	else return false;
 }
 
-// tas_vereine holen
 include("../adodb/adodb.inc.php");
 $conn = &ADONewConnection('mysql');	# create a connection
 //$conn->debug=true;
-$conn->PConnect($host,$user,$password,$database);   # connect to MS-Access, northwind dsn
+$conn->PConnect($host,$user,$password,$database);
 $ADODB_FETCH_MODE = ADODB_FETCH_ASSOC;
 
+//meldungen holen
 $sql='select tas_spieler.*, tas_vereine.davor, tas_vereine.name as verein, tas_meldung.ak as ak, tas_turnier.name_lang as turnier 
 	from tas_meldung,tas_spieler,tas_vereine,tas_turnier 
 	where tas_meldung.spieler_id=tas_spieler.id 

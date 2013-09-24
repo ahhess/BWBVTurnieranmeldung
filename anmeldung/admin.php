@@ -23,7 +23,7 @@ if (!session_is_registered("admin"))
 			$v=$rs->GetArray();
 			if (count($v)){
 				$_SESSION["admin"]=$v[0];
-				//header("location:admin.php");   //alles klar. session da. index neu aufrufen!
+				header("location:turniere.php");
 			}
 		} else {
 			// keine übereinstimmung user/pw
