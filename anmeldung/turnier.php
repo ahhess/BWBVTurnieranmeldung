@@ -19,22 +19,22 @@ if ($_POST["doSave"] == "doSave"){
 			ort='".$_POST["ort"]."', 
 			datum_anmelden_ab='".$_POST["datum_anmelden_ab"]."', 
 			datum_anmelden_bis='".$_POST["datum_anmelden_bis"]."', 
-			email_an='".$_POST["email_an"]."', 
 			turnierbeauftragter_id=".$_POST["turnierbeauftragter_id"]."
 			WHERE id=".$_POST["id"];
+			//email_an='".$_POST["email_an"]."', 
 		$id = $_POST["id"];
 	} else {
 		$sql="INSERT INTO tas_turnier (
-			name_lang, datum, ort, datum_anmelden_ab, datum_anmelden_bis, 
-			email_an, turnierbeauftragter_id)
+			name_lang, datum, ort, datum_anmelden_ab, datum_anmelden_bis, turnierbeauftragter_id)
 			VALUES (
 			'".$_POST["name_lang"]."', 
 			'".$_POST["datum"]."', 
 			'".$_POST["ort"]."', 
 			'".$_POST["datum_anmelden_ab"]."', 
 			'".$_POST["datum_anmelden_bis"]."', 
-			'".$_POST["email_an"]."', 
 			".$_POST["turnierbeauftragter_id"].")";
+			//email_an
+			//'".$_POST["email_an"]."', 
 	}
 	$rc = &$conn->Execute($sql) or die ("Fehler beim Speichern. Bitte Administrator benachrichtigen. / ".$sql);
 	header("location:turniere.php");

@@ -6,12 +6,11 @@
 			<table class="table table-hover table-condensed">
 			  <thead>
 				<tr>
-				  <th>ID</td>
 				  <th>Datum</td>
 				  <th>Name</td>
 				  <th>Anmelden ab</td>
 				  <th>Anmelden bis</td>
-				  <th>Zusatz-Emailadresse</td>
+				  {*<th>Zusatz-Emailadresse</td>*}
 				  <th>Turnierbeauftragter</td>
 				  <th><a class="btn btn-mini" href="turnier.php?id=-1"><i class="icon-edit"></i></a></td>
 				</tr>
@@ -19,12 +18,11 @@
 			  <tbody>
 			    {section name=i loop=$liste}
 				<tr>
-				  <td>{$liste[i].id}</td>
 				  <td>{$liste[i].datum|date_format:"%d.%m.%Y"}</td>
 				  <td>{$liste[i].name_lang}</td>
 				  <td>{$liste[i].datum_anmelden_ab|date_format:"%d.%m.%Y"}</td>
 				  <td>{$liste[i].datum_anmelden_bis|date_format:"%d.%m.%Y"}</td>
-				  <td>{$liste[i].email_an}</td>
+				  {*<td>{$liste[i].email_an}</td>*}
 				  <td>{$liste[i].nachname}, {$liste[i].vorname}</td>				  
 				  <td>
 					<div class="btn-toolbar">
