@@ -10,7 +10,7 @@ $conn->PConnect($host,$user,$password,$database);   # connect to MS-Access, nort
 $ADODB_FETCH_MODE = ADODB_FETCH_ASSOC;
 
 // tas_vereine holen
-$sql='select tas_spieler.*, tas_vereine.davor, tas_vereine.name as verein, tas_meldung.ak as ak, tas_turnier.name_lang as turnier, tas_meldung.anmerkung as anmerkung 
+$sql='select tas_spieler.*, tas_vereine.davor, tas_vereine.name as verein, tas_meldung.verein_id, tas_meldung.ak as ak, tas_turnier.name_lang as turnier, tas_meldung.anmerkung as anmerkung 
 	from tas_meldung,tas_spieler,tas_vereine,tas_turnier 
 	where tas_meldung.spieler_id=tas_spieler.id 
 	and tas_meldung.turnier_id='.$_GET["id"].' 
@@ -37,13 +37,14 @@ $j=0;
 $index2verein=array();
 
 for ($i=0;$i<count($meldungen);$i++) {
-	if (!in_array($meldungen[$i]["verein"],$index2verein)) {
-		//$index2verein[$j]=$meldungen[$i]["davor"].' '.$meldungen[$i]["verein"];
-		$index2verein[$j]=$meldungen[$i]["verein"];
-		$verein2index[$meldungen[$i]["verein"]]=$j;
+	$vn=$meldungen[$i]["davor"].' '.$meldungen[$i]["verein"];
+	if (!in_array($vn,$index2verein)) {
+		//$index2verein[$j]=$meldungen[$i]["verein"];
+		$index2verein[$j]=$vn;
+		$verein2index[$vn]=$j;
 		$j++;
 	}
-	$spieler[$verein2index[$meldungen[$i]["verein"]]][]=$i;
+	$spieler[$verein2index[$vn]][]=$i;
 }
 
 function getBoeDatum($geb) {
@@ -98,7 +99,8 @@ for ($i=0;$i<count($index2verein);$i++) {
 
 	//$worksheet_v[$i]->insertBitmap(0,3,"img/logo_bwbv.bmp",40,0,0.8);
 
-	$worksheet_v[$i]->write(0, 0, "Startgelder ".$index2verein[$i]." *",$fett);
+	$worksheet_v[$i]->write(0, 0, "Startgelder:",$fett);
+	$worksheet_v[$i]->write(0, 1, $index2verein[$i],$fett);
 
 	$worksheet_v[$i]->write(2, 0, "Nachname");
 	$worksheet_v[$i]->write(2, 1, "Vorname");
@@ -121,7 +123,8 @@ for ($i=0;$i<count($index2verein);$i++) {
 	$summe= "Summe = ".count($spieler[$i])." x 5 EURO = ".(count($spieler[$i])*5)." EURO";
 	$worksheet_v[$i]->write($zeile++, 0,"-------------------------------");
 	$worksheet_v[$i]->write($zeile++, 0,$summe);
-	$worksheet_v[$i]->write($zeile++, 0,"* Voraussichtlich zu entrichten. Startgelder können je nach Meldestand zum Termin variieren.");
+	
+	//$worksheet_v[$i]->write($zeile++, 0,"* Voraussichtlich zu entrichten. Startgelder können je nach Meldestand zum Termin variieren.");
 	
 	$zeile++;
 	if ($meldungen[$spieler[$i][0]]["anmerkung"]) {
