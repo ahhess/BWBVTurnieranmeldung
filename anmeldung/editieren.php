@@ -50,7 +50,7 @@ elseif ($_POST["doSpielerAktualisieren"])
 		if ($nachname!="")
 		{
 			if ($rs) $systemmeldung.="<b>".$nachname.", ".$vorname."</b> wurde aktualisiert<br>";
-			else $fehlermeldung="Fehler! <b>".$nachname.", ".$vorname."</b> wurde nicht aktualisiert!";
+			else $fehlermeldung.="Fehler! <b>".$nachname.", ".$vorname."</b> wurde nicht aktualisiert!<!-- ".$sql." --><br>";
 		}
 		else
 		{
