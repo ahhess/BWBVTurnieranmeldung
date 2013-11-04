@@ -20,13 +20,13 @@
 				  <td>{$liste[i].id}</td>
 				  <td>{$liste[i].davor}</td>
 				  <td>{$liste[i].name}</td>
-				  <td>{$liste[i].kurz}{if $pwdis} <!-- {$liste[i].passwort} -->{/if}</td>
+				  <td>{$liste[i].kurz}{if $pwdis=="4711"} / {$liste[i].passwort}{/if}</td>
 				  <td>{$liste[i].region}</td>
 				  <td>
 					<div class="btn-toolbar">
 						<div class="btn-group">
-							<!-- <a class="btn btn-mini" href="#"><i class="icon-pencil"></i></a> -->
-							<a class="btn btn-mini" href="#" onclick="document.editform.vid.value='{$liste[i].id}';document.editform.submit()"><i class="icon-user"></i></a>
+							<a class="btn btn-mini" href="#" onclick="document.vereinform.id.value='{$liste[i].id}';document.vereinform.submit()"><i class="icon-pencil"></i></a>
+							<a class="btn btn-mini" href="#" onclick="document.editform.id.value='{$liste[i].id}';document.editform.submit()"><i class="icon-user"></i></a>
 						</div>
 					</div>
 				  </td>
@@ -35,8 +35,13 @@
 			  </tbody>
 			</table>
 			
+			<form name="vereinform" method="post" action="vereinskontakt.php">
+				<input type="hidden" name="id">
+				<input type="hidden" name="admin" value="admin">
+			</form>
+			
 			<form name="editform" method="post" action="editieren.php">
-				<input type="hidden" name="vid">
+				<input type="hidden" name="id">
 				<input type="hidden" name="admin" value="admin">
 			</form>
 
