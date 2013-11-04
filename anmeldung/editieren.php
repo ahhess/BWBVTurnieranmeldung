@@ -19,10 +19,8 @@ if ($_POST["doInsertSubmit"])
 		$fehlermeldung="Vorname und Nachname eingeben!";
 	else
 	{
-		//$sql ='INSERT INTO tas_spieler (vorname,nachname,geschlecht,geburtstag,passnummer,id_vereine) ';
-		//$sql.='VALUES ("'.trim($_POST["vorname"]).'","'.trim($_POST["nachname"]).'","'.trim($_POST["geschlecht"]).'","'.trim($_POST["jahr"]).'-'.trim($_POST["monat"]).'-'.trim($_POST["tag"]).'","'.trim($_POST["passnummer"]).'","'.$_POST["vid"].'")';
 		$sql ='INSERT INTO tas_spieler (vorname,nachname,geschlecht,geburtstag,id_vereine) ';
-		$sql.='VALUES ("'.trim($_POST["vorname"]).'","'.trim($_POST["nachname"]).'","'.trim($_POST["geschlecht"]).'","'.trim($_POST["jahr"]).'-'.trim($_POST["monat"]).'-'.trim($_POST["tag"]).'","'.$_POST["vid"].'")';
+		$sql.='VALUES ("'.trim($_POST["vorname"]).'","'.trim($_POST["nachname"]).'","'.trim($_POST["geschlecht"]).'","'.trim($_POST["jahr"]).'-'.trim($_POST["monat"]).'-'.trim($_POST["tag"]).'","'.$_POST["id"].'")';
 		$rs = &$conn->Execute($sql);
 		if ($rs) $systemmeldung="Spieler wurde hinzugefügt.";
 		else $fehlermeldung="Fehler beim Hinzufügen des Spielers";
@@ -62,9 +60,9 @@ elseif ($_POST["doSpielerAktualisieren"])
 
 unset($recordSet);
 
-if ($_POST["vid"])
+if ($_POST["id"])
 {
-	$sql="select * from tas_vereine where id=".$_POST["vid"];
+	$sql="select * from tas_vereine where id=".$_POST["id"];
 	$recordSet = &$conn->Execute($sql);
 	if (!$recordSet)
 		print $conn->ErrorMsg();
