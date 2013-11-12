@@ -33,6 +33,13 @@ if ($_POST["doSubmitEmail"])
 	$systemmeldung='Daten wurden gespeichert.';
 }
 
+if ($_POST["doDelete"])
+{
+	$sql="DELETE FROM tas_vereine WHERE id=".$_POST["id"];
+	$rs = &$conn->Execute($sql) or die ("Fehler beim Speichern. Bitte Administrator benachrichtigen.");
+	header("location:vereine.php");
+}
+
 if ($_POST["id"]) 
 	$id = $_POST["id"];
 else
@@ -42,6 +49,13 @@ $sql='select * from tas_vereine where id='.$id;
 $rs = &$conn->Execute($sql);
 $verein=$rs->GetArray();
 $verein=$verein[0];
+
+$sql="SELECT count(*) as cnt FROM tas_spieler WHERE id_vereine=".$id;
+$rs = &$conn->Execute($sql);
+$cnt = $rs->getArray();
+$cnt = $cnt[0];
+$cnt = $cnt["cnt"];
+
 $conn->Close();
 
 if ($_SESSION["verein"]["id"] == $verein["id"])
@@ -51,6 +65,9 @@ require('../smarty/libs/Smarty.class.php');
 $smarty = get_new_smarty();
 $smarty->assign('menuakt','vereinskontakt.php');
 $smarty->assign('verein',$verein);
+$smarty->assign('anzahlspieler',$cnt);
 $smarty->assign('systemmeldung',$systemmeldung);
+$smarty->assign('admin',$_SESSION["admin"]);
+//print('<pre>admin:'.$_SESSION["admin"]."</pre>");
 $smarty->display('vereinskontakt.tpl.htm');
 ?>
