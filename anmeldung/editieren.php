@@ -91,7 +91,7 @@ $smarty->assign('systemmeldung',$systemmeldung);
 $smarty->assign('verein',$verein);
 $smarty->assign('spieler',$s);
 $smarty->assign('menuakt','editieren.php');
-$smarty->assign('admin','$_POST["admin"]');
+$smarty->assign('admin',$_SESSION["admin"]);
 
 $smarty->display('editieren2.tpl.htm');
 ?>
