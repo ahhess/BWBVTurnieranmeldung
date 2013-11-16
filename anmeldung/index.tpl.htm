@@ -20,7 +20,7 @@
 				{section name=t loop=$turniere}
 				<tr>
 				  <td>{$turniere[t].name_lang}</td>
-				  <td>{$turniere[t].datum|date_format:"%d.%m.%Y"}</td>
+				  <td>{$turniere[t].name_kurz}</td>
 				  <td>{$turniere[t].ort}</td>
 				  <td>{$turniere[t].datum_anmelden_bis|date_format:"%d.%m.%Y"}</td>
 				  <td>{$turniere[t].anzahl_anmeldungen} / {$turniere[t].anmeldungen_gesamt}
