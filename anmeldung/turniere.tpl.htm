@@ -18,7 +18,7 @@
 			  <tbody>
 			    {section name=i loop=$liste}
 				<tr>
-				  <td>{$liste[i].datum|date_format:"%d.%m.%Y"}</td>
+				  <td>{$liste[i].name_kurz}</td>
 				  <td>{$liste[i].name_lang}</td>
 				  <td>{$liste[i].datum_anmelden_ab|date_format:"%d.%m.%Y"}</td>
 				  <td>{$liste[i].datum_anmelden_bis|date_format:"%d.%m.%Y"}</td>

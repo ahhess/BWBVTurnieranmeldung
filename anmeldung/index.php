@@ -19,8 +19,8 @@ $smarty->assign('menuakt','index.php');
 $sql='select tas_turnier.*,tas_turnierbeauftragter.vorname as ba_vorname, tas_turnierbeauftragter.nachname as ba_nachname, tas_turnierbeauftragter.strasse as ba_strasse, tas_turnierbeauftragter.plz as ba_plz, tas_turnierbeauftragter.ort as ba_ort, tas_turnierbeauftragter.telefon_priv as ba_telefon_priv, tas_turnierbeauftragter.telefon_gesch as ba_telefon_gesch, tas_turnierbeauftragter.fax as ba_fax, tas_turnierbeauftragter.email as ba_email, tas_turnierbeauftragter.mobil as ba_mobil 
 	FROM tas_turnier,tas_turnierbeauftragter 
 	WHERE tas_turnier.turnierbeauftragter_id=tas_turnierbeauftragter.id 
-	AND datum_anmelden_ab < NOW() 
-	AND datum_anmelden_bis >= (NOW()-INTERVAL 2 DAY) 
+	AND datum_anmelden_ab < CURDATE() 
+	AND datum_anmelden_bis >= (CURDATE()-INTERVAL 3 DAY) 
 	ORDER BY datum';
 
 function countMeldungen($conn, $turnierid, $vereinid) {
@@ -55,8 +55,8 @@ if ($rs)
 $sql_abgelaufen='select tas_turnier.*,tas_turnierbeauftragter.vorname as ba_vorname, tas_turnierbeauftragter.nachname as ba_nachname, tas_turnierbeauftragter.strasse as ba_strasse, tas_turnierbeauftragter.plz as ba_plz, tas_turnierbeauftragter.ort as ba_ort, tas_turnierbeauftragter.telefon_priv as ba_telefon_priv, tas_turnierbeauftragter.telefon_gesch as ba_telefon_gesch, tas_turnierbeauftragter.fax as ba_fax, tas_turnierbeauftragter.email as ba_email, tas_turnierbeauftragter.mobil as ba_mobil 
 	FROM tas_turnier,tas_turnierbeauftragter 
 	WHERE tas_turnier.turnierbeauftragter_id=tas_turnierbeauftragter.id 
-	AND datum >= (NOW()-INTERVAL 2 DAY)  
-	AND datum_anmelden_bis < (NOW()-INTERVAL 2 DAY)  
+	AND datum >= (CURDATE()-INTERVAL 3 DAY)  
+	AND datum_anmelden_bis < (CURDATE()-INTERVAL 3 DAY)  
 	ORDER BY datum';
 
 $rs = &$conn->Execute($sql_abgelaufen);

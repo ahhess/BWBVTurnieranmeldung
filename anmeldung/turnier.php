@@ -15,6 +15,7 @@ if ($_POST["doSave"] == "doSave"){
 	if ($_POST["id"] > 0){
 		$sql="UPDATE tas_turnier SET 
 			name_lang='".$_POST["name_lang"]."', 
+			name_kurz='".$_POST["name_kurz"]."', 
 			datum='".$_POST["datum"]."', 
 			ort='".$_POST["ort"]."', 
 			datum_anmelden_ab='".$_POST["datum_anmelden_ab"]."', 
@@ -25,9 +26,10 @@ if ($_POST["doSave"] == "doSave"){
 		$id = $_POST["id"];
 	} else {
 		$sql="INSERT INTO tas_turnier (
-			name_lang, datum, ort, datum_anmelden_ab, datum_anmelden_bis, turnierbeauftragter_id)
+			name_lang, name_kurz, datum, ort, datum_anmelden_ab, datum_anmelden_bis, turnierbeauftragter_id)
 			VALUES (
 			'".$_POST["name_lang"]."', 
+			'".$_POST["name_kurz"]."', 
 			'".$_POST["datum"]."', 
 			'".$_POST["ort"]."', 
 			'".$_POST["datum_anmelden_ab"]."', 
