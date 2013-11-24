@@ -13,6 +13,8 @@ $conn = &ADONewConnection('mysql');
 $conn->PConnect($host,$user,$password,$database);
 $ADODB_FETCH_MODE = ADODB_FETCH_ASSOC;
 
+$systemmeldung="";
+	
 if ($_POST["doInsertSubmit"])
 {
 	if (!trim($_POST["nachname"]) && !trim($_POST["vorname"]) )
@@ -22,13 +24,15 @@ if ($_POST["doInsertSubmit"])
 		$sql ='INSERT INTO tas_spieler (vorname,nachname,geschlecht,geburtstag,id_vereine) ';
 		$sql.='VALUES ("'.trim($_POST["vorname"]).'","'.trim($_POST["nachname"]).'","'.trim($_POST["geschlecht"]).'","'.trim($_POST["jahr"]).'-'.trim($_POST["monat"]).'-'.trim($_POST["tag"]).'","'.$_POST["id"].'")';
 		$rs = &$conn->Execute($sql);
-		if ($rs) $systemmeldung="Spieler wurde hinzugefügt.";
-		else $fehlermeldung="Fehler beim Hinzufügen des Spielers";
+		if ($rs) 
+			$systemmeldung="Spieler wurde hinzugefügt.";
+		else 
+			$fehlermeldung="Fehler beim Hinzufügen des Spielers";
 	}
 }
-
 elseif ($_POST["doSpielerAktualisieren"])
 {
+	$updatemessage=0;
 	//print "<pre>";print_r($_POST);	
 	foreach ($_POST["nachname"] as $id=>$nachname)
 	{
@@ -43,19 +47,27 @@ elseif ($_POST["doSpielerAktualisieren"])
 			$sql="UPDATE tas_spieler SET nachname='".$nachname."', vorname='".$vorname."', geburtstag='".$geburtstag."', passnummer='".$passnummer."', geschlecht='".$geschlecht."' WHERE id=".$id;
 		else 
 			$sql="DELETE FROM tas_spieler WHERE id=".$id;
+
 		//print $sql."<br>";
 		$rs = &$conn->Execute($sql);
+
 		if ($nachname!="")
 		{
-			if ($rs) $systemmeldung.="<b>".$nachname.", ".$vorname."</b> wurde aktualisiert<br>";
-			else $fehlermeldung.="Fehler! <b>".$nachname.", ".$vorname."</b> wurde nicht aktualisiert!<!-- ".$sql." --><br>";
+			if ($rs)
+				$updatemessage=1;
+			else
+				$fehlermeldung.="Fehler! <b>".$nachname.", ".$vorname."</b> wurde nicht aktualisiert! <!-- ".$sql." --><br>";
 		}
 		else
 		{
-			if ($rs) $systemmeldung.="Spieler wurde gelöscht<br>";
-			else $fehlermeldung="Fehler bei Löschung des Spielers!<br>";
+			if ($rs) 
+				$systemmeldung.="Spieler wurde gelöscht<br>";
+			else 
+				$fehlermeldung="Fehler bei Löschung des Spielers! <!-- ".$sql." --><br>";
 		}
 	}
+	if ($updatemessage==1)
+		$systemmeldung="&Auml;nderungen wurden gespeichert.<br>";
 }
 
 unset($recordSet);
