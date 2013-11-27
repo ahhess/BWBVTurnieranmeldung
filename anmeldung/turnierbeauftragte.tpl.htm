@@ -17,8 +17,8 @@
 				  <th>Tel. gesch.</td>
 				  <th>Tel. mobil</td>
 				  <th>Fax</td>
-<!-- 			  <th><a class="btn btn-mini" href="#"><i class="icon-edit"></i></a></td>
--->				</tr>
+				  <th><a class="btn btn-mini" href="turnierbeauftragter.php?id=-1"><i class="icon-edit"></i></a></td>
+				</tr>
 			  </thead>
 			  <tbody>
 				{section name=i loop=$liste}
@@ -34,15 +34,14 @@
 				  <td>{$liste[i].telefon_gesch}</td>
 				  <td>{$liste[i].mobil}</td>
 				  <td>{$liste[i].fax}</td>
-<!-- 			  <td>
+				  <td>
 					<div class="btn-toolbar">
 						<div class="btn-group">
-							<a class="btn btn-mini" href="#"><i class="icon-pencil"></i></a>
-							<a class="btn btn-mini" href="#" onClick=""><i class="icon-trash"></i></a>
+							<a class="btn btn-mini" href="turnierbeauftragter.php?id={$liste[i].id}"><i class="icon-pencil"></i></a>
 						</div>
 					</div>
 				  </td> 
--->				</tr>
+				</tr>
 				{/section}
 			  </tbody>
 			</table>

@@ -1,0 +1,69 @@
+{include file="header.tpl.htm" title=Turnierbeauftragter}
+{include file="admin_menu.tpl.htm"}
+    <div class="row-fluid">
+        <div class="span12">
+
+			{if $systemmeldung}<div class="alert alert-success"><strong>{$systemmeldung}</strong></div>{/if}
+
+			<h3>Turnierbeauftragter</h3>
+
+			<form class="form-horizontal" method="post">		
+				<input type="hidden" name="id" value="{$turnierbeauftragter.id}">
+				<div class="control-group">
+					<label class="control-label">Nachname:</label>
+					<div class="controls"><input name="nachname" type="text" value="{$turnierbeauftragter.nachname}" class="input-large" required></div>
+				</div>				
+				<div class="control-group">
+					<label class="control-label">Vorname:</label>
+					<div class="controls"><input name="vorname" type="text" value="{$turnierbeauftragter.vorname}" class="input-large" required></div>
+				</div>				
+				<div class="control-group">
+					<label class="control-label">Strasse:</label>
+					<div class="controls"><input name="strasse" type="text" value="{$turnierbeauftragter.strasse}" class="input-large"></div>
+				</div>				
+				<div class="control-group">
+					<label class="control-label">PLZ:</label>
+					<div class="controls"><input name="plz" type="text" value="{$turnierbeauftragter.plz}" class="input-small"></div>
+				</div>
+				<div class="control-group">
+					<label class="control-label">Ort:</label>
+					<div class="controls"><input name="ort" type="text" value="{$turnierbeauftragter.ort}" class="input-large"></div>
+				</div>
+				<div class="control-group">
+					<label class="control-label">Telefon privat:</label>
+					<div class="controls"><input name="telefon_priv" type="text" value="{$turnierbeauftragter.telefon_priv}" class="input"></div>
+				</div>
+				<div class="control-group">
+					<label class="control-label">Telefon gesch&auml;ftlich:</label>
+					<div class="controls"><input name="telefon_gesch" type="text" value="{$turnierbeauftragter.telefon_gesch}" class="input"></div>
+				</div>
+				<div class="control-group">
+					<label class="control-label">Telefon mobil:</label>
+					<div class="controls"><input name="mobil" type="text" value="{$turnierbeauftragter.mobil}" class="input"></div>
+				</div>
+				<div class="control-group">
+					<label class="control-label">Fax:</label>
+					<div class="controls"><input name="fax" type="text" value="{$turnierbeauftragter.fax}" class="input"></div>
+				</div>
+				<div class="control-group">
+					<label class="control-label">Email:</label>
+					<div class="controls"><input name="email" type="text" value="{$turnierbeauftragter.email}" class="input-large"></div>
+				</div>
+				<div class="control-group">
+					<label class="control-label">Passwort:</label>
+					<div class="controls"><input name="passwort" type="password" value="{$turnierbeauftragter.passwort}" class="input"></div>
+				</div>
+				<div class="control-group">
+					<label class="control-label">Anzahl Turniere:</label>
+					<div class="controls">{$cnt}</div>
+				</div>
+				<div class="control-group">
+					<div class="controls">
+						<button type="submit" class="btn" name="doSave" value="doSave">Speichern</button>
+						{if $cnt == 0}<button type="submit" class="btn" name="doDelete" value="doDelete">L&ouml;schen</button>{/if}
+					</div>
+				</div>
+			</form>
+		</div>
+    </div>
+{include file="footer.tpl.htm"}
