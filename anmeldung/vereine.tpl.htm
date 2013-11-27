@@ -11,7 +11,7 @@
 				  <th>Name</td>
 				  <th>Benutzer</td>
 				  <th>Region</td>
-				  <th><!-- <a class="btn btn-mini" href="#"><i class="icon-edit"></i></a> --></td>
+				  <th><a class="btn btn-mini" href="#" onclick="document.vereinform.submit()"><i class="icon-edit"></i></a></td>
 				</tr>
 			  </thead>
 			  <tbody>
@@ -36,7 +36,7 @@
 			</table>
 			
 			<form name="vereinform" method="post" action="vereinskontakt.php">
-				<input type="hidden" name="id">
+				<input type="hidden" name="id" value="-1">
 			</form>
 			
 			<form name="editform" method="post" action="editieren.php">

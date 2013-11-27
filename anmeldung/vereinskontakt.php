@@ -14,22 +14,47 @@ $ADODB_FETCH_MODE = ADODB_FETCH_ASSOC;
 
 if ($_POST["doSubmitEmail"])
 {
-	$sql="UPDATE tas_vereine SET 
-		davor='".$_POST["davor"]."', 
-		name='".$_POST["name"]."', 
-		region='".$_POST["region"]."', 
-		kurz='".$_POST["kurz"]."', 
-		passwort='".$_POST["passwort"]."', 
-		ansprechpartner_name='".$_POST["ansprechpartner_name"]."', 
-		ansprechpartner_strasse='".$_POST["ansprechpartner_strasse"]."', 
-		ansprechpartner_plz_ort='".$_POST["ansprechpartner_plz_ort"]."', 
-		ansprechpartner_telefon='".$_POST["ansprechpartner_telefon"]."', 
-		ansprechpartner_mobil='".$_POST["ansprechpartner_mobil"]."', 
-		ansprechpartner_email='".$_POST["ansprechpartner_email"]."', 
-		ansprechpartner_bemerkung='".$_POST["ansprechpartner_bemerkung"]."' 
-		WHERE id=".$_POST["id"];
-
-	$rs = &$conn->Execute($sql) or die ("Fehler beim Speichern. Bitte Administrator benachrichtigen.");
+	if ($_POST["id"] > 0) 
+	{
+		$sql="UPDATE tas_vereine SET 
+			davor='".$_POST["davor"]."', 
+			name='".$_POST["name"]."', 
+			region='".$_POST["region"]."', 
+			kurz='".$_POST["kurz"]."', 
+			passwort='".$_POST["passwort"]."', 
+			ansprechpartner_name='".$_POST["ansprechpartner_name"]."', 
+			ansprechpartner_strasse='".$_POST["ansprechpartner_strasse"]."', 
+			ansprechpartner_plz_ort='".$_POST["ansprechpartner_plz_ort"]."', 
+			ansprechpartner_telefon='".$_POST["ansprechpartner_telefon"]."', 
+			ansprechpartner_mobil='".$_POST["ansprechpartner_mobil"]."', 
+			ansprechpartner_email='".$_POST["ansprechpartner_email"]."', 
+			ansprechpartner_bemerkung='".$_POST["ansprechpartner_bemerkung"]."', 
+			id=".$_POST["vnr"]."
+			WHERE id=".$_POST["id"];
+			
+			$_POST["id"] = $_POST["vnr"];
+	} 
+	else 
+	{
+		$sql="INSERT INTO tas_vereine 
+			(id, davor, name, region, kurz, passwort, ansprechpartner_name, ansprechpartner_strasse, ansprechpartner_plz_ort, 
+			ansprechpartner_telefon, ansprechpartner_mobil, ansprechpartner_email, ansprechpartner_bemerkung)
+			VALUES (
+			".$_POST["nr"].",
+			'".$_POST["davor"]."', 
+			'".$_POST["name"]."', 
+			'".$_POST["region"]."', 
+			'".$_POST["kurz"]."', 
+			'".$_POST["passwort"]."', 
+			'".$_POST["ansprechpartner_name"]."', 
+			'".$_POST["ansprechpartner_strasse"]."', 
+			'".$_POST["ansprechpartner_plz_ort"]."', 
+			'".$_POST["ansprechpartner_telefon"]."', 
+			'".$_POST["ansprechpartner_mobil"]."', 
+			'".$_POST["ansprechpartner_email"]."', 
+			'".$_POST["ansprechpartner_bemerkung"]."'";
+	}
+	$rs = &$conn->Execute($sql) or die ("Fehler beim Speichern. Bitte Administrator benachrichtigen.<br>".$sql);
 	$systemmeldung='Daten wurden gespeichert.';
 }
 
