@@ -1,5 +1,9 @@
 {include file="header.tpl.htm" title="Meldungen $turniername (Stand: $datum)"}
-{include file="menu.tpl.htm"}
+{if $admin}
+	{include file="admin_menu.tpl.htm"}
+{else}
+	{include file="menu.tpl.htm"}
+{/if}
       <div class="row-fluid">
         <div class="span12">
 			<h3>Meldungen {$turniername}</h3>
