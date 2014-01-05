@@ -8,9 +8,9 @@ check_login();
 $tid=$_POST["tid"];
 
 include("../adodb/adodb.inc.php");
-$conn = &ADONewConnection('mysql');	# create a connection
+$conn = &ADONewConnection('mysql');
 //$conn->debug=true;
-$conn->PConnect($host,$user,$password,$database);   # connect to MS-Access, northwind dsn
+$conn->PConnect($host,$user,$password,$database);
 $ADODB_FETCH_MODE = ADODB_FETCH_ASSOC;
 
 // turnierdaten holen
@@ -62,8 +62,6 @@ for ($i=0;$i<count($s);$i++) {
 
 $recordSet->Close(); # optional
 $conn->Close(); # optional
-
-//if ($_POST["doInsertSubmit"]) $_SESSION["meldung"]=$_POST["meldung"];
 
 for ($i=0;$i<count($s);$i++) 
 	$s[$i]["spielklasse"]=spielklasse_berechnen($s[$i]["geburtstag"]);
