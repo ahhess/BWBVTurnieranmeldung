@@ -4,7 +4,10 @@ session_start();
 include("config.inc.php");
 include("funktionen.inc.php");
 
-check_login();
+if ($_POST["admin"])
+	check_admin_login();
+else
+	check_login();
 
 function spieler_markiert($id)
 {
@@ -53,6 +56,7 @@ $smarty->assign('countVereine',count($vereine));
 $smarty->assign('turniername',$turniername);
 $smarty->assign('datum',date('d.m.Y'));
 $smarty->assign('zeit',date('G:i'));
+$smarty->assign('admin',$_SESSION["admin"]);
 
 if ($_GET["format"] == "csv")
 	$smarty->display('csv.tpl.htm');
