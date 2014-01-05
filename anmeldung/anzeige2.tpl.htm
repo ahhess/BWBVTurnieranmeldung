@@ -10,7 +10,7 @@
 
 			<h4>Bisher online gemeldete Vereine ({$countVereine}):</h4>
 			<p>{section name=verein loop=$vereine}
-				{$vereine[verein].davor} {$vereine[verein].name}<br>
+				{$vereine[verein].davor} {$vereine[verein].name} ({$vereine[verein].vmeldcount})<br>
 			{/section} </p>
 
 			<h4>Bisher gemeldete Spieler/innen ({$countMeldungen}):</h4>

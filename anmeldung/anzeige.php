@@ -32,11 +32,13 @@ $meldungen=$recordSetSpieler->GetArray();
 $turniername=$meldungen[0]["turnier"];
 
 //vereine holen
-$sqlV='select DISTINCT tas_vereine.davor, tas_vereine.name 
-	from tas_meldung,tas_spieler,tas_vereine 
-	where tas_meldung.spieler_id=tas_spieler.id 
-	and tas_meldung.turnier_id='.$_GET["id"].' 
-	and tas_meldung.verein_id=tas_vereine.id';
+$sqlV='SELECT tas_vereine.name, tas_vereine.davor, COUNT( * ) AS vmeldcount
+	FROM tas_meldung, tas_spieler, tas_vereine
+	WHERE tas_meldung.turnier_id='.$_GET["id"].'
+	AND tas_meldung.spieler_id = tas_spieler.id
+	AND tas_meldung.verein_id = tas_vereine.id
+	GROUP BY tas_vereine.name, tas_vereine.davor
+	ORDER BY tas_vereine.name, tas_vereine.davor';
 $recordSetVereine = &$conn->Execute($sqlV);
 $vereine=$recordSetVereine->GetArray();
 //print "<pre>";print_r($meldungen);
