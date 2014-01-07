@@ -94,7 +94,7 @@ if ($_POST["doMeldungSubmit"])
 	if ($turnier["ba_email"]) 
 		mail($turnier["ba_email"],$ueberschrift,$text,"FROM: ".$_SESSION["verein"]["ansprechpartner_name"]." <".$_SESSION["verein"]["ansprechpartner_email"].">");
 	else 
-		mail("sportwart-nw@bwbv.de",$turnier["name_lang"]." hat keine Email des Beauftragten!!! Korrigieren!");
+		mail("turnieradmin@bwbv.de",$turnier["name_lang"]." hat keine Email des Beauftragten!!! Korrigieren!");
 
 	// email an den verein
 	if ($_SESSION["verein"]["ansprechpartner_email"]) {
@@ -104,7 +104,7 @@ if ($_POST["doMeldungSubmit"])
 				mail($email[$i],$ueberschrift,$text,"FROM: ".$turnier["ba_vorname"]." ".$turnier["ba_nachname"]."<".$turnier["ba_email"].">");
 		}
 	}
-	else die("Noch keine Email zur Benachrichtigung eingetragen. Schnell ins <a href='index.php'>Hauptmenü</a>, eintragen und Meldung noch einmal tätigen!!!");
+	else die("Noch keine Email zur Benachrichtigung eingetragen. Schnell in die <a href='vereinskontakt.php'>Vereinskontaktdaten </a>, Emailadresse eintragen und Meldung noch einmal tätigen!!!");
 
 	// email an die zusatzperson aus tas_turnier.email_an
 	if ($turnier["email_an"]) {
