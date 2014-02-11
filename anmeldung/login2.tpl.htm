@@ -46,7 +46,7 @@
 				{section name=t loop=$turniere}
 				<tr>
 				  <td>{$turniere[t].name_lang}</td>
-				  <td>{$turniere[t].datum|date_format:"%d.%m.%Y"}</td>
+				  <td>{$turniere[t].name_kurz}</td>
 				  <td>
 				    {if $turniere[t].datum_anmelden_ab != 0000-00-00}
 						{$turniere[t].datum_anmelden_ab|date_format:"%d.%m.%Y"}

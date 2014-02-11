@@ -62,7 +62,7 @@
 				{section name=t loop=$turniere_abgelaufen}
 				<tr>
 				  <td>{$turniere_abgelaufen[t].name_lang}</td>
-				  <td>{$turniere_abgelaufen[t].datum|date_format:"%d.%m.%Y"}</td>
+				  <td>{$turniere_abgelaufen[t].name_kurz}</td>
 				  <td>{$turniere_abgelaufen[t].ort}</td>
 				  <td>{$turniere_abgelaufen[t].datum_anmelden_bis|date_format:"%d.%m.%Y"}</td>
 				  <td>{$turniere_abgelaufen[t].anzahl_anmeldungen} / {$turniere_abgelaufen[t].anmeldungen_gesamt}
