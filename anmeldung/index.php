@@ -14,15 +14,6 @@ require('../smarty/libs/Smarty.class.php');
 $smarty = get_new_smarty();
 $smarty->assign('menuakt','index.php');
 
-// aktuelle ausschreibungen holen - für login- und übersichtsseite
-
-$sql='select tas_turnier.*,tas_turnierbeauftragter.vorname as ba_vorname, tas_turnierbeauftragter.nachname as ba_nachname, tas_turnierbeauftragter.strasse as ba_strasse, tas_turnierbeauftragter.plz as ba_plz, tas_turnierbeauftragter.ort as ba_ort, tas_turnierbeauftragter.telefon_priv as ba_telefon_priv, tas_turnierbeauftragter.telefon_gesch as ba_telefon_gesch, tas_turnierbeauftragter.fax as ba_fax, tas_turnierbeauftragter.email as ba_email, tas_turnierbeauftragter.mobil as ba_mobil 
-	FROM tas_turnier,tas_turnierbeauftragter 
-	WHERE tas_turnier.turnierbeauftragter_id=tas_turnierbeauftragter.id 
-	AND datum_anmelden_ab < CURDATE() 
-	AND datum_anmelden_bis >= (CURDATE()-INTERVAL 3 DAY) 
-	ORDER BY datum';
-
 function countMeldungen($conn, $turnierid, $vereinid) {
 	$sql2='SELECT COUNT(*) as anzahl FROM tas_meldung WHERE turnier_id='.$turnierid;
 	if ($vereinid != null) {
@@ -35,15 +26,32 @@ function countMeldungen($conn, $turnierid, $vereinid) {
 	return $count["anzahl"];
 }
 
-$rs = &$conn->Execute($sql);
-if ($rs)
-{
-	$turniere=$rs->getArray();
+// aktuelle ausschreibungen holen - für login- und übersichtsseite
+$fristkulanz='3 DAY';
+$region="%";
+if($_GET['region']){
+	$region=$_GET['region'];
+} else {
+	// Region des Vereins vorbelegen
+	if (is_array($_SESSION["verein"])){
+		$region=$_SESSION['verein']['region'];
+	}
+}
+$sql="select tas_turnier.*,tas_turnierbeauftragter.vorname as ba_vorname, tas_turnierbeauftragter.nachname as ba_nachname, tas_turnierbeauftragter.strasse as ba_strasse, tas_turnierbeauftragter.plz as ba_plz, tas_turnierbeauftragter.ort as ba_ort, tas_turnierbeauftragter.telefon_priv as ba_telefon_priv, tas_turnierbeauftragter.telefon_gesch as ba_telefon_gesch, tas_turnierbeauftragter.fax as ba_fax, tas_turnierbeauftragter.email as ba_email, tas_turnierbeauftragter.mobil as ba_mobil 
+	FROM tas_turnier
+	JOIN tas_turnierbeauftragter ON tas_turnier.turnierbeauftragter_id=tas_turnierbeauftragter.id 
+	WHERE region like '$region'
+	AND datum_anmelden_ab <= CURDATE() 
+	AND datum_anmelden_bis >= (CURDATE()-INTERVAL $fristkulanz) 
+	ORDER BY datum";
+//print_r("<pre>".$sql."</pre>");
 
-	if (is_array($_SESSION["verein"]))    // nicht bei Login!
-	{
-		for ($i=0;$i<count($turniere);$i++)
-		{
+$rs = &$conn->Execute($sql);
+if ($rs){
+	$turniere=$rs->getArray();
+	if (is_array($_SESSION["verein"])){
+		// wenn eingelogged anzahl meldungen zaehlen
+		for ($i=0;$i<count($turniere);$i++)	{
 			$turniere[$i]["anzahl_anmeldungen"]=countMeldungen($conn, $turniere[$i]["id"], $_SESSION["verein"]["id"]);
 			$turniere[$i]["anmeldungen_gesamt"]=countMeldungen($conn, $turniere[$i]["id"], null);
 		}
@@ -51,24 +59,22 @@ if ($rs)
 }
 
 // alte ausschreibungen holen
-
-$sql_abgelaufen='select tas_turnier.*,tas_turnierbeauftragter.vorname as ba_vorname, tas_turnierbeauftragter.nachname as ba_nachname, tas_turnierbeauftragter.strasse as ba_strasse, tas_turnierbeauftragter.plz as ba_plz, tas_turnierbeauftragter.ort as ba_ort, tas_turnierbeauftragter.telefon_priv as ba_telefon_priv, tas_turnierbeauftragter.telefon_gesch as ba_telefon_gesch, tas_turnierbeauftragter.fax as ba_fax, tas_turnierbeauftragter.email as ba_email, tas_turnierbeauftragter.mobil as ba_mobil 
-	FROM tas_turnier,tas_turnierbeauftragter 
-	WHERE tas_turnier.turnierbeauftragter_id=tas_turnierbeauftragter.id 
-	AND datum >= (CURDATE()-INTERVAL 3 DAY)  
-	AND datum_anmelden_bis < (CURDATE()-INTERVAL 3 DAY)  
-	ORDER BY datum';
+$sql_abgelaufen="select tas_turnier.*,tas_turnierbeauftragter.vorname as ba_vorname, tas_turnierbeauftragter.nachname as ba_nachname, tas_turnierbeauftragter.strasse as ba_strasse, tas_turnierbeauftragter.plz as ba_plz, tas_turnierbeauftragter.ort as ba_ort, tas_turnierbeauftragter.telefon_priv as ba_telefon_priv, tas_turnierbeauftragter.telefon_gesch as ba_telefon_gesch, tas_turnierbeauftragter.fax as ba_fax, tas_turnierbeauftragter.email as ba_email, tas_turnierbeauftragter.mobil as ba_mobil 
+	FROM tas_turnier
+	JOIN tas_turnierbeauftragter ON tas_turnier.turnierbeauftragter_id=tas_turnierbeauftragter.id 
+	WHERE region like '$region'
+	AND datum >= CURDATE()  
+	AND datum_anmelden_bis < (CURDATE()-INTERVAL $fristkulanz)  
+	ORDER BY datum";
 
 $rs = &$conn->Execute($sql_abgelaufen);
 
 //print "<pre>";print_r($rs);
-if ($rs)
-{
+if ($rs){
 	$turniere_abgelaufen=$rs->getArray();
-	if (is_array($_SESSION["verein"])) // nicht bei LOGIN!
-	{
-		for ($i=0;$i<count($turniere_abgelaufen);$i++)
-		{
+	if (is_array($_SESSION["verein"])) {
+		// wenn eingelogged anzahl meldungen zaehlen
+		for ($i=0;$i<count($turniere_abgelaufen);$i++){
 			$turniere_abgelaufen[$i]["anzahl_anmeldungen"]=countMeldungen($conn, $turniere_abgelaufen[$i]["id"], $_SESSION["verein"]["id"]);
 			$turniere_abgelaufen[$i]["anmeldungen_gesamt"]=countMeldungen($conn, $turniere_abgelaufen[$i]["id"], null);
 		}
@@ -81,17 +87,14 @@ if (!session_is_registered("verein")) // keine session, d.h. noch nicht angemeld
 	$smarty->assign('turniere',$turniere);
 	$smarty->assign('turniere_abgelaufen',$turniere_abgelaufen);
 
-	if ($_POST["doLoginSubmit"])
-	{
+	if ($_POST["doLoginSubmit"]){
 		//$smarty->assign('fehlermeldung_zugang',"Die Anmeldung ist im Moment nicht moeglich.");
 		/***/
-		if ( $_POST["benutzer"] <> "" and $_POST["passwort"] <> "" ) 
-		{
+		if ( $_POST["benutzer"] <> "" and $_POST["passwort"] <> "" ) {
 			$sql='select * from tas_vereine where kurz="'.substr($_POST["benutzer"],0,10).'" AND passwort="'.$_POST["passwort"].'"';
 			$rs = &$conn->Execute($sql);
 			$v=$rs->GetArray();
-			if (count($v))
-			{
+			if (count($v)){
 				$_SESSION["verein"]=$v[0];
 				header("location:index.php");   //alles klar. session da. index neu aufrufen!
 			}
@@ -105,6 +108,18 @@ if (!session_is_registered("verein")) // keine session, d.h. noch nicht angemeld
 	exit;
 }
 
+// ermitteln der Regionen
+$sql="select distinct region FROM tas_turnier 
+	WHERE ( datum_anmelden_ab <= CURDATE() 
+	AND datum_anmelden_bis >= (CURDATE()-INTERVAL $fristkulanz) 
+	) OR ( datum >= CURDATE()  
+	AND datum_anmelden_bis < (CURDATE()-INTERVAL $fristkulanz) 
+	) ORDER BY region";
+$rs = &$conn->Execute($sql);
+if($rs){
+	$regionen=$rs->GetArray();
+}
+
 $conn->Close();
 
 //smarty
@@ -112,6 +127,7 @@ $conn->Close();
 $smarty->assign('fehlermeldung',$fehlermeldung);
 $smarty->assign('turniere',$turniere);
 $smarty->assign('turniere_abgelaufen',$turniere_abgelaufen);
+$smarty->assign('regionen',$regionen);
 
 $smarty->display('index.tpl.htm');
 ?>

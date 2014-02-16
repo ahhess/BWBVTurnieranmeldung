@@ -40,13 +40,17 @@
 			  <tbody>
 				<tr>
 				  <th>Turnier</td>
+				  <th>Region</td>
 				  <th>Datum</td>
+				  <th>Ort</td>
 				  <th>Meldezeitraum</td>
 				</tr>
 				{section name=t loop=$turniere}
 				<tr>
 				  <td>{$turniere[t].name_lang}</td>
+				  <td>{$turniere[t].region}</td>
 				  <td>{$turniere[t].name_kurz}</td>
+				  <td>{$turniere[t].ort}</td>
 				  <td>
 				    {if $turniere[t].datum_anmelden_ab != 0000-00-00}
 						{$turniere[t].datum_anmelden_ab|date_format:"%d.%m.%Y"}
@@ -65,12 +69,23 @@
 			  <tbody>
 				<tr>
 				  <th>Turnier</td>
+				  <th>Region</td>
 				  <th>Datum</td>
+				  <th>Ort</td>
+				  <th>Meldezeitraum</td>
 				</tr>
 				{section name=t loop=$turniere_abgelaufen}
 				<tr>
 				  <td>{$turniere_abgelaufen[t].name_lang}</td>
-				  <td>{$turniere_abgelaufen[t].datum|date_format:"%d.%m.%Y"}</td>
+				  <td>{$turniere_abgelaufen[t].region}</td>
+				  <td>{$turniere_abgelaufen[t].name_kurz}</td>
+				  <td>{$turniere_abgelaufen[t].ort}</td>
+				  <td>
+				    {if $turniere_abgelaufen[t].datum_anmelden_ab != 0000-00-00}
+						{$turniere_abgelaufen[t].datum_anmelden_ab|date_format:"%d.%m.%Y"}
+				    {/if}
+                    bis {$turniere_abgelaufen[t].datum_anmelden_bis|date_format:"%d.%m.%Y"}
+				  </td>
 				</tr>
 				{/section}
 			  </tbody>
