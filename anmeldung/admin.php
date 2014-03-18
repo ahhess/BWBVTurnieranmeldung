@@ -23,6 +23,7 @@ if (!session_is_registered("admin"))
 			$v=$rs->GetArray();
 			if (count($v)){
 				$_SESSION["admin"]=$v[0];
+				$_SESSION["region"]=$v[0]['region'];
 				header("location:turniere.php");
 			}
 		} else {

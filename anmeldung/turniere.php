@@ -12,6 +12,8 @@ $conn->PConnect($host,$user,$password,$database);
 $ADODB_FETCH_MODE = ADODB_FETCH_ASSOC;
 
 $region = "NW";
+if ($_SESSION["region"])
+	$region = $_SESSION["region"];
 if ($_POST["region"])
 	$region = $_POST["region"];
 
