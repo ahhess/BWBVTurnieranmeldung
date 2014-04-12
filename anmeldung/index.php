@@ -14,6 +14,9 @@ require('../smarty/libs/Smarty.class.php');
 $smarty = get_new_smarty();
 $smarty->assign('menuakt','index.php');
 
+$log=false;
+$systemmeldung="";
+
 function countMeldungen($conn, $turnierid, $vereinid) {
 	$sql2='SELECT COUNT(*) as anzahl FROM tas_meldung WHERE turnier_id='.$turnierid;
 	if ($vereinid != null) {
@@ -22,7 +25,9 @@ function countMeldungen($conn, $turnierid, $vereinid) {
 	$rs2=&$conn->Execute($sql2);
 	$count=$rs2->getArray();
 	$count=$count[0];
-	//print_r("<pre>".$sql2." : ".$count["anzahl"]."</pre>");
+	if ($log) 
+		$systemmeldung=$systemmeldung.$sql2." : ".$count["anzahl"]."<br>";
+		//print_r("<pre>".$sql2." : ".$count["anzahl"]."</pre>");
 	return $count["anzahl"];
 }
 
@@ -40,11 +45,13 @@ if($_GET['region']){
 $sql="select tas_turnier.*,tas_turnierbeauftragter.vorname as ba_vorname, tas_turnierbeauftragter.nachname as ba_nachname, tas_turnierbeauftragter.strasse as ba_strasse, tas_turnierbeauftragter.plz as ba_plz, tas_turnierbeauftragter.ort as ba_ort, tas_turnierbeauftragter.telefon_priv as ba_telefon_priv, tas_turnierbeauftragter.telefon_gesch as ba_telefon_gesch, tas_turnierbeauftragter.fax as ba_fax, tas_turnierbeauftragter.email as ba_email, tas_turnierbeauftragter.mobil as ba_mobil 
 	FROM tas_turnier
 	JOIN tas_turnierbeauftragter ON tas_turnier.turnierbeauftragter_id=tas_turnierbeauftragter.id 
-	WHERE region like '$region'
+	WHERE tas_turnier.region like '$region'
 	AND datum_anmelden_ab <= CURDATE() 
 	AND datum_anmelden_bis >= (CURDATE()-INTERVAL $fristkulanz) 
 	ORDER BY datum";
-//print_r("<pre>".$sql."</pre>");
+if ($log) 
+	$systemmeldung=$systemmeldung.$sql."<br>";
+	//print_r("<pre>".$sql."</pre>");
 
 $rs = &$conn->Execute($sql);
 if ($rs){
@@ -62,14 +69,14 @@ if ($rs){
 $sql_abgelaufen="select tas_turnier.*,tas_turnierbeauftragter.vorname as ba_vorname, tas_turnierbeauftragter.nachname as ba_nachname, tas_turnierbeauftragter.strasse as ba_strasse, tas_turnierbeauftragter.plz as ba_plz, tas_turnierbeauftragter.ort as ba_ort, tas_turnierbeauftragter.telefon_priv as ba_telefon_priv, tas_turnierbeauftragter.telefon_gesch as ba_telefon_gesch, tas_turnierbeauftragter.fax as ba_fax, tas_turnierbeauftragter.email as ba_email, tas_turnierbeauftragter.mobil as ba_mobil 
 	FROM tas_turnier
 	JOIN tas_turnierbeauftragter ON tas_turnier.turnierbeauftragter_id=tas_turnierbeauftragter.id 
-	WHERE region like '$region'
+	WHERE tas_turnier.region like '$region'
 	AND datum >= CURDATE()  
 	AND datum_anmelden_bis < (CURDATE()-INTERVAL $fristkulanz)  
 	ORDER BY datum";
 
 $rs = &$conn->Execute($sql_abgelaufen);
-
 //print "<pre>";print_r($rs);
+	
 if ($rs){
 	$turniere_abgelaufen=$rs->getArray();
 	if (is_array($_SESSION["verein"])) {
@@ -115,6 +122,8 @@ $sql="select distinct region FROM tas_turnier
 	) OR ( datum >= CURDATE()  
 	AND datum_anmelden_bis < (CURDATE()-INTERVAL $fristkulanz) 
 	) ORDER BY region";
+if ($log) 
+	$systemmeldung=$systemmeldung.$sql."<br>";
 $rs = &$conn->Execute($sql);
 if($rs){
 	$regionen=$rs->GetArray();
@@ -128,6 +137,7 @@ $smarty->assign('fehlermeldung',$fehlermeldung);
 $smarty->assign('turniere',$turniere);
 $smarty->assign('turniere_abgelaufen',$turniere_abgelaufen);
 $smarty->assign('regionen',$regionen);
+$smarty->assign('systemmeldung',$systemmeldung);
 
 $smarty->display('index.tpl.htm');
 ?>

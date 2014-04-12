@@ -2,6 +2,7 @@
 {include file="menu.tpl.htm"}
       <div class="row-fluid">
         <div class="span12">
+			{if $systemmeldung}<div class="alert alert-success"><strong>{$systemmeldung}</strong></div>{/if}
 			{if $regionen}
 				<label class="btn">Region:</label>
 				<div class="btn-group" data-toggle="buttons-radio">
