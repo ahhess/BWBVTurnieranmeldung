@@ -23,13 +23,14 @@ if ($_POST["doSave"] == "doSave"){
 			telefon_gesch='".$_POST["telefon_gesch"]."',
 			mobil='".$_POST["mobil"]."',
 			fax='".$_POST["fax"]."',
+			region='".$_POST["region"]."',
 			email='".$_POST["email"]."',
 			passwort='".$_POST["passwort"]."'
 			WHERE id=".$_POST["id"];
 		$id = $_POST["id"];
 	} else {
 		$sql="INSERT INTO tas_turnierbeauftragter (
-			nachname, vorname, strasse, plz, ort, telefon_priv, telefon_gesch, mobil, fax, email, passwort) 
+			nachname, vorname, strasse, plz, ort, telefon_priv, telefon_gesch, mobil, fax, region, email, passwort) 
 			VALUES (
 			'".$_POST["nachname"]."', 
 			'".$_POST["vorname"]."', 
@@ -40,6 +41,7 @@ if ($_POST["doSave"] == "doSave"){
 			'".$_POST["telefon_gesch"]."', 
 			'".$_POST["mobil"]."', 
 			'".$_POST["fax"]."', 
+			'".$_POST["region"]."', 
 			'".$_POST["email"]."', 
 			'".$_POST["passwort"]."')";
 	}
