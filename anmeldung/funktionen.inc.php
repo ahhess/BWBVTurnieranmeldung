@@ -31,6 +31,31 @@ function get_new_smarty() {
 	return $smarty;
 }
 
+/**
+* date_mysql2german
+* wandelt ein MySQL-DATE (ISO-Date)
+* in ein traditionelles deutsches Datum um.
+*/
+function date_mysql2german($datum) {
+	list($jahr, $monat, $tag) = explode("-", $datum);
+	return sprintf("%02d.%02d.%04d", $tag, $monat, $jahr);
+}
+
+/**
+* date_german2mysql
+* wandelt ein traditionelles deutsches Datum
+* nach MySQL (ISO-Date), in '' eingebettet.
+* Wenn Eingabe leer, dann return null;
+*/
+function date_german2mysql($datum) {
+	if($datum==""){
+		return "null";
+	} else {
+		list($tag, $monat, $jahr) = explode(".", $datum);
+		return sprintf("'%04d-%02d-%02d'", $jahr, $monat, $tag);
+	}	
+}
+
 // für smarty
 $spielklasse["U9"]="U9";
 $spielklasse["U11"]="U11";

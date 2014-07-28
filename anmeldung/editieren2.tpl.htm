@@ -30,7 +30,7 @@
 					<tr> 
 					  <td><input name="nachname[{$spieler[zeile].id}]" type="text" value="{$spieler[zeile].nachname}"></td>
 					  <td><input name="vorname[{$spieler[zeile].id}]" type="text" value="{$spieler[zeile].vorname}"></td>
-					  <td><input name="geburtstag[{$spieler[zeile].id }]" type="text" value="{$spieler[zeile].geburtstag}" class="input-small" placeholder="JJJJ-MM-TT"></td>					  
+					  <td><input name="geburtstag[{$spieler[zeile].id }]" type="text" value='{$spieler[zeile].geburtstag|date_format:"%d.%m.%Y"}' class="input-small" placeholder="TT-MM-JJJJ"></td>					  
 					  <td><input name="passnummer[{$spieler[zeile].id}]" type="text" value="{$spieler[zeile].passnummer}" class="input-small"></td>
 					  <td>
 						<select name="geschlecht[{$spieler[zeile].id }]" class="input-medium">
@@ -65,13 +65,9 @@
 					  <input name="id" type="hidden" value="{$verein.id}"></td>
 					  <td valign="top"><input name="nachname" type="text"></td>
 					  <td valign="top"><input name="vorname" type="text"></td>
-					  <td valign="top"> 
-						<input name="tag" type="text" class="input-mini" maxlength="2" placeholder="TT">
-						<input name="monat" type="text" class="input-mini" maxlength="2" placeholder="MM">
-						<input name="jahr" type="text" class="input-mini" maxlength="4" placeholder="JJJJ">
-					  </td>
-					  {*<td valign="top"><input name="passnummer" type="text" class="input-small"></td>*}
-					  <td valign="top">
+					  <td valign="top"><input name="geburtstag" type="text" class="input-small" placeholder="TT-MM-JJJJ"></td>
+					{*<td valign="top"><input name="passnummer" type="text" class="input-small"></td>
+					*}<td valign="top">
 						<select name="geschlecht" id="select2" class="input-medium">
 						  <option value="m">M&auml;nnlich</option>
 						  <option value="w">Weiblich</option>

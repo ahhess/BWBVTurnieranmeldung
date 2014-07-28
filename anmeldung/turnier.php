@@ -12,14 +12,17 @@ $conn->PConnect($host,$user,$password,$database);
 $ADODB_FETCH_MODE = ADODB_FETCH_ASSOC;
 
 if ($_POST["doSave"] == "doSave"){
+	$datum=date_german2mysql($_POST["datum"]);
+	$datum_anmelden_ab=date_german2mysql($_POST["datum_anmelden_ab"]);
+	$datum_anmelden_bis=date_german2mysql($_POST["datum_anmelden_bis"]);
 	if ($_POST["id"] > 0){
 		$sql="UPDATE tas_turnier SET 
 			name_lang='".$_POST["name_lang"]."', 
 			name_kurz='".$_POST["name_kurz"]."', 
-			datum='".$_POST["datum"]."', 
+			datum=".$datum.", 
 			ort='".$_POST["ort"]."', 
-			datum_anmelden_ab='".$_POST["datum_anmelden_ab"]."', 
-			datum_anmelden_bis='".$_POST["datum_anmelden_bis"]."', 
+			datum_anmelden_ab=".$datum_anmelden_ab.", 
+			datum_anmelden_bis=".$datum_anmelden_bis.", 
 			region='".$_POST["region"]."', 
 			turnierbeauftragter_id=".$_POST["turnierbeauftragter_id"]."
 			WHERE id=".$_POST["id"];
@@ -31,15 +34,16 @@ if ($_POST["doSave"] == "doSave"){
 			VALUES (
 			'".$_POST["name_lang"]."', 
 			'".$_POST["name_kurz"]."', 
-			'".$_POST["datum"]."', 
+			".$datum.", 
 			'".$_POST["ort"]."', 
 			'".$_POST["region"]."', 
-			'".$_POST["datum_anmelden_ab"]."', 
-			'".$_POST["datum_anmelden_bis"]."', 
+			".$datum_anmelden_ab.", 
+			".$datum_anmelden_bis.", 
 			".$_POST["turnierbeauftragter_id"].")";
 			//email_an
 			//'".$_POST["email_an"]."', 
 	}
+	//print_r("<pre>$sql</pre>");
 	$rc = &$conn->Execute($sql) or die ("Fehler beim Speichern. Bitte Administrator benachrichtigen. / ".$sql);
 	header("location:turniere.php");
 	//$systemmeldung='Daten wurden gespeichert.';

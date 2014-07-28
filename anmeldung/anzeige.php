@@ -22,17 +22,21 @@ $conn = &ADONewConnection('mysql');	# create a connection
 $conn->PConnect($host,$user,$password,$database);
 $ADODB_FETCH_MODE = ADODB_FETCH_ASSOC;
 
+//turnier holen
+$sql="select * from tas_turnier where id=".$_GET["id"];
+$recordSet = &$conn->Execute($sql);
+$turniere=$recordSet->GetArray();
+$turnier=$turniere[0];
+
 //meldungen holen
-$sql='select tas_spieler.*, tas_vereine.davor, tas_vereine.name as verein, tas_meldung.ak as ak, tas_turnier.name_lang as turnier 
+$sql='select tas_spieler.*, tas_vereine.davor, tas_vereine.name as verein, tas_meldung.ak as ak 
 	from tas_meldung,tas_spieler,tas_vereine,tas_turnier 
 	where tas_meldung.spieler_id=tas_spieler.id 
 	and tas_meldung.turnier_id='.$_GET["id"].' 
-	and tas_meldung.verein_id=tas_vereine.id 
-	and tas_turnier.id=tas_meldung.turnier_id 
+	and tas_meldung.verein_id=tas_vereine.id
 	order by tas_meldung.ak asc, tas_spieler.geschlecht asc, tas_spieler.nachname';
 $recordSetSpieler = &$conn->Execute($sql);
 $meldungen=$recordSetSpieler->GetArray();
-$turniername=$meldungen[0]["turnier"];
 
 //vereine holen
 $sqlV='SELECT tas_vereine.name, tas_vereine.davor, COUNT( * ) AS vmeldcount
@@ -53,7 +57,7 @@ $smarty->assign('meldungen',$meldungen);
 $smarty->assign('countMeldungen',count($meldungen));
 $smarty->assign('vereine',$vereine);
 $smarty->assign('countVereine',count($vereine));
-$smarty->assign('turniername',$turniername);
+$smarty->assign('turnier',$turnier);
 $smarty->assign('datum',date('d.m.Y'));
 $smarty->assign('zeit',date('G:i'));
 $smarty->assign('admin',$_SESSION["admin"]);

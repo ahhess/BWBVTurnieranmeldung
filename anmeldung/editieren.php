@@ -21,8 +21,9 @@ if ($_POST["doInsertSubmit"])
 		$fehlermeldung="Vorname und Nachname eingeben!";
 	else
 	{
-		$sql ='INSERT INTO tas_spieler (vorname,nachname,geschlecht,geburtstag,id_vereine) ';
-		$sql.='VALUES ("'.trim($_POST["vorname"]).'","'.trim($_POST["nachname"]).'","'.trim($_POST["geschlecht"]).'","'.trim($_POST["jahr"]).'-'.trim($_POST["monat"]).'-'.trim($_POST["tag"]).'","'.$_POST["id"].'")';
+		$sql ="INSERT INTO tas_spieler (vorname,nachname,geschlecht,id_vereine,geburtstag) ";
+		$sql.="VALUES ('".trim($_POST["vorname"])."','".trim($_POST["nachname"])."','".trim($_POST["geschlecht"])."',".$_POST["id"].",".date_german2mysql($_POST["geburtstag"]).")";
+		//print_r($sql);	
 		$rs = &$conn->Execute($sql);
 		if ($rs) 
 			$systemmeldung="Spieler wurde hinzugefügt.";
@@ -39,12 +40,11 @@ elseif ($_POST["doSpielerAktualisieren"])
 		$nachname=trim($nachname);
 		$vorname=trim($_POST["vorname"][$id]);
 		$geschlecht=$_POST["geschlecht"][$id];
-		$geburtstag=trim($_POST["geburtstag"][$id]);
-        preg_match('/^[\d]{4}-[\d]{1,2}-[\d]{1,2}$/i',$geburtstag)?$geburtstag=$geburtstag:$geburtstag="'";
+		$geburtstag=date_german2mysql(trim($_POST["geburtstag"][$id]));
 		$passnummer=trim($_POST["passnummer"][$id]);
 		
 		if ($nachname!="") 
-			$sql="UPDATE tas_spieler SET nachname='".$nachname."', vorname='".$vorname."', geburtstag='".$geburtstag."', passnummer='".$passnummer."', geschlecht='".$geschlecht."' WHERE id=".$id;
+			$sql="UPDATE tas_spieler SET nachname='".$nachname."', vorname='".$vorname."', geburtstag=".$geburtstag.", passnummer='".$passnummer."', geschlecht='".$geschlecht."' WHERE id=".$id;
 		else 
 			$sql="DELETE FROM tas_spieler WHERE id=".$id;
 

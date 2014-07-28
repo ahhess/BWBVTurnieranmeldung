@@ -22,19 +22,19 @@
 				</div>				
 				<div class="control-group">
 					<label class="control-label">Datum (Sortierung): *</label>
-					<div class="controls"><input name="datum" type="text" value="{$turnier.datum}" class="input-small" placeholder="JJJJ-MM-TT" required></div>
+					<div class="controls"><input name="datum" type="text" value='{$turnier.datum|date_format:"%d.%m.%Y"}' class="input-small" placeholder="TT.MM.JJJJ" required></div>
 				</div>
 				<div class="control-group">
 					<label class="control-label">Ort:</label>
 					<div class="controls"><input name="ort" type="text" value="{$turnier.ort}" class="input-xxlarge"></div>
 				</div>
 				<div class="control-group">
-					<label class="control-label">Anmeldung ab:</label>
-					<div class="controls"><input name="datum_anmelden_ab" type="text" value="{$turnier.datum_anmelden_ab}" class="input-small" placeholder="JJJJ-MM-TT"></div>
+					<label class="control-label">Anmeldung ab: *</label>
+					<div class="controls"><input name="datum_anmelden_ab" type="text" value='{$turnier.datum_anmelden_ab|date_format:"%d.%m.%Y"}' class="input-small" placeholder="TT.MM.JJJJ" required></div>
 				</div>
 				<div class="control-group">
 					<label class="control-label">Anmeldung bis: *</label>
-					<div class="controls"><input name="datum_anmelden_bis" type="text" value="{$turnier.datum_anmelden_bis}" class="input-small" placeholder="JJJJ-MM-TT" required></div>
+					<div class="controls"><input name="datum_anmelden_bis" type="text" value='{$turnier.datum_anmelden_bis|date_format:"%d.%m.%Y"}' class="input-small" placeholder="TT.MM.JJJJ" required></div>
 				</div>
 			{*	<div class="control-group">
 					<label class="control-label">Zusatz-Email:</label>

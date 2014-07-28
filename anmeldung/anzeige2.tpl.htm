@@ -6,11 +6,12 @@
 {/if}
       <div class="row-fluid">
         <div class="span12">
-			<h3>Meldungen {$turniername}</h3>
+			<h3>Meldungen {$turnier.name_lang}</h3>
+			<p>am {$turnier.name_kurz} in {$turnier.ort}</p>
 			<p>Folgende Meldungen sind derzeit in dem Meldesystem hinterlegt.<br>
 			Hinweis: Nach Ende der Meldefrist kann diese Liste unter Umst&auml;nden nicht mehr aktuell sein.
-			Kontaktieren Sie in diesem Fall ggf. den Turnierbeauftragten. </p>
-			<p>( Stand: {$datum}, {$zeit} Uhr ) </p>
+			Kontaktieren Sie in diesem Fall ggf. den Turnierbeauftragten.</p>
+			<p>( Stand: {$datum}, {$zeit} Uhr )</p>
 
 			<h4>Bisher online gemeldete Vereine ({$countVereine}):</h4>
 			<p>{section name=verein loop=$vereine}

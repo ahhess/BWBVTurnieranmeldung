@@ -27,6 +27,8 @@
 					<div class="span6">
 						<p><strong>Turnier:</strong>
 						<br>{$turnier.name_lang}
+						<br>am {$turnier.name_kurz}
+						<br>in {$turnier.ort}
 						<p><strong>Verein:</strong>
 						<br>{$verein.davor} {$verein.name}
 						<p><strong>Absender/Ansprechpartner f&uuml;r R&uuml;ckfragen:</strong>
@@ -59,7 +61,7 @@
 						  <th>&nbsp;</th>
 						  <th>Nachname</th>
 						  <th>Vorname</th>
-						  <th>Geburtsdatum (J-M-T)</th>
+						  <th>Geburtsdatum</th>
 						  <th>Passnummer</th>
 						  <th>Spielklasse</th>
 						</thead>
@@ -69,7 +71,7 @@
 							  <td><input name="meldung[]" type="checkbox" class="" id="meldung[]" value="{$spieler[zeile].id}" {if $spieler[zeile].turnier_id==$turnier.id}CHECKED{/if}></td>
 							  <td>{$spieler[zeile].nachname}</td>
 							  <td>{$spieler[zeile].vorname}</td>
-							  <td>{$spieler[zeile].geburtstag}</td>
+							  <td>{$spieler[zeile].geburtstag|date_format:"%d.%m.%Y"}</td>
 							  <td>{if $spieler[zeile].passnummer!=""}{$spieler[zeile].passnummer}{else}<a href="editieren.php">nachtragen</a>{/if}</td>
 							  <td>
 								<select class="input-small" name=spk[{$spieler[zeile].id}] id="spk[{$spieler[zeile].id}]">
