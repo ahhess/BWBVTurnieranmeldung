@@ -30,7 +30,7 @@ $turnier=$turniere[0];
 
 //meldungen holen
 $sql='select tas_spieler.*, tas_vereine.davor, tas_vereine.name as verein, tas_meldung.ak as ak 
-	from tas_meldung,tas_spieler,tas_vereine,tas_turnier 
+	from tas_meldung,tas_spieler,tas_vereine
 	where tas_meldung.spieler_id=tas_spieler.id 
 	and tas_meldung.turnier_id='.$_GET["id"].' 
 	and tas_meldung.verein_id=tas_vereine.id
