@@ -32,7 +32,12 @@
 				<div class="control-group">
 					<label class="control-label" for="region">Region:</label>
 					<div class="controls">
-						<input name="region" type="text" value="{$verein.region}" size="2">
+						<select class="form-control" name="region" value="{$verein.region}" class="input-small">
+							<option{if $verein.region == "NB"} selected{/if}>NB</option>
+							<option{if $verein.region == "NW"} selected{/if}>NW</option>
+							<option{if $verein.region == "SB"} selected{/if}>SB</option>
+							<option{if $verein.region == "SW"} selected{/if}>SW</option>
+						</select>
 					</div>
 				</div>
 			

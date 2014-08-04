@@ -9,39 +9,46 @@
 			<form class="form-horizontal" method="post">		
 				<input type="hidden" name="id" value="{$turnier.id}">
 				<div class="control-group">
-					<label class="control-label">Name: *</label>
+					<label class="control-label" for="name_lang">Name: *</label>
 					<div class="controls"><input name="name_lang" type="text" value="{$turnier.name_lang}" class="input-xxlarge" required></div>
 				</div>				
 				<div class="control-group">
-					<label class="control-label">Region: *</label>
-					<div class="controls"><input name="region" type="text" value="{$turnier.region}" class="input-small"></div>
+					<label class="control-label" for="region">Region: *</label>
+					<div class="controls">
+						<select class="form-control" name="region" value="{$turnier.region}" class="input-small">
+							<option{if $turnier.region == "NB"} selected{/if}>NB</option>
+							<option{if $turnier.region == "NW"} selected{/if}>NW</option>
+							<option{if $turnier.region == "SB"} selected{/if}>SB</option>
+							<option{if $turnier.region == "SW"} selected{/if}>SW</option>
+						</select>
+					</div>
 				</div>
 				<div class="control-group">
-					<label class="control-label">Datum (Anzeige): *</label>
+					<label class="control-label" for="name_kurz">Datum (Anzeige): *</label>
 					<div class="controls"><input name="name_kurz" type="text" value="{$turnier.name_kurz}" class="input" required></div>
 				</div>				
 				<div class="control-group">
-					<label class="control-label">Datum (Sortierung): *</label>
+					<label class="control-label" for="datum">Datum (Sortierung): *</label>
 					<div class="controls"><input name="datum" type="text" value='{$turnier.datum|date_format:"%d.%m.%Y"}' class="input-small" placeholder="TT.MM.JJJJ" required></div>
 				</div>
 				<div class="control-group">
-					<label class="control-label">Ort:</label>
+					<label class="control-label" for="ort">Ort:</label>
 					<div class="controls"><input name="ort" type="text" value="{$turnier.ort}" class="input-xxlarge"></div>
 				</div>
 				<div class="control-group">
-					<label class="control-label">Anmeldung ab: *</label>
+					<label class="control-label" for="datum_anmelden_ab">Anmeldung ab: *</label>
 					<div class="controls"><input name="datum_anmelden_ab" type="text" value='{$turnier.datum_anmelden_ab|date_format:"%d.%m.%Y"}' class="input-small" placeholder="TT.MM.JJJJ" required></div>
 				</div>
 				<div class="control-group">
-					<label class="control-label">Anmeldung bis: *</label>
+					<label class="control-label" for="datum_anmelden_bis">Anmeldung bis: *</label>
 					<div class="controls"><input name="datum_anmelden_bis" type="text" value='{$turnier.datum_anmelden_bis|date_format:"%d.%m.%Y"}' class="input-small" placeholder="TT.MM.JJJJ" required></div>
 				</div>
 			{*	<div class="control-group">
-					<label class="control-label">Zusatz-Email:</label>
+					<label class="control-label" for="email_an">Zusatz-Email:</label>
 					<div class="controls"><input name="email_an" type="text" value="{$turnier.email_an}" class="input-xxlarge"></div>
 				</div>
 			*}	<div class="control-group">
-					<label class="control-label">Turnierverantworlicher:</label>
+					<label class="control-label" for="turnierbeauftragter_id">Turnierverantworlicher:</label>
 					<div class="controls">
 						<select name="turnierbeauftragter_id">
 							{section name=i loop=$turnierbeauftragter}

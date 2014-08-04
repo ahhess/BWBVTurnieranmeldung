@@ -27,7 +27,14 @@
 				</div>
 				<div class="control-group">
 					<label class="control-label">Region: *</label>
-					<div class="controls"><input name="region" type="text" value="{$turnierbeauftragter.region}" class="input-small"></div>
+					<div class="controls">
+						<select class="form-control" name="region" value="{$turnierbeauftragter.region}" class="input-small">
+							<option{if $turnierbeauftragter.region == "NB"} selected{/if}>NB</option>
+							<option{if $turnierbeauftragter.region == "NW"} selected{/if}>NW</option>
+							<option{if $turnierbeauftragter.region == "SB"} selected{/if}>SB</option>
+							<option{if $turnierbeauftragter.region == "SW"} selected{/if}>SW</option>
+						</select>
+					</div>
 				</div>
 				<div class="control-group">
 					<label class="control-label">Strasse:</label>
