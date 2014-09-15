@@ -23,6 +23,7 @@
 				  {*<th>Zusatz-Emailadresse</td>*}
 				  <th>Turnierbeauftragter</td>
 				  <th>Region</td>
+				  <th>Meldungen</td>
 				  <th><a class="btn btn-mini" href="turnier.php?id=-1"><i class="icon-edit"></i></a></td>
 				</tr>
 			  </thead>
@@ -34,8 +35,9 @@
 				  <td>{$liste[i].datum_anmelden_ab|date_format:"%d.%m.%Y"}</td>
 				  <td>{$liste[i].datum_anmelden_bis|date_format:"%d.%m.%Y"}</td>
 				  {*<td>{$liste[i].email_an}</td>*}
-				  <td>{$liste[i].nachname}, {$liste[i].vorname}</td>				  
-				  <td>{$liste[i].region}</td>				  
+				  <td>{$liste[i].nachname}, {$liste[i].vorname}</td>
+				  <td>{$liste[i].region}</td>
+				  <td>{$liste[i].meldungen}</td>
 				  <td>
 					<div class="btn-toolbar">
 						<div class="btn-group">

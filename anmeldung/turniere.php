@@ -18,11 +18,19 @@ if ($_POST["region"])
 	$region = $_POST["region"];
 
 unset($recordSet);
-$sql="SELECT tas_turnier.*, tas_turnierbeauftragter.nachname, tas_turnierbeauftragter.vorname 
+$sql="SELECT tas_turnier.id, tas_turnier.name_lang, tas_turnier.name_kurz, tas_turnier.datum_anmelden_ab, tas_turnier.datum_anmelden_bis,
+		tas_turnier.datum, tas_turnier.ort, tas_turnier.email_an, tas_turnier.turnierbeauftragter_id, tas_turnier.region, 
+		tas_turnierbeauftragter.nachname, tas_turnierbeauftragter.vorname, 
+	Count(tas_meldung.spieler_id) as meldungen
 	FROM tas_turnier
 	LEFT OUTER JOIN tas_turnierbeauftragter 
 		ON tas_turnier.turnierbeauftragter_id = tas_turnierbeauftragter.id 
+	LEFT OUTER JOIN tas_meldung 
+		ON tas_turnier.id = tas_meldung.turnier_id 
 	WHERE tas_turnier.region = '$region'
+	Group by tas_turnier.id, tas_turnier.name_lang, tas_turnier.name_kurz, tas_turnier.datum_anmelden_ab, tas_turnier.datum_anmelden_bis,
+		tas_turnier.datum, tas_turnier.ort, tas_turnier.email_an, tas_turnier.turnierbeauftragter_id, tas_turnier.region, 
+		tas_turnierbeauftragter.nachname, tas_turnierbeauftragter.vorname
 	ORDER BY datum desc, name_lang";
 $recordSet = &$conn->Execute($sql);
 $liste = $recordSet->getArray();
