@@ -120,7 +120,8 @@ for ($i=0;$i<count($index2verein);$i++) {
 		$zeile++;
 	}
 	$zeile++;
-	$summe= "Summe = ".count($spieler[$i])." x 5 EURO = ".(count($spieler[$i])*5)." EURO";
+	$startgebuehr=7;
+	$summe= "Summe = ".count($spieler[$i])." x ".$startgebuehr." EURO = ".(count($spieler[$i]) * $startgebuehr)." EURO";
 	$worksheet_v[$i]->write($zeile++, 0,"-------------------------------");
 	$worksheet_v[$i]->write($zeile++, 0,$summe);
 	
@@ -135,4 +136,3 @@ for ($i=0;$i<count($index2verein);$i++) {
 
 $workbook->close();
 ?>
-
