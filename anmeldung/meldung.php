@@ -85,30 +85,32 @@ if ($_POST["doMeldungSubmit"])
 	$text.="\n\n* = Die Spielklasse wurde vom Eintragenden manuell verändert.\n\nAnmerkung zu der Meldung: \n";
 	$text.=$_POST["anmerkung"]?$_POST["anmerkung"]:"- keine Anmerkung gemacht -";
 	$text.="\n\nAnsprechpartner zu dieser Meldung sind:\n\n";
-	$text.="Turnierbeauftragter:\n".$adresse_turnierbeauftragter."\n\n";
+	$text.="Turnierbeauftragter:\n".$adresse_turnierbeauftragter."\n";
 	$text.="Meldender Verein:\n".$adresse_rueckfrage_an_verein."\n\n";
-	$text.="http://www.bwbv.de/turnier/anmeldung\n\n";
+	$text.="Dies ist eine automatisch generierte Infomail. Es gelten die im Onlinemeldesystem aktuell erfassten Meldungen. Bitte nicht an den Absender antworten.\n";
+	$text.="http://www.bwbv.de/turnier/anmeldung\n";
 	//echo $text;
 
 	// email an den turnierbeauftragten
 	if ($turnier["ba_email"]) 
-		mail($turnier["ba_email"],$ueberschrift,$text,"FROM: ".$_SESSION["verein"]["ansprechpartner_name"]." <".$_SESSION["verein"]["ansprechpartner_email"].">");
+		mail($turnier["ba_email"],$ueberschrift,$text,"FROM: BWBV Turnieranmeldung <no-reply@bwbv.de>");
 	else 
-		mail("turnieradmin@bwbv.de",$turnier["name_lang"]." hat keine Email des Beauftragten!!! Korrigieren!");
+		mail("turnieradmin@bwbv.de",$turnier["name_lang"]." hat keine Email des Beauftragten!!!","Bitte Korrigieren!","FROM: BWBV Turnieranmeldung <no-reply@bwbv.de>");
 
 	// email an den verein
 	if ($_SESSION["verein"]["ansprechpartner_email"]) {
 		$email = explode(";", $_SESSION["verein"]["ansprechpartner_email"]);
 		for ($i=0;$i<count($email);$i++) {
-			if($email[$i] <> "")
-				mail($email[$i],$ueberschrift,$text,"FROM: ".$turnier["ba_vorname"]." ".$turnier["ba_nachname"]."<".$turnier["ba_email"].">");
+			if($email[$i] <> "") {
+				mail($email[$i],$ueberschrift,$text,"FROM: BWBV Turnieranmeldung <no-reply@bwbv.de>");
+			}
 		}
 	}
 	else die("Noch keine Email zur Benachrichtigung eingetragen. Schnell in die <a href='vereinskontakt.php'>Vereinskontaktdaten </a>, Emailadresse eintragen und Meldung noch einmal tätigen!!!");
 
 	// email an die zusatzperson aus tas_turnier.email_an
 	if ($turnier["email_an"]) {
-		mail($turnier["email_an"],"(Kopie) ".$ueberschrift,"Guten Tag. Sie wurden als Empfänger einer Kopie dieser Mail eingetragen!\n---\n\n".$text,"FROM: ".$turnier["ba_vorname"]." ".$turnier["ba_nachname"]."<".$turnier["ba_email"].">");
+		mail($turnier["email_an"],"(Kopie) ".$ueberschrift,"Guten Tag. Sie wurden als Empfänger einer Kopie dieser Mail eingetragen!\n---\n\n".$text,"FROM: BWBV Turnieranmeldung <no-reply@bwbv.de>");
 	}
 }
 
