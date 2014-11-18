@@ -92,10 +92,10 @@ if ($_POST["doMeldungSubmit"])
 	//echo $text;
 
 	// email an den turnierbeauftragten
-	if ($turnier["ba_email"]) 
-		mail($turnier["ba_email"],$ueberschrift,$text,"FROM: BWBV Turnieranmeldung <no-reply@bwbv.de>");
-	else 
-		mail("turnieradmin@bwbv.de",$turnier["name_lang"]." hat keine Email des Beauftragten!!!","Bitte Korrigieren!","FROM: BWBV Turnieranmeldung <no-reply@bwbv.de>");
+	//if ($turnier["ba_email"]) 
+	//	mail($turnier["ba_email"],$ueberschrift,$text,"FROM: BWBV Turnieranmeldung <no-reply@bwbv.de>");
+	//else 
+	//	mail("turnieradmin@bwbv.de",$turnier["name_lang"]." hat keine Email des Beauftragten!!!","Bitte Korrigieren!","FROM: BWBV Turnieranmeldung <no-reply@bwbv.de>");
 
 	// email an den verein
 	if ($_SESSION["verein"]["ansprechpartner_email"]) {
