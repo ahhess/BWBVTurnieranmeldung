@@ -32,7 +32,7 @@ function countMeldungen($conn, $turnierid, $vereinid) {
 }
 
 // aktuelle ausschreibungen holen - für login- und übersichtsseite
-$fristkulanz='3 DAY';
+$fristkulanz='1 DAY';
 $region="%";
 if($_GET['region']){
 	$region=$_GET['region'];
