@@ -29,7 +29,7 @@ $turniere=$recordSet->GetArray();
 $turnier=$turniere[0];
 
 //meldungen holen
-$sql='select tas_spieler.*, tas_vereine.davor, tas_vereine.name as verein, tas_meldung.ak as ak 
+$sql='select tas_spieler.*, tas_vereine.davor, tas_vereine.name as verein, tas_meldung.partnernr as partnernr, tas_meldung.ak as ak 
 	from tas_meldung,tas_spieler,tas_vereine
 	where tas_meldung.spieler_id=tas_spieler.id 
 	and tas_meldung.turnier_id='.$_GET["id"].' 

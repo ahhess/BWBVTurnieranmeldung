@@ -10,7 +10,9 @@ $conn->PConnect($host,$user,$password,$database);   # connect to MS-Access, nort
 $ADODB_FETCH_MODE = ADODB_FETCH_ASSOC;
 
 // tas_vereine holen
-$sql='select tas_spieler.*, tas_vereine.davor, tas_vereine.name as verein, tas_meldung.verein_id, tas_meldung.ak as ak, tas_turnier.name_lang as turnier, tas_meldung.anmerkung as anmerkung 
+$sql='select tas_spieler.*, tas_vereine.davor, tas_vereine.name as verein, 
+	tas_meldung.verein_id, tas_meldung.ak as ak, tas_meldung.partnernr as partnernr, 
+	tas_turnier.name_lang as turnier, tas_meldung.anmerkung as anmerkung 
 	from tas_meldung,tas_spieler,tas_vereine,tas_turnier 
 	where tas_meldung.spieler_id=tas_spieler.id 
 	and tas_meldung.turnier_id='.$_GET["id"].' 
@@ -72,10 +74,11 @@ $worksheet->write(0, 0, "Nachname");
 $worksheet->write(0, 1, "Vorname");
 $worksheet->write(0, 2, "Kuerzel");
 $worksheet->write(0, 3, "Verein");
-$worksheet->write(0, 4, "AK");
-$worksheet->write(0, 5, "Passnummer");
-$worksheet->write(0, 6, "Geburtstag");
-$worksheet->write(0, 7, "Geschlecht");
+$worksheet->write(0, 4, "Partnernr");
+$worksheet->write(0, 5, "AK");
+$worksheet->write(0, 6, "Passnummer");
+$worksheet->write(0, 7, "Geburtstag");
+$worksheet->write(0, 8, "Geschlecht");
 
 // Spielerdaten
 for ($i=0;$i<count($meldungen);$i++) {
@@ -83,10 +86,11 @@ for ($i=0;$i<count($meldungen);$i++) {
 	$worksheet->write($i+2, 1, $meldungen[$i]["vorname"]);
 	$worksheet->write($i+2, 2, $meldungen[$i]["davor"]);
 	$worksheet->write($i+2, 3, $meldungen[$i]["verein"]);
-	$worksheet->write($i+2, 4, $meldungen[$i]["ak"]);
-	$worksheet->write($i+2, 5, $meldungen[$i]["passnummer"]);
-	$worksheet->write($i+2, 6, getBoeDatum($meldungen[$i]["geburtstag"]));
-	$worksheet->write($i+2, 7, $meldungen[$i]["geschlecht"]);
+	$worksheet->write($i+2, 4, $meldungen[$i]["partnernr"]);
+	$worksheet->write($i+2, 5, $meldungen[$i]["ak"]);
+	$worksheet->write($i+2, 6, $meldungen[$i]["passnummer"]);
+	$worksheet->write($i+2, 7, getBoeDatum($meldungen[$i]["geburtstag"]));
+	$worksheet->write($i+2, 8, $meldungen[$i]["geschlecht"]);
 }
 
 // Worksheet je Verein fuer Startgelder
@@ -108,6 +112,7 @@ for ($i=0;$i<count($index2verein);$i++) {
 	$worksheet_v[$i]->write(2, 3, "Passnummer");
 	$worksheet_v[$i]->write(2, 4, "Geburtstag");
 	$worksheet_v[$i]->write(2, 5, "Geschlecht");
+	$worksheet_v[$i]->write(2, 6, "Partnernr");
 
 	$zeile = 3;
 	for ($j=0;$j<count($spieler[$i]);$j++) {
@@ -117,6 +122,7 @@ for ($i=0;$i<count($index2verein);$i++) {
 		$worksheet_v[$i]->write($zeile, 3, $meldungen[$spieler[$i][$j]]["passnummer"]);
 		$worksheet_v[$i]->write($zeile, 4, getBoeDatum($meldungen[$spieler[$i][$j]]["geburtstag"]));
 		$worksheet_v[$i]->write($zeile, 5, $meldungen[$spieler[$i][$j]]["geschlecht"]);
+		$worksheet_v[$i]->write($zeile, 6, $meldungen[$spieler[$i][$j]]["partnernr"]);
 		$zeile++;
 	}
 	$zeile++;
