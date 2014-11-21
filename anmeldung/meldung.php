@@ -31,9 +31,11 @@ if ($_POST["doMeldungSubmit"])
 	$rs = &$conn->Execute("delete from tas_meldung where verein_id=".$_SESSION["verein"]["id"].' AND turnier_id='.$tid);
 	if (count ($_POST["meldung"]) )
 	{
-		$sql='insert into tas_meldung (turnier_id,spieler_id,verein_id,ak,anmerkung) VALUES ';
-		for ($i=0;$i<count($_POST["meldung"]);$i++) 
-			$sql.='('.$tid.','.$_POST["meldung"][$i].','.$_SESSION["verein"]["id"].',"'.$_POST["spk"][$_POST["meldung"][$i]].'","'.$_POST["anmerkung"].'"),';
+		$sql='insert into tas_meldung (turnier_id,spieler_id,verein_id,ak,partnernr,anmerkung) VALUES ';
+		for ($i=0;$i<count($_POST["meldung"]);$i++) {
+			$spid=$_POST["meldung"][$i];
+			$sql.='('.$tid.','.$spid.','.$_SESSION["verein"]["id"].',"'.$_POST["spk"][$spid].'","'.$_POST["partnernr"][$spid].'","'.$_POST["anmerkung"].'"),';
+		}
 		$sql=substr($sql,0,strlen($sql)-1);
 		$rs = &$conn->Execute($sql);
 	}
@@ -41,7 +43,7 @@ if ($_POST["doMeldungSubmit"])
 }
 
 // spielerdaten mit turnieranmeldung holen
-$sql='select tas_spieler.*,tas_meldung.ak,tas_meldung.anmerkung,tas_meldung.turnier_id 
+$sql='select tas_spieler.*,tas_meldung.ak,tas_meldung.anmerkung,tas_meldung.turnier_id,tas_meldung.partnernr
 	FROM tas_spieler 
 	LEFT OUTER JOIN tas_meldung 
 		ON tas_spieler.id=tas_meldung.spieler_id 

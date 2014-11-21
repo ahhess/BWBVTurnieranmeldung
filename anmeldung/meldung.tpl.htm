@@ -50,7 +50,7 @@
 						<p>Hiermit werden nachfolgende Spieler(innen) zum o.g. Turnier verbindlich angemeldet. Verpflichtungen, die aus dieser Meldung resultieren, regelt die SpO.</p>
 					</div>
 					<div class="span6">
-						<p><strong>Anmerkungen zur Meldung / ggf. Doppelpaarungen:</strong>
+						<p><strong>Anmerkungen zur Meldung:</strong>
 						<p><textarea name="anmerkung" rows="4" id="anmerkung">{$anmerkung}</textarea>
 					</div>
 				</div>
@@ -63,6 +63,7 @@
 						  <th>Vorname</th>
 						  <th>Geburtsdatum</th>
 						  <th>Passnummer</th>
+						  <th>Partnernr*</th>
 						  <th>Spielklasse</th>
 						</thead>
 						<tbody>
@@ -73,6 +74,7 @@
 							  <td>{$spieler[zeile].vorname}</td>
 							  <td>{$spieler[zeile].geburtstag|date_format:"%d.%m.%Y"}</td>
 							  <td>{if $spieler[zeile].passnummer!=""}{$spieler[zeile].passnummer}{else}<a href="editieren.php">nachtragen</a>{/if}</td>
+							  <td><input name="partnernr[{$spieler[zeile].id}]" id="partnernr[{$spieler[zeile].id}]" value="{$spieler[zeile].partnernr}" class="input-mini"></td>
 							  <td>
 								<select class="input-small" name=spk[{$spieler[zeile].id}] id="spk[{$spieler[zeile].id}]">
 									<option value="U9"  {if $spieler[zeile].ak=="U9"} SELECTED{elseif $spieler[zeile].spielklasse=="U9"}SELECTED{/if}> U&nbsp;9 {if $spieler[zeile].geschlecht=="m"}JE{else}ME{/if}</option>
@@ -92,6 +94,8 @@
 				
 				<div class="row-fluid">
 					<button class="btn btn-large btn-block" name="doMeldungSubmit" value="doMeldungSubmit">Melden</button>
+					<p>&nbsp;</p>
+					<p>*) Bei Doppelmeldungen in der Spalte Partnernr bei den beiden Partner/innen die gleiche Partnernr eingeben.</p>
 				</div>
 
 				<input type="hidden" name="tid" value="{$turnier.id}">
