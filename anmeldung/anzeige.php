@@ -34,7 +34,7 @@ $sql='select tas_spieler.*, tas_vereine.davor, tas_vereine.name as verein, tas_m
 	where tas_meldung.spieler_id=tas_spieler.id 
 	and tas_meldung.turnier_id='.$_GET["id"].' 
 	and tas_meldung.verein_id=tas_vereine.id
-	order by tas_meldung.ak asc, tas_spieler.geschlecht asc, tas_spieler.nachname';
+	order by tas_meldung.ak asc, tas_spieler.geschlecht asc, tas_vereine.name, tas_vereine.davor, tas_meldung.partnernr, tas_spieler.nachname';
 $recordSetSpieler = &$conn->Execute($sql);
 $meldungen=$recordSetSpieler->GetArray();
 
