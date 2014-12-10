@@ -66,7 +66,7 @@ $conn->Close(); # optional
 for ($i=0;$i<count($s);$i++) 
 	$s[$i]["spielklasse"]=spielklasse_berechnen($s[$i]["geburtstag"]);
 
-if ($_POST["doMeldungSubmit"])
+if ($_POST["doMeldungSubmit"] && $sendmail == 1)
 {
 	// email aufbereiten
 	for ($i=0;$i<count($s);$i++) 
