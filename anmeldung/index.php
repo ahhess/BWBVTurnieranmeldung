@@ -32,7 +32,6 @@ function countMeldungen($conn, $turnierid, $vereinid) {
 }
 
 // aktuelle ausschreibungen holen - für login- und übersichtsseite
-$fristkulanz='1 DAY';
 $region="%";
 if($_GET['region']){
 	$region=$_GET['region'];
@@ -47,7 +46,7 @@ $sql="select tas_turnier.*,tas_turnierbeauftragter.vorname as ba_vorname, tas_tu
 	JOIN tas_turnierbeauftragter ON tas_turnier.turnierbeauftragter_id=tas_turnierbeauftragter.id 
 	WHERE tas_turnier.region like '$region'
 	AND datum_anmelden_ab <= CURDATE() 
-	AND datum_anmelden_bis >= (CURDATE()-INTERVAL $fristkulanz) 
+	AND datum_anmelden_bis >= CURDATE() 
 	ORDER BY datum";
 if ($log) 
 	$systemmeldung=$systemmeldung.$sql."<br>";
@@ -71,7 +70,7 @@ $sql_abgelaufen="select tas_turnier.*,tas_turnierbeauftragter.vorname as ba_vorn
 	JOIN tas_turnierbeauftragter ON tas_turnier.turnierbeauftragter_id=tas_turnierbeauftragter.id 
 	WHERE tas_turnier.region like '$region'
 	AND datum >= CURDATE()  
-	AND datum_anmelden_bis < (CURDATE()-INTERVAL $fristkulanz)  
+	AND datum_anmelden_bis < CURDATE() 
 	ORDER BY datum";
 
 $rs = &$conn->Execute($sql_abgelaufen);
@@ -117,11 +116,9 @@ if (!session_is_registered("verein")) // keine session, d.h. noch nicht angemeld
 
 // ermitteln der Regionen
 $sql="select distinct region FROM tas_turnier 
-	WHERE ( datum_anmelden_ab <= CURDATE() 
-	AND datum_anmelden_bis >= (CURDATE()-INTERVAL $fristkulanz) 
-	) OR ( datum >= CURDATE()  
-	AND datum_anmelden_bis < (CURDATE()-INTERVAL $fristkulanz) 
-	) ORDER BY region";
+	WHERE ( datum_anmelden_ab <= CURDATE() AND datum_anmelden_bis >= CURDATE() ) 
+	OR ( datum >= CURDATE() AND datum_anmelden_bis < CURDATE() ) 
+	ORDER BY region";
 if ($log) 
 	$systemmeldung=$systemmeldung.$sql."<br>";
 $rs = &$conn->Execute($sql);
