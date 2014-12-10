@@ -18,16 +18,19 @@ if ($_POST["doSubmitEmail"])
 		davor='".$_POST["davor"]."', 
 		name='".$_POST["name"]."', 
 		region='".$_POST["region"]."', 
-		kurz='".$_POST["kurz"]."', 
-		passwort='".$_POST["passwort"]."', 
-		ansprechpartner_name='".$_POST["ansprechpartner_name"]."', 
+		kurz='".$_POST["kurz"]."',
 		ansprechpartner_strasse='".$_POST["ansprechpartner_strasse"]."', 
 		ansprechpartner_plz_ort='".$_POST["ansprechpartner_plz_ort"]."', 
 		ansprechpartner_telefon='".$_POST["ansprechpartner_telefon"]."', 
 		ansprechpartner_mobil='".$_POST["ansprechpartner_mobil"]."', 
 		ansprechpartner_email='".$_POST["ansprechpartner_email"]."', 
-		ansprechpartner_bemerkung='".$_POST["ansprechpartner_bemerkung"]."' 
-		WHERE id=".$_POST["id"];
+		ansprechpartner_name='".$_POST["ansprechpartner_name"]."', 
+		ansprechpartner_bemerkung='".$_POST["ansprechpartner_bemerkung"]."' ";
+	// passwort nur updaten, wenn gefuellt (wird in anzeige nicht vorbelegt)
+	if ($_POST["passwort"]) {
+		$sql=$sql.",passwort='".$_POST["passwort"]."' ";
+	}
+	$sql=$sql." WHERE id=".$_POST["id"];
 
 	$rs = &$conn->Execute($sql) or die ("Fehler beim Speichern. Bitte Administrator benachrichtigen.");
 	$systemmeldung='Daten wurden gespeichert.';
