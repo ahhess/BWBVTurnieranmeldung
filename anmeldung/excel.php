@@ -9,20 +9,6 @@ $conn = &ADONewConnection('mysql');	# create a connection
 $conn->PConnect($host,$user,$password,$database);   # connect to MS-Access, northwind dsn
 $ADODB_FETCH_MODE = ADODB_FETCH_ASSOC;
 
-// tas_vereine holen
-$sql='select tas_spieler.*, tas_vereine.davor, tas_vereine.name as verein, 
-	tas_meldung.verein_id, tas_meldung.ak as ak, tas_meldung.partnernr as partnernr, 
-	tas_turnier.name_lang as turnier, tas_meldung.anmerkung as anmerkung 
-	from tas_meldung,tas_spieler,tas_vereine,tas_turnier 
-	where tas_meldung.spieler_id=tas_spieler.id 
-	and tas_meldung.turnier_id='.$_GET["id"].' 
-	and tas_meldung.verein_id=tas_vereine.id 
-	and tas_turnier.id=tas_meldung.turnier_id 
-	order by tas_meldung.ak, tas_spieler.geschlecht, tas_vereine.name, tas_vereine.davor, tas_meldung.partnernr, tas_spieler.nachname';
-	
-$recordSetSpieler = &$conn->Execute($sql);
-$meldungen=$recordSetSpieler->GetArray();
-
 // turnierinfo holen
 $sqlT='Select * FROM tas_turnier WHERE id='.$_GET["id"];
 $recordSetTurnier = &$conn->Execute($sqlT);
@@ -30,20 +16,37 @@ $turnier=$recordSetTurnier->GetArray();
 if (count($turnier)==0) die("TURNIER EXISTIERT NICHT!");
 $turnier=$turnier[0];
 
-//print_r($turnier);exit;
-//print_r($meldungen);
+// spielermeldungen holen
+$sql='select tas_spieler.*, tas_vereine.davor, tas_vereine.name as verein, 
+	tas_meldung.verein_id, tas_meldung.ak as ak, tas_meldung.partnernr as partnernr, 
+	tas_turnier.name_lang as turnier
+	from tas_meldung,tas_spieler,tas_vereine,tas_turnier 
+	where tas_meldung.spieler_id=tas_spieler.id 
+	and tas_meldung.turnier_id='.$_GET["id"].' 
+	and tas_meldung.verein_id=tas_vereine.id 
+	and tas_turnier.id=tas_meldung.turnier_id 
+	order by tas_meldung.ak, tas_spieler.geschlecht, tas_vereine.name, tas_vereine.davor, tas_meldung.partnernr, tas_spieler.nachname';
+	
+$recordSetSpieler = &$conn->Execute($sql) or die("SQL Error");
+$meldungen=$recordSetSpieler->GetArray();
 
-$conn->Close(); # optional
+// vereinsmeldungen (anmerkungen) holen
+$vereinsmeldungen = array();
+$sql='select * from tas_vereinsmeldung where turnier_id='.$_GET["id"];
+$rs = &$conn->Execute($sql) or die("SQL Error");
+if ($rs) {
+	$vereinsmeldungen = $rs->GetArray();
+}
 
 $j=0;
-$index2verein=array();
+$vereinsnamen=array();
 
 for ($i=0;$i<count($meldungen);$i++) {
 	$vn=$meldungen[$i]["davor"].' '.$meldungen[$i]["verein"];
-	if (!in_array($vn,$index2verein)) {
-		//$index2verein[$j]=$meldungen[$i]["verein"];
-		$index2verein[$j]=$vn;
+	if (!in_array($vn,$vereinsnamen)) {
+		$vereinsnamen[$j]=$vn;
 		$verein2index[$vn]=$j;
+		$verein_id[$vn]=$meldungen[$i]["verein_id"];
 		$j++;
 	}
 	$spieler[$verein2index[$vn]][]=$i;
@@ -96,17 +99,17 @@ for ($i=0;$i<count($meldungen);$i++) {
 }
 
 // Worksheet je Verein fuer Startgelder
-for ($i=0;$i<count($index2verein);$i++) {
+for ($i=0;$i<count($vereinsnamen);$i++) {
 
-	$worksheet_v[$i] =& $workbook->addWorksheet($index2verein[$i]);
-	$worksheet_v[$i]->setHeader("Teilnehmerübersicht und Startgeldaufstellung für ".$index2verein[$i]);
+	$worksheet_v[$i] =& $workbook->addWorksheet(str_replace("/", "-", $vereinsnamen[$i]));
+	$worksheet_v[$i]->setHeader("Teilnehmerübersicht und Startgeldaufstellung für ".$vereinsnamen[$i]);
 	$worksheet_v[$i]->setFooter($turnier["name_lang"].", ".$turnier["datum"]."\nStand ".date("d.m.Y - H:i")." Uhr");
 	$worksheet_v[$i]->hideGridlines();
 
 	//$worksheet_v[$i]->insertBitmap(0,3,"img/logo_bwbv.bmp",40,0,0.8);
 
 	$worksheet_v[$i]->write(0, 0, "Startgelder:",$fett);
-	$worksheet_v[$i]->write(0, 1, $index2verein[$i],$fett);
+	$worksheet_v[$i]->write(0, 1, $vereinsnamen[$i],$fett);
 
 	$c=0;
 	$worksheet_v[$i]->write(2, $c++, "Nachname");
@@ -135,13 +138,17 @@ for ($i=0;$i<count($index2verein);$i++) {
 	$worksheet_v[$i]->write($zeile++, 0,"-------------------------------");
 	$worksheet_v[$i]->write($zeile++, 0,$summe);
 	//$worksheet_v[$i]->write($zeile++, 0,"* Voraussichtlich zu entrichten. Startgelder können je nach Meldestand zum Termin variieren.");
-	
-	$zeile++;
-	if ($meldungen[$spieler[$i][0]]["anmerkung"]) {
-		$worksheet_v[$i]->write($zeile++, 0, "Anmerkungen des Vereins:");
-		$worksheet_v[$i]->write($zeile++, 0, $meldungen[$spieler[$i][0]]["anmerkung"]);
+
+	//anmerkungen ausgeben
+	for ($j=0;$j<count($vereinsmeldungen);$j++) {
+		if ($vereinsmeldungen[$j]["verein_id"] == $verein_id[$vereinsnamen[$i]]
+		&&  $vereinsmeldungen[$j]["anmerkung"]) {
+			$zeile++;
+			$worksheet_v[$i]->write($zeile++, 0, "Anmerkungen des Vereins:");
+			//$worksheet_v[$i]->write($zeile++, 0, $vereinsmeldungen[$j]["anmerkung"]);
+			$worksheet_v[$i]->write($zeile++, 0, preg_replace("/[\\n\\r]+/", " ", $vereinsmeldungen[$j]["anmerkung"]));
+		}
 	}
 }
-
 $workbook->close();
 ?>
