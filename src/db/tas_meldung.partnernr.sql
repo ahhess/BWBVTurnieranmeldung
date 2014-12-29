@@ -1,2 +1,3 @@
 alter  TABLE `tas_meldung` add 
-  `partnernr` varchar(4) NOT NULL DEFAULT ''
+  `partner` varchar(100) collate utf8_unicode_ci default NULL
+  ;

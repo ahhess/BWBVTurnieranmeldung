@@ -18,14 +18,14 @@ $turnier=$turnier[0];
 
 // spielermeldungen holen
 $sql='select tas_spieler.*, tas_vereine.davor, tas_vereine.name as verein, 
-	tas_meldung.verein_id, tas_meldung.ak as ak, tas_meldung.partnernr as partnernr, 
+	tas_meldung.verein_id, tas_meldung.ak as ak, tas_meldung.partner as partner, 
 	tas_turnier.name_lang as turnier
 	from tas_meldung,tas_spieler,tas_vereine,tas_turnier 
 	where tas_meldung.spieler_id=tas_spieler.id 
 	and tas_meldung.turnier_id='.$_GET["id"].' 
 	and tas_meldung.verein_id=tas_vereine.id 
 	and tas_turnier.id=tas_meldung.turnier_id 
-	order by tas_meldung.ak, tas_spieler.geschlecht, tas_vereine.name, tas_vereine.davor, tas_meldung.partnernr, tas_spieler.nachname';
+	order by tas_meldung.ak, tas_spieler.geschlecht, tas_vereine.name, tas_vereine.davor, tas_meldung.partner, tas_spieler.nachname';
 	
 $recordSetSpieler = &$conn->Execute($sql) or die("SQL Error");
 $meldungen=$recordSetSpieler->GetArray();
@@ -78,11 +78,11 @@ $worksheet->write(0, $c++, "Nachname");
 $worksheet->write(0, $c++, "Vorname");
 $worksheet->write(0, $c++, "Kuerzel");
 $worksheet->write(0, $c++, "Verein");
-$worksheet->write(0, $c++, "Partnernr");
 $worksheet->write(0, $c++, "Passnummer");
 $worksheet->write(0, $c++, "Geburtstag");
 $worksheet->write(0, $c++, "AK");
 $worksheet->write(0, $c++, "Geschlecht");
+$worksheet->write(0, $c++, "Partner");
 
 // Spielerdaten
 for ($i=0;$i<count($meldungen);$i++) {
@@ -91,11 +91,11 @@ for ($i=0;$i<count($meldungen);$i++) {
 	$worksheet->write($i+2, $c++, $meldungen[$i]["vorname"]);
 	$worksheet->write($i+2, $c++, $meldungen[$i]["davor"]);
 	$worksheet->write($i+2, $c++, $meldungen[$i]["verein"]);
-	$worksheet->write($i+2, $c++, $meldungen[$i]["partnernr"]);
 	$worksheet->write($i+2, $c++, $meldungen[$i]["passnummer"]);
 	$worksheet->write($i+2, $c++, getBoeDatum($meldungen[$i]["geburtstag"]));
 	$worksheet->write($i+2, $c++, $meldungen[$i]["ak"]);
 	$worksheet->write($i+2, $c++, $meldungen[$i]["geschlecht"]);
+	$worksheet->write($i+2, $c++, $meldungen[$i]["partner"]);
 }
 
 // Worksheet je Verein fuer Startgelder
@@ -114,22 +114,22 @@ for ($i=0;$i<count($vereinsnamen);$i++) {
 	$c=0;
 	$worksheet_v[$i]->write(2, $c++, "Nachname");
 	$worksheet_v[$i]->write(2, $c++, "Vorname");
-	$worksheet_v[$i]->write(2, $c++, "Partnernr");
 	$worksheet_v[$i]->write(2, $c++, "Passnummer");
 	$worksheet_v[$i]->write(2, $c++, "Geburtstag");
 	$worksheet_v[$i]->write(2, $c++, "AK");
 	$worksheet_v[$i]->write(2, $c++, "Geschlecht");
+	$worksheet_v[$i]->write(2, $c++, "Partner");
 
 	$zeile = 3;
 	for ($j=0;$j<count($spieler[$i]);$j++) {
 		$c=0;
 		$worksheet_v[$i]->write($zeile, $c++, $meldungen[$spieler[$i][$j]]["nachname"]);
 		$worksheet_v[$i]->write($zeile, $c++, $meldungen[$spieler[$i][$j]]["vorname"]);
-		$worksheet_v[$i]->write($zeile, $c++, $meldungen[$spieler[$i][$j]]["partnernr"]);
 		$worksheet_v[$i]->write($zeile, $c++, $meldungen[$spieler[$i][$j]]["passnummer"]);
 		$worksheet_v[$i]->write($zeile, $c++, getBoeDatum($meldungen[$spieler[$i][$j]]["geburtstag"]));
 		$worksheet_v[$i]->write($zeile, $c++, $meldungen[$spieler[$i][$j]]["ak"]);
 		$worksheet_v[$i]->write($zeile, $c++, $meldungen[$spieler[$i][$j]]["geschlecht"]);
+		$worksheet_v[$i]->write($zeile, $c++, $meldungen[$spieler[$i][$j]]["partner"]);
 		$zeile++;
 	}
 	$zeile++;

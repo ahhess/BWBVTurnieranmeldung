@@ -63,18 +63,17 @@
 						  <th>Vorname</th>
 						  <th>Geburtsdatum</th>
 						  <th>Passnummer</th>
-						  <th>Partnernr*</th>
 						  <th>Spielklasse</th>
+						  <th>Partner*</th>
 						</thead>
 						<tbody>
 							{section name=zeile loop=$spieler} 
 							<tr> 
-							  <td><input name="meldung[]" type="checkbox" class="" id="meldung[]" value="{$spieler[zeile].id}" {if $spieler[zeile].turnier_id==$turnier.id}CHECKED{/if}></td>
+							  <td><input name="meldung[]" type="checkbox" id="meldung[]" value="{$spieler[zeile].id}" {if $spieler[zeile].turnier_id==$turnier.id}CHECKED{/if}></td>
 							  <td>{$spieler[zeile].nachname}</td>
 							  <td>{$spieler[zeile].vorname}</td>
 							  <td>{$spieler[zeile].geburtstag|date_format:"%d.%m.%Y"}</td>
 							  <td>{if $spieler[zeile].passnummer!=""}{$spieler[zeile].passnummer}{else}<a href="editieren.php">nachtragen</a>{/if}</td>
-							  <td><input name="partnernr[{$spieler[zeile].id}]" id="partnernr[{$spieler[zeile].id}]" value="{$spieler[zeile].partnernr}" class="input-mini"></td>
 							  <td>
 								<select class="input-small" name=spk[{$spieler[zeile].id}] id="spk[{$spieler[zeile].id}]">
 									<option value="U9"  {if $spieler[zeile].ak=="U9"} SELECTED{elseif $spieler[zeile].spielklasse=="U9"}SELECTED{/if}> U&nbsp;9 {if $spieler[zeile].geschlecht=="m"}JE{else}ME{/if}</option>
@@ -86,6 +85,7 @@
 									<option value="ERW" {if $spieler[zeile].ak=="ERW"}SELECTED{elseif $spieler[zeile].ak=="" AND $spieler[zeile].spielklasse=="ERW"}SELECTED{/if}> ERW {if $spieler[zeile].geschlecht=="m"}HE{else}DE{/if}</option>
 								</select>
 							  </td>
+							  <td><input name="partner[{$spieler[zeile].id}]" id="partner[{$spieler[zeile].id}]" value="{$spieler[zeile].partner}" type="text" class="input"></td>
 							</tr>
 							{/section} 
 						</tbody>
@@ -95,7 +95,9 @@
 				<div class="row-fluid">
 					<button class="btn btn-large btn-block" name="doMeldungSubmit" value="doMeldungSubmit">Melden</button>
 					<p>&nbsp;</p>
-					<p>*) Bei Doppelmeldungen in der Spalte Partnernr bei den beiden Partner/innen die gleiche Partnernr eingeben.</p>
+					<p>*) Bei Doppel-/Mixedmeldungen in der Spalte "Partner" den jeweiligen Partnernamen eintragen (geht auch einfach mit Copy+Paste).
+					Beide Spieler müssen trotzdem "angehakt" sein. Vereinsfremde Partner mit Verein angeben. 
+					"frei" bei Freimeldung eintragen.)</p>
 				</div>
 
 				<input type="hidden" name="tid" value="{$turnier.id}">
