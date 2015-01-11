@@ -3,9 +3,9 @@
 -- http://www.phpmyadmin.net
 --
 -- Host: rdbms
--- Erstellungszeit: 05. Jan 2014 um 09:13
--- Server Version: 5.5.31-log
--- PHP-Version: 5.2.17
+-- Erstellungszeit: 06. Sep 2014 um 00:23
+-- Server Version: 5.5.37-log
+-- PHP-Version: 5.3.27
 
 SET SQL_MODE = "NO_AUTO_VALUE_ON_ZERO";
 SET time_zone = "+00:00";
@@ -19,8 +19,6 @@ SET time_zone = "+00:00";
 --
 -- Datenbank: `DB1226375`
 --
-CREATE DATABASE IF NOT EXISTS `DB1226375` DEFAULT CHARACTER SET latin1 COLLATE latin1_german1_ci;
-USE `DB1226375`;
 
 -- --------------------------------------------------------
 
@@ -28,7 +26,6 @@ USE `DB1226375`;
 -- Tabellenstruktur für Tabelle `tas_meldung`
 --
 
-DROP TABLE IF EXISTS `tas_meldung`;
 CREATE TABLE IF NOT EXISTS `tas_meldung` (
   `turnier_id` int(11) NOT NULL DEFAULT '0',
   `spieler_id` int(11) NOT NULL DEFAULT '0',
@@ -44,7 +41,6 @@ CREATE TABLE IF NOT EXISTS `tas_meldung` (
 -- Tabellenstruktur für Tabelle `tas_spieler`
 --
 
-DROP TABLE IF EXISTS `tas_spieler`;
 CREATE TABLE IF NOT EXISTS `tas_spieler` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
   `vorname` varchar(20) COLLATE utf8_unicode_ci NOT NULL DEFAULT '',
@@ -55,7 +51,8 @@ CREATE TABLE IF NOT EXISTS `tas_spieler` (
   `id_vereine` int(11) DEFAULT NULL,
   `bemerkung` varchar(30) COLLATE utf8_unicode_ci DEFAULT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=MyISAM  DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci AUTO_INCREMENT=712 ;
+) ENGINE=MyISAM  DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci AUTO_INCREMENT=2551 ;
+
 
 -- --------------------------------------------------------
 
@@ -63,7 +60,6 @@ CREATE TABLE IF NOT EXISTS `tas_spieler` (
 -- Tabellenstruktur für Tabelle `tas_turnier`
 --
 
-DROP TABLE IF EXISTS `tas_turnier`;
 CREATE TABLE IF NOT EXISTS `tas_turnier` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
   `name_lang` varchar(160) COLLATE utf8_unicode_ci NOT NULL DEFAULT '',
@@ -76,7 +72,7 @@ CREATE TABLE IF NOT EXISTS `tas_turnier` (
   `turnierbeauftragter_id` int(11) DEFAULT NULL,
   `region` varchar(10) COLLATE utf8_unicode_ci NOT NULL DEFAULT '',
   PRIMARY KEY (`id`)
-) ENGINE=MyISAM  DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci AUTO_INCREMENT=142 ;
+) ENGINE=MyISAM  DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci AUTO_INCREMENT=153 ;
 
 -- --------------------------------------------------------
 
@@ -84,7 +80,6 @@ CREATE TABLE IF NOT EXISTS `tas_turnier` (
 -- Tabellenstruktur für Tabelle `tas_turnierbeauftragter`
 --
 
-DROP TABLE IF EXISTS `tas_turnierbeauftragter`;
 CREATE TABLE IF NOT EXISTS `tas_turnierbeauftragter` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
   `nachname` varchar(30) CHARACTER SET utf8 COLLATE utf8_unicode_ci DEFAULT NULL,
@@ -98,8 +93,9 @@ CREATE TABLE IF NOT EXISTS `tas_turnierbeauftragter` (
   `fax` varchar(30) CHARACTER SET utf8 COLLATE utf8_unicode_ci DEFAULT NULL,
   `email` varchar(70) CHARACTER SET utf8 COLLATE utf8_unicode_ci DEFAULT NULL,
   `passwort` varchar(25) DEFAULT NULL,
+  `region` varchar(10) DEFAULT '',
   PRIMARY KEY (`id`)
-) ENGINE=MyISAM  DEFAULT CHARSET=utf8 AUTO_INCREMENT=26 ;
+) ENGINE=MyISAM  DEFAULT CHARSET=utf8 AUTO_INCREMENT=37 ;
 
 -- --------------------------------------------------------
 
@@ -107,7 +103,6 @@ CREATE TABLE IF NOT EXISTS `tas_turnierbeauftragter` (
 -- Tabellenstruktur für Tabelle `tas_vereine`
 --
 
-DROP TABLE IF EXISTS `tas_vereine`;
 CREATE TABLE IF NOT EXISTS `tas_vereine` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
   `davor` varchar(20) COLLATE utf8_unicode_ci DEFAULT NULL,
@@ -125,7 +120,8 @@ CREATE TABLE IF NOT EXISTS `tas_vereine` (
   PRIMARY KEY (`id`),
   UNIQUE KEY `davor` (`davor`,`name`),
   UNIQUE KEY `kurz` (`kurz`)
-) ENGINE=MyISAM  DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci AUTO_INCREMENT=426 ;
+) ENGINE=MyISAM  DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci AUTO_INCREMENT=10087 ;
+
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
 /*!40101 SET CHARACTER_SET_RESULTS=@OLD_CHARACTER_SET_RESULTS */;
