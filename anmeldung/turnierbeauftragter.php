@@ -13,6 +13,7 @@ $ADODB_FETCH_MODE = ADODB_FETCH_ASSOC;
 
 if ($_POST["doSave"] == "doSave"){
 	if ($_POST["id"] > 0){
+		$id = $_POST["id"];
 		$sql="UPDATE tas_turnierbeauftragter SET 
 			nachname='".$_POST["nachname"]."', 
 			vorname='".$_POST["vorname"]."', 
@@ -24,10 +25,11 @@ if ($_POST["doSave"] == "doSave"){
 			mobil='".$_POST["mobil"]."',
 			fax='".$_POST["fax"]."',
 			region='".$_POST["region"]."',
-			email='".$_POST["email"]."',
-			passwort='".$_POST["passwort"]."'
-			WHERE id=".$_POST["id"];
-		$id = $_POST["id"];
+			email='".$_POST["email"]."'";
+			if ($_POST["passwort"]) {
+				$sql=$sql.",passwort='".$_POST["passwort"]."' ";
+			}
+			$sql=$sql." WHERE id=".$id;
 	} else {
 		$sql="INSERT INTO tas_turnierbeauftragter (
 			nachname, vorname, strasse, plz, ort, telefon_priv, telefon_gesch, mobil, fax, region, email, passwort) 
@@ -42,8 +44,11 @@ if ($_POST["doSave"] == "doSave"){
 			'".$_POST["mobil"]."', 
 			'".$_POST["fax"]."', 
 			'".$_POST["region"]."', 
-			'".$_POST["email"]."', 
-			'".$_POST["passwort"]."')";
+			'".$_POST["email"]."'"; 
+			if ($_POST["passwort"]) {
+				$sql=$sql.",'".$_POST["passwort"]."'";
+			}
+			$sql=$sql.")";
 	}
 	$rc = &$conn->Execute($sql) or die ("Fehler beim Speichern. Bitte Administrator benachrichtigen. / ".$sql);
 	header("location:turnierbeauftragte.php");
