@@ -20,6 +20,7 @@ $conn->Close();
 require('../smarty/libs/Smarty.class.php');
 $smarty = get_new_smarty();
 $smarty->assign('liste',$liste);
+$smarty->assign('pwdis',$_GET["pwdis"]);
 $smarty->assign('menuakt','turnierbeauftragte.php');
 $smarty->assign('admin',$_SESSION["admin"]);
 $smarty->display('turnierbeauftragte.tpl.htm');
