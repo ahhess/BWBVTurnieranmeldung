@@ -137,16 +137,16 @@ for ($i=0;$i<count($vereinsnamen);$i++) {
 	$summe= "Summe = ".count($spieler[$i])." x ".$startgebuehr." EURO = ".(count($spieler[$i]) * $startgebuehr)." EURO";
 	$worksheet_v[$i]->write($zeile++, 0,"-------------------------------");
 	$worksheet_v[$i]->write($zeile++, 0,$summe);
-	//$worksheet_v[$i]->write($zeile++, 0,"* Voraussichtlich zu entrichten. Startgelder können je nach Meldestand zum Termin variieren.");
 
 	//anmerkungen ausgeben
 	for ($j=0;$j<count($vereinsmeldungen);$j++) {
-		if ($vereinsmeldungen[$j]["verein_id"] == $verein_id[$vereinsnamen[$i]]
-		&&  $vereinsmeldungen[$j]["anmerkung"]) {
-			$zeile++;
-			$worksheet_v[$i]->write($zeile++, 0, "Anmerkungen des Vereins:");
-			//$worksheet_v[$i]->write($zeile++, 0, $vereinsmeldungen[$j]["anmerkung"]);
-			$worksheet_v[$i]->write($zeile++, 0, preg_replace("/[\\n\\r]+/", " ", $vereinsmeldungen[$j]["anmerkung"]));
+		if ($vereinsmeldungen[$j]["verein_id"] == $verein_id[$vereinsnamen[$i]]) {
+			if ($vereinsmeldungen[$j]["anmerkung"]) {
+				$zeile++;
+				$worksheet_v[$i]->write($zeile++, 0, "Anmerkungen des Vereins:");
+				$worksheet_v[$i]->write($zeile++, 0, preg_replace("/[\\n\\r]+/", " ", $vereinsmeldungen[$j]["anmerkung"]));
+			}
+			break;
 		}
 	}
 }

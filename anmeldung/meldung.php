@@ -76,11 +76,17 @@ for ($i=0;$i<count($s);$i++)
 	$s[$i]["spielklasse"]=spielklasse_berechnen($s[$i]["geburtstag"]);
 
 
-if ($_POST["doMeldungSubmit"] && $sendmail == 1) {
-	// email aufbereiten
+if ($_POST["doMeldungSubmit"] && $sendmail == 1 ) {
+	function domail($to, $subj, $txt, $from) {
+		//echo "<pre>mail: to: $to, from: $from\nBetr.:$subj\n$txt</pre>"; 
+		mail($to, $subj, $txt, $from);
+	}
+	//gemeldete spieler nach id indizieren
 	for ($i=0;$i<count($s);$i++) {
 		$spieler[$s[$i]["id"]]=$s[$i];
 	}
+
+	// email aufbereiten
 	$absender="FROM: BWBV Turnieranmeldung <no-reply@bwbv.de>";
 	$adresse_turnierbeauftragter=$turnier["ba_vorname"]." ".$turnier["ba_nachname"]."\n".$turnier["ba_telefon_priv"]."\n".$turnier["ba_email"]."\n";
 	$adresse_rueckfrage_an_verein=$_SESSION["verein"]["ansprechpartner_name"]."\n".$_SESSION["verein"]["ansprechpartner_telefon"]."\n".$_SESSION["verein"]["ansprechpartner_email"]."\n";
@@ -89,8 +95,12 @@ if ($_POST["doMeldungSubmit"] && $sendmail == 1) {
 
 	for ($i=0;$i<count($_POST["meldung"]);$i++) {
 		$spielklasseVeraendert="";
-		if (spielklasse_berechnen($spieler[$_POST["meldung"][$i]]["geburtstag"]) != $_POST["spk"][$_POST["meldung"][$i]]) $spielklasseVeraendert="*";
-		$text.=$spieler[$_POST["meldung"][$i]]["nachname"].", ".$spieler[$_POST["meldung"][$i]]["vorname"]." - ".$_POST["spk"][$_POST["meldung"][$i]].$spielklasseVeraendert." - ".$spieler[$_POST["meldung"][$i]]["geburtstag"]."\n";
+		if (spielklasse_berechnen($spieler[$_POST["meldung"][$i]]["geburtstag"]) != $_POST["spk"][$_POST["meldung"][$i]]) 
+			$spielklasseVeraendert="*";
+		$text.=$spieler[$_POST["meldung"][$i]]["nachname"].", ".$spieler[$_POST["meldung"][$i]]["vorname"]." - ".$_POST["spk"][$_POST["meldung"][$i]].$spielklasseVeraendert." - ".$spieler[$_POST["meldung"][$i]]["geburtstag"];
+		if ($spieler[$_POST["meldung"][$i]]["partner"])
+			$text.=" - Partner: ".$spieler[$_POST["meldung"][$i]]["partner"];
+		$text.="\n";
 	}
 	$text.="\n\n* = Die Spielklasse wurde vom Eintragenden manuell verändert.\n\nAnmerkung zu der Meldung: \n";
 	$text.=$_POST["anmerkung"]?$_POST["anmerkung"]:"- keine Anmerkung gemacht -";
@@ -99,11 +109,6 @@ if ($_POST["doMeldungSubmit"] && $sendmail == 1) {
 	$text.="Meldender Verein:\n".$adresse_rueckfrage_an_verein."\n\n";
 	$text.="Dies ist eine automatisch generierte Infomail. Es gelten die im Onlinemeldesystem aktuell erfassten Meldungen. Bitte nicht an den Absender antworten.\n";
 	$text.="http://www.bwbv.de/turnier/anmeldung\n";
-	
-	function domail($to, $subj, $txt, $from) {
-		//echo "<pre>mail: to: $to, from: $from\nBetr.:$subj\n$txt</pre>"; 
-		mail($to, $subj, $txt, $from);
-	}
 	
 	// email an den turnierbeauftragten
 	if ($turnier["ba_email"]) 
