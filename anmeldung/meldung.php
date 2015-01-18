@@ -90,7 +90,7 @@ if ($_POST["doMeldungSubmit"] && $sendmail == 1 ) {
 	$absender="FROM: BWBV Turnieranmeldung <no-reply@bwbv.de>";
 	$adresse_turnierbeauftragter=$turnier["ba_vorname"]." ".$turnier["ba_nachname"]."\n".$turnier["ba_telefon_priv"]."\n".$turnier["ba_email"]."\n";
 	$adresse_rueckfrage_an_verein=$_SESSION["verein"]["ansprechpartner_name"]."\n".$_SESSION["verein"]["ansprechpartner_telefon"]."\n".$_SESSION["verein"]["ansprechpartner_email"]."\n";
-	$ueberschrift="Anmeldung: ".$turnier["name_kurz"]." (".$_SESSION["verein"]["davor"]." ".$_SESSION["verein"]["name"].")";
+	$ueberschrift="Anmeldung: ".$turnier["name_lang"]." am ".$turnier["name_kurz"]." (".$_SESSION["verein"]["davor"]." ".$_SESSION["verein"]["name"].")";
 	$text=$_SESSION["verein"]["name"]." hat soeben gemeldet:\n\n";
 
 	for ($i=0;$i<count($_POST["meldung"]);$i++) {
@@ -114,7 +114,7 @@ if ($_POST["doMeldungSubmit"] && $sendmail == 1 ) {
 	if ($turnier["ba_email"]) 
 		domail($turnier["ba_email"],$ueberschrift,$text,$absender);
 	else 
-		domail("turnieradmin@bwbv.de",$turnier["name_lang"]." hat keine Email des Beauftragten!!!","Bitte Korrigieren!",$absender);
+		domail("turnieradmin@bwbv.de",$turnier["name_lang"]." am ".$turnier["name_kurz"]." hat keine Email des Beauftragten!!!","Bitte Korrigieren!",$absender);
 
 	// email an den verein
 	if ($_SESSION["verein"]["ansprechpartner_email"]) {
