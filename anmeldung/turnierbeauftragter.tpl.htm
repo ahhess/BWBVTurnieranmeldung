@@ -29,6 +29,7 @@
 					<label class="control-label">Region: *</label>
 					<div class="controls">
 						<select class="form-control" name="region" value="{$turnierbeauftragter.region}" class="input-small">
+							<option{if $turnierbeauftragter.region == "BW"} selected{/if}>BW</option>
 							<option{if $turnierbeauftragter.region == "NB"} selected{/if}>NB</option>
 							<option{if $turnierbeauftragter.region == "NW"} selected{/if}>NW</option>
 							<option{if $turnierbeauftragter.region == "SB"} selected{/if}>SB</option>

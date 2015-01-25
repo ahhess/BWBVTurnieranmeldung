@@ -4,6 +4,8 @@
         <div class="span12">
 			<h2>Turniere</h2>
 			<form name="searchform" class="form-search" method="post">
+				<label class="radio"><input type="radio" name="region" id="regionbw" value="BW" onchange="document.searchform.submit()"
+					{if $region == "BW"} checked{/if}>BW</label>
 				<label class="radio"><input type="radio" name="region" id="regionnb" value="NB" onchange="document.searchform.submit()"
 					{if $region == "NB"} checked{/if}>NB</label>
 				<label class="radio"><input type="radio" name="region" id="regionnw" value="NW" onchange="document.searchform.submit()"

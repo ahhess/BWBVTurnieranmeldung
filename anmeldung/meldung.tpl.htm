@@ -85,7 +85,7 @@
 									<option value="ERW" {if $spieler[zeile].ak=="ERW"}SELECTED{elseif $spieler[zeile].ak=="" AND $spieler[zeile].spielklasse=="ERW"}SELECTED{/if}> ERW {if $spieler[zeile].geschlecht=="m"}HE{else}DE{/if}</option>
 								</select>
 							  </td>
-							  <td><input name="partner[{$spieler[zeile].id}]" id="partner[{$spieler[zeile].id}]" value="{$spieler[zeile].partner}" type="text" class="input"></td>
+							  <td><input name="partner[{$spieler[zeile].id}]" id="partner[{$spieler[zeile].id}]" value="{$spieler[zeile].partner}" type="text" class="input-xlarge"></td>
 							</tr>
 							{/section} 
 						</tbody>
