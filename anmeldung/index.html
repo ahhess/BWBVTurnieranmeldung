@@ -1,13 +1,8 @@
-<?php
-session_start();
-include("config.inc.php");
-include("funktionen.inc.php");
-include("../adodb/adodb.inc.php");
-?>
 <!DOCTYPE html>
-<html lang="de">
+<html lang="en">
 
 <head>
+
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1">
@@ -46,7 +41,7 @@ include("../adodb/adodb.inc.php");
                     <i class="fa fa-bars"></i>
                 </button>
                 <a class="navbar-brand page-scroll" href="#page-top">
-                    <i class="fa fa-play-circle"></i>  <span class="light"> Start </span> BWBV Turnier-Anmeldung
+                    <i class="fa fa-play-circle"></i>  <span class="light">Start</span>BWBV Turnier-Anmeldung
                 </a>
             </div>
 
@@ -90,65 +85,40 @@ include("../adodb/adodb.inc.php");
         <div class="row">
             <div class="col-lg-8 col-lg-offset-2">
                 <h2>Übersicht aktuelle Turniere</h2>
+			
+				<table class="table table-hover">
+				  <tbody>
+					<tr>
+					  <th>Turnier</td>
+					  <th>Region</td>
+					  <th>Datum</td>
+					  <th>Ort</td>
+					  <th>Meldezeitraum</td>
+					</tr>
+					<tr>
+					  <td>BWM 2015</td>
+					  <td>BW</td>
+					  <td>18.4.2015</td>
+					  <td>Fellbach</td>
+					  <td>
+												01.01.2015
+											bis 10.04.2015
+					  </td>
+					</tr>
 
-<?php
-$conn = &ADONewConnection('mysql');
-//$conn->debug=true;
-$conn->PConnect($host,$user,$password,$database);
-$ADODB_FETCH_MODE = ADODB_FETCH_ASSOC;
+					<tr>
+					  <td>Bez.-Meisterschaften NW</td>
+					  <td>NW</td>
+					  <td>07./08.02.2015</td>
+					  <td>Fischerwörthhalle, Fischerwörthstr. 8, 74379 Ingersheim</td>
+					  <td>
+												10.01.2015
+											bis 30.01.2015
+					  </td>
+					</tr>
+				  </tbody>
+				</table>
 
-// aktuelle ausschreibungen holen - für login- und übersichtsseite
-$region="%";
-if($_GET['region']){
-	$region=$_GET['region'];
-} else {
-	// Region des Vereins vorbelegen
-	if (is_array($_SESSION["verein"])){
-		$region=$_SESSION['verein']['region'];
-	}
-}
-$sql="select tas_turnier.*,tas_turnierbeauftragter.vorname as ba_vorname, tas_turnierbeauftragter.nachname as ba_nachname, tas_turnierbeauftragter.strasse as ba_strasse, tas_turnierbeauftragter.plz as ba_plz, tas_turnierbeauftragter.ort as ba_ort, tas_turnierbeauftragter.telefon_priv as ba_telefon_priv, tas_turnierbeauftragter.telefon_gesch as ba_telefon_gesch, tas_turnierbeauftragter.fax as ba_fax, tas_turnierbeauftragter.email as ba_email, tas_turnierbeauftragter.mobil as ba_mobil 
-	FROM tas_turnier
-	JOIN tas_turnierbeauftragter ON tas_turnier.turnierbeauftragter_id=tas_turnierbeauftragter.id 
-	WHERE tas_turnier.region like '$region'
-	AND ( datum_anmelden_ab <= CURDATE() AND datum_anmelden_bis >= CURDATE() )
-	or ( datum >= CURDATE() AND datum_anmelden_bis < CURDATE() )
-	ORDER BY datum";
-$rs = &$conn->Execute($sql);
-if ($rs){
-	$turniere=$rs->getArray();
-?>
-	<table class="table">
-		<thead>
-			<tr>
-			  <th>Turnier</td>
-			  <th>Region</td>
-			  <th>Datum</td>
-			  <th>Ort</td>
-			  <th>Meldezeitraum</td>
-			</tr>
-		</thead>
-		<tbody>
-<?php
-	for ($i=0;$i<count($turniere);$i++)	{
-?>
-			<tr>
-			  <td><?php echo $turniere[$i]['name_lang']; ?></td>
-			  <td><?php echo $turniere[$i]['region']; ?></td>
-			  <td><?php echo $turniere[$i]['name_kurz']; ?></td>
-			  <td><?php echo $turniere[$i]['ort']; ?></td>
-			  <td><?php if ($turniere[t]['datum_anmelden_ab'] != "0000-00-00") echo $turniere[$i]['datum_anmelden_ab']; ?>
-				bis <?php echo $turniere[$i]['datum_anmelden_bis']; ?>
-			  </td>
-			</tr>
-<?php
-	}
-?>
-		</tbody>
-	</table>
-<?php
-}		
-?>
 			</div>
         </div>
 			<a href="#login" class="btn btn-circle page-scroll">
@@ -181,7 +151,7 @@ if ($rs){
     <!-- Footer -->
     <footer>
         <div class="container text-center">
-            <p>Copyright &copy; 2015 <a href="http://www.bwbv.de">BWBV</a></p>
+            <p>Copyright &copy; 2015 <a href="http://www.bwbv.de">www.bwbv.de</a></p>
 			<p><a href="mailto:turnieradmin@bwbv.de">Q&A: turnieradmin@bwbv.de</a></p>
         </div>
     </footer>
