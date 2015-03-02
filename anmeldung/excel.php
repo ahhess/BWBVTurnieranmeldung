@@ -130,74 +130,43 @@ if ($debug) {
 	echo("</table>");
 }	
 
-if($_GET["cnt"])
-	$cnt=$_GET["cnt"];
-else
-	$cnt=65000;
+// Worksheet fuer Startgelder je Verein
+$sheetname="Startgelder";
+$header2="Startgelder (Stand ".date("d.m.Y - H:i").")";
+$startgebuehr=7;	
 
-// Worksheet je Verein fuer Startgelder
-for ($i=0;$i<$cnt && $i<count($vereinsnamen);$i++) {
-	$header2="Teilnehmerübersicht und Startgeldaufstellung für ".$vereinsnamen[$i]." (Stand ".date("d.m.Y - H:i").")";
-	$sheetname=str_replace("/", "-", $vereinsnamen[$i]);
-	if ($debug) {
-		echo("<h2>".$header2."</h2>");
-		echo("<h3>".$sheetname."</h3>");
-		echo("<table border='1'><tr><td>Spieler-ID<td>Nachname<td>Vorname<td>Geburtstag<td>AK<td>Geschlecht<td>Partner");
-	} else {
-		$worksheet =& $workbook->addWorksheet($sheetname);
-		$worksheet->setHeader($header2);
-		$worksheet->setFooter($header1);
-		$worksheet->hideGridlines();
-		//$worksheet->insertBitmap(0,3,"img/logo_bwbv.bmp",40,0,0.8);
-		$r=0;
-		$worksheet->write($r++, 0, $header1, $fett);
-		$worksheet->write($r++, 0, $header2, $fett);
-		//$worksheet->write(0, 0, "Startgelder:",$fett);
-		//$worksheet->write(0, 1, $vereinsnamen[$i],$fett);
+if ($debug) {
+	echo("<h2>".$header2."</h2>");
+	echo("<table border='1'><tr><td>Verein<td>Anzahl Teilnehmer<td>x ".$startgebuehr." EURO<td>Anmerkungen des Vereins");
+} else {
+	$worksheet =& $workbook->addWorksheet($sheetname);
+	$worksheet->setHeader($header2);
+	$worksheet->setFooter($header1);
+	$worksheet->hideGridlines();
+	$r=0;
+	$worksheet->write($r++, 0, $header1, $fett);
+	$worksheet->write($r++, 0, $header2, $fett);
 
-		$r++;
-		$r++;
-		$c=0;
-		$worksheet->write($r, $c++, "Spieler-ID", $fett);
-		$worksheet->write($r, $c++, "Nachname", $fett);
-		$worksheet->write($r, $c++, "Vorname", $fett);
-		$worksheet->write($r, $c++, "Geburtstag", $fett);
-		$worksheet->write($r, $c++, "AK", $fett);
-		$worksheet->write($r, $c++, "Geschlecht", $fett);
-		$worksheet->write($r, $c++, "Partner", $fett);
-	}
-	
-	for ($j=0;$j<count($spieler[$i]);$j++) {
-		$r++;
-		$c=0;
-		if ($debug) {
-			echo("<tr><td>".$meldungen[$spieler[$i][$j]]["passnummer"]);
-			echo("<td>".$meldungen[$spieler[$i][$j]]["nachname"]);
-			echo("<td>".$meldungen[$spieler[$i][$j]]["vorname"]);
-			echo("<td>".getBoeDatum($meldungen[$spieler[$i][$j]]["geburtstag"]));
-			echo("<td>".$meldungen[$spieler[$i][$j]]["ak"]);
-			echo("<td>".$meldungen[$spieler[$i][$j]]["geschlecht"]);
-			echo("<td>".$meldungen[$spieler[$i][$j]]["partner"]);
-		} else {
-			$worksheet->write($r, $c++, $meldungen[$spieler[$i][$j]]["nachname"]);
-			$worksheet->write($r, $c++, $meldungen[$spieler[$i][$j]]["vorname"]);
-			$worksheet->write($r, $c++, getBoeDatum($meldungen[$spieler[$i][$j]]["geburtstag"]));
-			$worksheet->write($r, $c++, $meldungen[$spieler[$i][$j]]["ak"]);
-			$worksheet->write($r, $c++, $meldungen[$spieler[$i][$j]]["geschlecht"]);
-			$worksheet->write($r, $c++, $meldungen[$spieler[$i][$j]]["partner"]);
-		}
-	}
-
-	//startgebuehr
 	$r++;
-	$startgebuehr=7;
-	$summe= "Summe = ".count($spieler[$i])." x ".$startgebuehr." EURO = ".(count($spieler[$i]) * $startgebuehr)." EURO";
+	$c=0;
+	$worksheet->write($r, $c++, "Verein", $fett);
+	$worksheet->write($r, $c++, "Anzahl Teilnehmer", $fett);
+	$worksheet->write($r, $c++, "x ".$startgebuehr." EURO", $fett);
+	$worksheet->write($r, $c++, "Anmerkungen des Vereins", $fett);
+}
+for ($i=0;$i<count($vereinsnamen);$i++) {
+	$summe=count($spieler[$i]) * $startgebuehr;
+	$r++;
+	$c=0;
 	if ($debug) {
-		echo("</table>");
-		echo("<p>".$summe);
+		echo("<tr><td>".$vereinsnamen[$i]);
+		echo("<td>".count($spieler[$i]));
+		echo("<td>".$summe);
+		echo("<td>");
 	} else {
-		$worksheet->write($r++, 0,"-------------------------------");
-		$worksheet->write($r++, 0,$summe, $fett);
+		$worksheet->write($r, $c++, $vereinsnamen[$i]);
+		$worksheet->write($r, $c++, count($spieler[$i]));
+		$worksheet->write($r, $c++, $summe);
 	}
 
 	//anmerkungen ausgeben
@@ -206,17 +175,18 @@ for ($i=0;$i<$cnt && $i<count($vereinsnamen);$i++) {
 			if ($vereinsmeldungen[$j]["anmerkung"]) {
 				$anm = preg_replace("/[\\n\\r]+/", " ", $vereinsmeldungen[$j]["anmerkung"]);
 				if ($debug) {
-					echo("<p>Anmerkungen: ".$anm);
+					echo($anm);
 				} else {
-					$r++;
-					$worksheet->write($r++, 0, "Anmerkungen des Vereins:");
-					$worksheet->write($r++, 0, $anm);
+					$worksheet->write($r, $c++, $anm);
 				}
 			}
 			break;
 		}
 	}
 }
-if (!$debug) 
+if ($debug) {
+	echo("</table>");
+} else {	
 	$workbook->close();
+}
 ?>
