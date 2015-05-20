@@ -19,13 +19,16 @@ if ($_POST["doMeldungSubmit"]) {
 	//Meldung speichern
 	$rs = &$conn->Execute("delete from tas_vereinsmeldung where verein_id=$vid AND turnier_id=$tid");
 	$rs = &$conn->Execute("delete from tas_meldung where verein_id=$vid AND turnier_id=$tid");
-	if (count ($_POST["meldung"]) )	{
+	$meldung = $_POST["meldung"];
+	if (count($meldung) )	{
 		$sql='insert into tas_meldung (turnier_id,spieler_id,verein_id,ak,partner) VALUES ';
-		for ($i=0;$i<count($_POST["meldung"]);$i++) {
-			$spid=$_POST["meldung"][$i];
-			$sql.='('.$tid.','.$spid.','.$vid.',"'.$_POST["spk"][$spid].'","'.$_POST["partner"][$spid].'"),';
+		for ($i=0;$i<count($meldung);$i++) {
+			$spid=$meldung[$i];
+			$ak=$_POST["spk"][$spid];
+			$partner=$_POST["partner"][$spid];
+			$sql.="($tid,$spid,$vid,'$ak','$partner'),";
 		}
-		$sql=substr($sql,0,strlen($sql)-1);
+		$sql=substr($sql,0,strlen($sql)-1); //letztes komma weg
 		$rs = &$conn->Execute($sql);
 	}
 	if ($_POST["anmerkung"]) {
@@ -36,12 +39,12 @@ if ($_POST["doMeldungSubmit"]) {
 }
 
 // turnierdaten holen
-$sql='select tas_turnier.*,tas_turnierbeauftragter.vorname as ba_vorname, tas_turnierbeauftragter.nachname as ba_nachname, 
-	tas_turnierbeauftragter.strasse as ba_strasse, tas_turnierbeauftragter.plz as ba_plz, tas_turnierbeauftragter.ort as ba_ort, 
-	tas_turnierbeauftragter.telefon_priv as ba_telefon_priv, tas_turnierbeauftragter.telefon_gesch as ba_telefon_gesch, 
-	tas_turnierbeauftragter.fax as ba_fax, tas_turnierbeauftragter.email as ba_email, tas_turnierbeauftragter.mobil as ba_mobil 
-	FROM tas_turnier,tas_turnierbeauftragter 
-	WHERE tas_turnier.turnierbeauftragter_id=tas_turnierbeauftragter.id 
+$sql='select tas_turnier.*, ba.vorname as ba_vorname, ba.nachname as ba_nachname, 
+	ba.strasse as ba_strasse, ba.plz as ba_plz, ba.ort as ba_ort, 
+	ba.telefon_priv as ba_telefon_priv, ba.telefon_gesch as ba_telefon_gesch, 
+	ba.fax as ba_fax, ba.email as ba_email, ba.mobil as ba_mobil 
+	FROM tas_turnier, tas_turnierbeauftragter ba
+	WHERE tas_turnier.turnierbeauftragter_id=ba.id 
 	AND tas_turnier.id='.$tid;
 $recordSet = &$conn->Execute($sql);
 $turnier=$recordSet->getArray();

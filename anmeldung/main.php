@@ -2,27 +2,14 @@
 session_start();
 include("config.inc.php");
 include("funktionen.inc.php");
-include("../adodb/adodb.inc.php");
 
+check_login();
+
+include("../adodb/adodb.inc.php");
 $conn = &ADONewConnection('mysql');
 //$conn->debug=true;
 $conn->PConnect($host,$user,$password,$database);
 $ADODB_FETCH_MODE = ADODB_FETCH_ASSOC;
-
-// LOGIN Check
-//echo "doLoginSubmit=".$_POST["doLoginSubmit"].",benutzer=".$_POST["benutzer"].",passwort=".$_POST["passwort"];
-if ($_POST["doLoginSubmit"]){
-	if ( $_POST["benutzer"] <> "" and $_POST["passwort"] <> "" ) {
-		$sql='select * from tas_vereine where kurz="'.substr($_POST["benutzer"],0,10).'" AND passwort="'.$_POST["passwort"].'"';
-		$rs = &$conn->Execute($sql);
-		$v=$rs->GetArray();
-		if (count($v)){
-			$_SESSION["verein"]=$v[0];
-			header("location:main.php");   //alles klar, session da. hautpseite aufrufen!
-			exit;
-		}
-	}
-}
 ?>
 <!DOCTYPE html>
 <html lang="de">
@@ -65,45 +52,25 @@ if ($_POST["doLoginSubmit"]){
                 <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-main-collapse">
                     <i class="fa fa-bars"></i>
                 </button>
-                <a class="navbar-brand page-scroll" href="#page-top">
-                    <i class="fa fa-play-circle"></i>  <span class="light"> Start </span> BWBV Turnier-Anmeldung
+                <a class="navbar-brand page-scroll" href="#turniere">
+                    <i class="fa fa-play-circle"></i> BWBV Turnier-Anmeldung
                 </a>
             </div>
 
             <!-- Collect the nav links, forms, and other content for toggling -->
             <div class="collapse navbar-collapse navbar-right navbar-main-collapse">
                 <ul class="nav navbar-nav">
-                    <li class="hidden">
-                        <a href="#page-top"></a>
-                    </li>
-                    <li>
-                        <a class="page-scroll" href="#turniere">Turniere</a>
-                    </li>
-                    <li>
-                        <a class="page-scroll" href="#login">Login</a>
-                    </li>
+                    <li class="hidden"><a href="#page-top"></a></li>
+                    <li><a class="page-scroll" href="vereinskontakt.php">Vereinskontakt</a></li>
+                    <li><a class="page-scroll" href="editieren.php">Spielerdaten</a></li>
+                    <li><a class="page-scroll" href="help.php">FAQ</a></li>
+                    <li><a class="page-scroll" href="logoff.php">Abmelden</a></li>
                 </ul>
             </div>
             <!-- /.navbar-collapse -->
         </div>
         <!-- /.container -->
     </nav>
-
-    <!-- Intro Header -->
-    <header class="intro">
-        <div class="intro-body">
-            <div class="container">
-                <div class="row">
-                    <div class="col-md-8 col-md-offset-2">
-                        <h1 class="brand-heading">BWBV Turnier-Anmeldung</h1>
-                        <a href="#turniere" class="btn btn-circle page-scroll">
-                            <i class="fa fa-angle-double-down animated"></i>
-                        </a>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </header>
 
     <section id="turniere" class="container content-section text-center">
         <div class="row">
@@ -152,25 +119,6 @@ if ($rs){
 }		
 ?>
 			</div>
-        </div>
-			<a href="#login" class="btn btn-circle page-scroll">
-				<i class="fa fa-angle-double-down animated"></i>
-			</a>
-    </section>
-
-    <section id="login" class="container content-section text-center">
-        <div class="row">
-            <div class="col-lg-8 col-lg-offset-2">
-				<h2 class="form-signin-heading">Anmelden</h2>
-				<form class="form-signin" method="post">
-					<label for="benutzer" class="sr-only">Benutzer</label>
-					<input type="text" name="benutzer" class="form-control" placeholder="Benutzer" required autofocus>
-					<label for="passwort" class="sr-only">Password</label>
-					<input type="password" name="passwort" class="form-control" placeholder="Passwort" required>
-					<input type="hidden" name="doLoginSubmit" value="doLoginSubmit">
-					<button class="btn btn-lg btn-primary btn-block" type="submit">Anmelden</button>
-				</form>
-            </div>
         </div>
     </section>
 
