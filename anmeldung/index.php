@@ -80,7 +80,7 @@ if ($_POST["doLoginSubmit"]){
                         <a class="page-scroll" href="#turniere">Turniere</a>
                     </li>
                     <li>
-                        <a class="page-scroll" href="#login">Login</a>
+                        <a class="page-scroll" href="#login">Anmelden</a>
                     </li>
                 </ul>
             </div>
@@ -107,14 +107,14 @@ if ($_POST["doLoginSubmit"]){
 
     <section id="turniere" class="container content-section text-center">
         <div class="row">
-            <div class="col-lg-8 col-lg-offset-2">
+            <div> <!--class="col-lg-10 col-lg-offset-1"-->
 <?php
 // aktuelle ausschreibungen holen - für login- und übersichtsseite
 $sql="select tas_turnier.*,tas_turnierbeauftragter.vorname as ba_vorname, tas_turnierbeauftragter.nachname as ba_nachname, tas_turnierbeauftragter.strasse as ba_strasse, tas_turnierbeauftragter.plz as ba_plz, tas_turnierbeauftragter.ort as ba_ort, tas_turnierbeauftragter.telefon_priv as ba_telefon_priv, tas_turnierbeauftragter.telefon_gesch as ba_telefon_gesch, tas_turnierbeauftragter.fax as ba_fax, tas_turnierbeauftragter.email as ba_email, tas_turnierbeauftragter.mobil as ba_mobil 
 	FROM tas_turnier
 	JOIN tas_turnierbeauftragter ON tas_turnier.turnierbeauftragter_id=tas_turnierbeauftragter.id 
 	WHERE ( datum >= CURDATE() AND datum_anmelden_ab <= CURDATE() )
-	ORDER BY datum";
+	ORDER BY datum, tas_turnier.region, name_lang ";
 $rs = &$conn->Execute($sql);
 if ($rs){
 	$turniere=$rs->getArray();
@@ -123,9 +123,9 @@ if ($rs){
 				<table class="table">
 					<thead>
 						<tr>
-						  <th>Turnier</td>
-						  <th>Region</td>
 						  <th>Datum</td>
+						  <th>Region</td>
+						  <th>Turnier</td>
 						  <th>Ort</td>
 						  <th>Meldezeitraum</td>
 						</tr>
@@ -135,12 +135,12 @@ if ($rs){
 	for ($i=0;$i<count($turniere);$i++)	{
 ?>
 						<tr>
-						  <td><?php echo $turniere[$i]['name_lang']; ?></td>
-						  <td><?php echo $turniere[$i]['region']; ?></td>
 						  <td><?php echo $turniere[$i]['name_kurz']; ?></td>
+						  <td><?php echo $turniere[$i]['region']; ?></td>
+						  <td><?php echo $turniere[$i]['name_lang']; ?></td>
 						  <td><?php echo $turniere[$i]['ort']; ?></td>
-						  <td><?php if ($turniere[t]['datum_anmelden_ab'] != "0000-00-00") echo $turniere[$i]['datum_anmelden_ab']; ?>
-							bis <?php echo $turniere[$i]['datum_anmelden_bis']; ?>
+						  <td><?php if ($turniere[t]['datum_anmelden_ab'] != "0000-00-00") echo date_mysql2german($turniere[$i]['datum_anmelden_ab']); ?>
+							bis <?php echo date_mysql2german($turniere[$i]['datum_anmelden_bis']); ?>
 						  </td>
 						</tr>
 <?php
@@ -160,7 +160,7 @@ if ($rs){
 
     <section id="login" class="container content-section text-center">
         <div class="row">
-            <div class="col-lg-8 col-lg-offset-2">
+            <div class="col-lg-4 col-lg-offset-4">
 				<h2 class="form-signin-heading">Anmelden</h2>
 				<form class="form-signin" method="post">
 					<label for="benutzer" class="sr-only">Benutzer</label>
@@ -168,7 +168,7 @@ if ($rs){
 					<label for="passwort" class="sr-only">Password</label>
 					<input type="password" name="passwort" class="form-control" placeholder="Passwort" required>
 					<input type="hidden" name="doLoginSubmit" value="doLoginSubmit">
-					<button class="btn btn-lg btn-primary btn-block" type="submit">Anmelden</button>
+					<button class="btn btn-lg btn-primary btn-block" type="submit">OK</button>
 				</form>
             </div>
         </div>
@@ -177,26 +177,15 @@ if ($rs){
     <!-- Footer -->
     <footer>
         <div class="container text-center">
-            <p>Copyright &copy; 2015 <a href="http://www.bwbv.de">BWBV</a></p>
+            <p>Copyright &copy; 2015 <a href="http://www.bwbv.de">www.bwbv.de</a></p>
 			<p><a href="mailto:turnieradmin@bwbv.de">Q&A: turnieradmin@bwbv.de</a></p>
         </div>
     </footer>
 
-    <!-- jQuery -->
     <script src="js/jquery.js"></script>
-
-    <!-- Bootstrap Core JavaScript -->
     <script src="js/bootstrap.min.js"></script>
-
-    <!-- Plugin JavaScript -->
     <script src="js/jquery.easing.min.js"></script>
-
-    <!-- Google Maps API Key - Use your own API key to enable the map feature. More information on the Google Maps API can be found at https://developers.google.com/maps/ -->
-    <script type="text/javascript" src="https://maps.googleapis.com/maps/api/js?key=AIzaSyCRngKslUGJTlibkQ3FkfTxj3Xss1UlZDA&sensor=false"></script>
-
-    <!-- Custom Theme JavaScript -->
     <script src="js/grayscale.js"></script>
-
 </body>
 
 </html>

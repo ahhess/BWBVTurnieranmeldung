@@ -74,40 +74,68 @@ $ADODB_FETCH_MODE = ADODB_FETCH_ASSOC;
 
     <section id="turniere" class="container content-section text-center">
         <div class="row">
-            <div class="col-lg-8 col-lg-offset-2">
-<?php
-// aktuelle ausschreibungen holen - für login- und übersichtsseite
-$sql="select tas_turnier.*,tas_turnierbeauftragter.vorname as ba_vorname, tas_turnierbeauftragter.nachname as ba_nachname, tas_turnierbeauftragter.strasse as ba_strasse, tas_turnierbeauftragter.plz as ba_plz, tas_turnierbeauftragter.ort as ba_ort, tas_turnierbeauftragter.telefon_priv as ba_telefon_priv, tas_turnierbeauftragter.telefon_gesch as ba_telefon_gesch, tas_turnierbeauftragter.fax as ba_fax, tas_turnierbeauftragter.email as ba_email, tas_turnierbeauftragter.mobil as ba_mobil 
-	FROM tas_turnier
-	JOIN tas_turnierbeauftragter ON tas_turnier.turnierbeauftragter_id=tas_turnierbeauftragter.id 
-	WHERE ( datum >= CURDATE() AND datum_anmelden_ab <= CURDATE() )
-	ORDER BY datum";
-$rs = &$conn->Execute($sql);
-if ($rs){
-	$turniere=$rs->getArray();
-?>
+            <div> <!--class="col-lg-10 col-lg-offset-1"-->
                 <h2>&Uuml;bersicht aktuelle Turniere</h2>
 				<table class="table">
 					<thead>
 						<tr>
-						  <th>Turnier</td>
-						  <th>Region</td>
 						  <th>Datum</td>
+						  <th>Region</td>
+						  <th>Turnier</td>
 						  <th>Ort</td>
 						  <th>Meldezeitraum</td>
+						  <th>Meldungen Verein / Gesamt</th>
+						  <th>Verantw.</th>
+						  <th> </th>
 						</tr>
 					</thead>
 					<tbody>
 <?php
+// aktuelle ausschreibungen holen - für login- und übersichtsseite
+$region="%";
+if($_GET['region']){
+	$region=$_GET['region'];
+} else {
+	// Region des Vereins vorbelegen
+	if (is_array($_SESSION["verein"])){
+		$region=$_SESSION['verein']['region'];
+	}
+}
+$sql="select tas_turnier.*
+	, tas_turnierbeauftragter.vorname as ba_vorname, tas_turnierbeauftragter.nachname as ba_nachname
+	, (select count(*) from tas_meldung cv where tas_turnier.id=cv.turnier_id and cv.verein_id = 9) as anzahl_anmeldungen 
+	, (select count(*) from tas_meldung ca where tas_turnier.id=ca.turnier_id) as anmeldungen_gesamt 
+	FROM tas_turnier
+	JOIN tas_turnierbeauftragter ON tas_turnier.turnierbeauftragter_id=tas_turnierbeauftragter.id 
+	WHERE tas_turnier.region like '$region'
+	AND ( datum >= CURDATE() AND datum_anmelden_ab <= CURDATE() )
+	ORDER BY datum, tas_turnier.region, tas_turnier.name_lang";
+$rs = &$conn->Execute($sql);
+if ($rs){
+	$turniere=$rs->getArray();
 	for ($i=0;$i<count($turniere);$i++)	{
 ?>
 						<tr>
-						  <td><?php echo $turniere[$i]['name_lang']; ?></td>
-						  <td><?php echo $turniere[$i]['region']; ?></td>
 						  <td><?php echo $turniere[$i]['name_kurz']; ?></td>
+						  <td><?php echo $turniere[$i]['region']; ?></td>
+						  <td><?php echo $turniere[$i]['name_lang']; ?></td>
 						  <td><?php echo $turniere[$i]['ort']; ?></td>
 						  <td><?php if ($turniere[t]['datum_anmelden_ab'] != "0000-00-00") echo $turniere[$i]['datum_anmelden_ab']; ?>
 							bis <?php echo $turniere[$i]['datum_anmelden_bis']; ?>
+						  </td>
+						  <td><?php echo $turniere[$i]['anzahl_anmeldungen']." / ".$turniere[$i]['anmeldungen_gesamt']; ?></td>
+						  <td><?php echo $turniere[$i]['ba_vorname']." ".$turniere[$i]['ba_nachname']; ?></td>
+						  <td>
+							<div class="btn-toolbar">
+								<div class="btn-group">
+									<a class="btn" href="anzeige.php?id=<?php echo $turniere[$i]['id']; ?>">Meldeliste</a>
+									<form name="meldungform" method="post" action="meldung.php">
+										<input type="hidden" name="tid" value="<?php echo $turniere[$i]['id']; ?>">
+										<input type="submit" class="btn" value="Anmeldung">
+										<!--a class="btn" href="#" onclick="document.meldungform.tid.value='<?php echo $turniere[$i]['id']; ?>';document.meldungform.submit()">Anmeldung</a-->
+									</form>
+								</div>
+							</div>
 						  </td>
 						</tr>
 <?php
