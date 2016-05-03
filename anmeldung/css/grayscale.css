@@ -67,7 +67,7 @@ a:focus {
     text-transform: uppercase;
     font-family: Montserrat,"Helvetica Neue",Helvetica,Arial,sans-serif;
     background-color: #000;
-}
+ }
 
 .navbar-custom .navbar-brand {
     font-weight: 700;
@@ -144,6 +144,10 @@ a:focus {
     -moz-background-size: cover;
     background-size: cover;
     -o-background-size: cover;
+}
+
+th {
+    text-align: center;
 }
 
 .intro .intro-body {
@@ -262,6 +266,12 @@ a:focus {
     -moz-background-size: cover;
     background-size: cover;
     -o-background-size: cover;
+}
+
+.main-section {
+    margin-top: 50px;
+    padding-top: 130px;
+    background: url(../img/svfbadminton14.jpg) no-repeat top center scroll;
 }
 
 #map {

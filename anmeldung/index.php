@@ -160,7 +160,7 @@ if ($rs){
 
     <section id="login" class="container content-section text-center">
         <div class="row">
-            <div class="col-lg-4 col-lg-offset-4">
+            <div class="col-md-4 col-md-offset-4">
 				<h2 class="form-signin-heading">Anmelden</h2>
 				<form class="form-signin" method="post">
 					<label for="benutzer" class="sr-only">Benutzer</label>
