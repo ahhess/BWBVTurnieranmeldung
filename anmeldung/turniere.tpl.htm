@@ -4,16 +4,14 @@
         <div class="span12">
 			<h2>Turniere</h2>
 			<form name="searchform" class="form-search" method="post">
-				<label class="radio"><input type="radio" name="region" id="regionbw" value="BW" onchange="document.searchform.submit()"
-					{if $region == "BW"} checked{/if}>BW</label>
-				<label class="radio"><input type="radio" name="region" id="regionnb" value="NB" onchange="document.searchform.submit()"
-					{if $region == "NB"} checked{/if}>NB</label>
-				<label class="radio"><input type="radio" name="region" id="regionnw" value="NW" onchange="document.searchform.submit()"
-					{if $region == "NW" || $region == ""} checked{/if}>NW</label>
-				<label class="radio"><input type="radio" name="region" id="regionsb" value="SB" onchange="document.searchform.submit()"
-					{if $region == "SB"} checked{/if}>SB</label>
-				<label class="radio"><input type="radio" name="region" id="regionsw" value="SW" onchange="document.searchform.submit()"
-					{if $region == "SW"} checked{/if}>SW</label>
+				<label class="radio"><input type="radio" name="region" id="regionso" value="SO" onchange="document.searchform.submit()" {if $region == "SO"} checked{/if}>SO</label>
+				<label class="radio"><input type="radio" name="region" id="regionbw" value="BW" onchange="document.searchform.submit()" {if $region == "BW"} checked{/if}>BW</label>
+				<label class="radio"><input type="radio" name="region" id="regionnb" value="NB" onchange="document.searchform.submit()" {if $region == "NB"} checked{/if}>NB</label>
+				<label class="radio"><input type="radio" name="region" id="regionnw" value="NW" onchange="document.searchform.submit()" {if $region == "NW" || $region == ""} checked{/if}>NW</label>
+				<label class="radio"><input type="radio" name="region" id="regionsb" value="SB" onchange="document.searchform.submit()" {if $region == "SB"} checked{/if}>SB</label>
+				<label class="radio"><input type="radio" name="region" id="regionsw" value="SW" onchange="document.searchform.submit()" {if $region == "SW"} checked{/if}>SW</label>
+				<label class="radio"><input type="radio" name="region" id="regionbbv" value="BBV" onchange="document.searchform.submit()" {if $region == "BBV"} checked{/if}>BBV</label>
+				<label class="radio"><input type="radio" name="region" id="regionbvs" value="BVS" onchange="document.searchform.submit()" {if $region == "BVS"} checked{/if}>BVS</label>
 			</form>
 			<table class="table table-hover table-condensed">
 			  <thead>
