@@ -65,4 +65,12 @@ $spielklasse["U17"]="U17";
 $spielklasse["U19"]="U19";
 $spielklasse["ERW"]="ERW";
 
+$regionen[0]="SO";
+$regionen[1]="BW";
+$regionen[2]="NB";
+$regionen[3]="SB";
+$regionen[4]="NW";
+$regionen[5]="SW";
+$regionen[6]="BBV";
+$regionen[7]="BVS";
 ?>

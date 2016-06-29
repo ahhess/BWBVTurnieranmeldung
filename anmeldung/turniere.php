@@ -14,8 +14,10 @@ $ADODB_FETCH_MODE = ADODB_FETCH_ASSOC;
 $region = "NW";
 if ($_SESSION["region"])
 	$region = $_SESSION["region"];
-if ($_POST["region"])
-	$region = $_POST["region"];
+if ($_GET["region"]) {
+	$region = $_GET["region"];
+	$_SESSION["region"] = $region;
+}
 
 unset($recordSet);
 $sql="SELECT tas_turnier.id, tas_turnier.name_lang, tas_turnier.name_kurz, tas_turnier.datum_anmelden_ab, tas_turnier.datum_anmelden_bis,
@@ -42,6 +44,7 @@ $smarty->assign('liste',$liste);
 $smarty->assign('menuakt','turniere.php');
 $smarty->assign('admin',$_SESSION["admin"]);
 $smarty->assign('region',$region);
+$smarty->assign('regionen',$regionen);
 
 $smarty->display('turniere.tpl.htm');
 ?>

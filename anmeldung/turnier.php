@@ -87,5 +87,7 @@ $smarty->assign('cnt',$cnt);
 $smarty->assign('menuakt','turnier.php');
 $smarty->assign('admin',$_SESSION["admin"]);
 //$smarty->assign('systemmeldung',$systemmeldung);
+$smarty->assign('regionen',$regionen);
+
 $smarty->display('turnier.tpl.htm');
 ?>

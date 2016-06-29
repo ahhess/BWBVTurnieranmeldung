@@ -6,10 +6,10 @@
 			{if $regionen}
 				<label class="btn">Region:</label>
 				<div class="btn-group" data-toggle="buttons-radio">
-				  {section name=i loop=$regionen}
-				  <a class="btn" href="?region={$regionen[i].region}">{$regionen[i].region}</a>
-				  {/section}
-				  <a class="btn" href="?region=%">alle</a>
+				{section name=i loop=$regionen}
+					<a class="btn{if $region == $regionen[i].region} active{/if}" href="?region={$regionen[i].region}">{$regionen[i].region}</a>
+				{/section}
+					<a class="btn{if $region == "%"} active{/if}" href="?region=%">alle</a>
 				</div>
 			{/if}
 			{if $turniere}

@@ -71,6 +71,7 @@ $smarty->assign('verein',$verein);
 $smarty->assign('anzahlspieler',$cnt);
 $smarty->assign('systemmeldung',$systemmeldung);
 $smarty->assign('admin',$_SESSION["admin"]);
+$smarty->assign('regionen',$regionen);
 //print('<pre>admin:'.$_SESSION["admin"]."</pre>");
 $smarty->display('vereinskontakt.tpl.htm');
 ?>
