@@ -135,6 +135,7 @@ $smarty->assign('turniere',$turniere);
 $smarty->assign('turniere_abgelaufen',$turniere_abgelaufen);
 $smarty->assign('regionen',$regionen);
 $smarty->assign('systemmeldung',$systemmeldung);
+$smarty->assign('menuakt','index.php');
 
 $smarty->display('index.tpl.htm');
 ?>
