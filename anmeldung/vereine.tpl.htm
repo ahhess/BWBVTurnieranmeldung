@@ -4,14 +4,12 @@
         <div class="span12">
 			<h2>Vereine</h2>
 			<form name="searchform" class="form-search" method="post">
-				<label class="radio"><input type="radio" name="region" id="regionnb" value="NB" onchange="document.searchform.suchen.click()"
-					{if $region == "NB"} checked{/if}>NB</label>
-				<label class="radio"><input type="radio" name="region" id="regionnw" value="NW" onchange="document.searchform.suchen.click()"
-					{if $region == "NW" || $region == ""} checked{/if}>NW</label>
-				<label class="radio"><input type="radio" name="region" id="regionsb" value="SB" onchange="document.searchform.suchen.click()"
-					{if $region == "SB"} checked{/if}>SB</label>
-				<label class="radio"><input type="radio" name="region" id="regionsw" value="SW" onchange="document.searchform.suchen.click()"
-					{if $region == "SW"} checked{/if}>SW</label>
+				<label class="radio"><input type="radio" name="region" id="regionnb" value="NB" onchange="document.searchform.suchen.click()" {if $region == "NB"} checked{/if}>NB</label>
+				<label class="radio"><input type="radio" name="region" id="regionnw" value="NW" onchange="document.searchform.suchen.click()" {if $region == "NW" || $region == ""} checked{/if}>NW</label>
+				<label class="radio"><input type="radio" name="region" id="regionsb" value="SB" onchange="document.searchform.suchen.click()" {if $region == "SB"} checked{/if}>SB</label>
+				<label class="radio"><input type="radio" name="region" id="regionsw" value="SW" onchange="document.searchform.suchen.click()" {if $region == "SW"} checked{/if}>SW</label>
+				<label class="radio"><input type="radio" name="region" id="regionbbv" value="BBV" onchange="document.searchform.suchen.click()" {if $region == "BBV"} checked{/if}>BBV</label>
+				<label class="radio"><input type="radio" name="region" id="regionbvs" value="BVS" onchange="document.searchform.suchen.click()" {if $region == "BVS"} checked{/if}>BVS</label>
 				<input class="search-query" name="q" placeholder="Vereins- oder Spielername" value="{$q}">
 				<button type="submit" class="btn" name="suchen" value="suchen"><i class="icon-search"></i></button>
 			</form>
