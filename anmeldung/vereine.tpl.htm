@@ -3,19 +3,6 @@
       <div class="row-fluid">
         <div class="span12">
 			<h2>Vereine</h2>
-			<form name="searchform" class="form-search" method="post">
-				<label class="radio"><input type="radio" name="region" id="regionnb" value="NB" onchange="document.searchform.suchen.click()"
-					{if $region == "NB"} checked{/if}>NB</label>
-				<label class="radio"><input type="radio" name="region" id="regionnw" value="NW" onchange="document.searchform.suchen.click()"
-					{if $region == "NW" || $region == ""} checked{/if}>NW</label>
-				<label class="radio"><input type="radio" name="region" id="regionsb" value="SB" onchange="document.searchform.suchen.click()"
-					{if $region == "SB"} checked{/if}>SB</label>
-				<label class="radio"><input type="radio" name="region" id="regionsw" value="SW" onchange="document.searchform.suchen.click()"
-					{if $region == "SW"} checked{/if}>SW</label>
-				<input class="search-query" name="q" placeholder="Vereins- oder Spielername" value="{$q}">
-				<button type="submit" class="btn" name="suchen" value="suchen"><i class="icon-search"></i></button>
-			</form>
-			
 			<table class="table table-hover table-condensed">
 			  <thead>
 				<tr>
@@ -23,8 +10,8 @@
 				  <th>K&uuml;rzel</td>
 				  <th>Name</td>
 				  <th>Benutzer</td>
-				  <th>Bezirk</td>
-				  <th><!-- <a class="btn btn-mini" href="#"><i class="icon-edit"></i></a> --></td>
+				  <th>Region</td>
+				  <th><a class="btn btn-mini" href="#" onclick="document.vereinform.submit()"><i class="icon-edit"></i></a></td>
 				</tr>
 			  </thead>
 			  <tbody>
@@ -49,7 +36,7 @@
 			</table>
 			
 			<form name="vereinform" method="post" action="vereinskontakt.php">
-				<input type="hidden" name="id">
+				<input type="hidden" name="id" value="-1">
 			</form>
 			
 			<form name="editform" method="post" action="editieren.php">

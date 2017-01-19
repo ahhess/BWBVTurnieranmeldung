@@ -12,25 +12,31 @@
 			<h3>Vereinskontaktdaten</h3>
 
 			<form class="form-horizontal" method="post">
-				<input name="id" type="hidden" value="{$verein.id}">
 			
 				<p>Verein:</p>
 				
 				<div class="control-group">
-					<label class="control-label" for="davor">K&uuml;rzel:</label>
+					<label class="control-label" for="id">Nr.*:</label>
+					<div class="controls">
+						<input name="id" type="text" size="6" {if $verein.id != -1} value="{$verein.id}" readonly>{else}>
+						<input name="neu" type="hidden" value="true">{/if}
+					</div>
+				</div>
+				<div class="control-group">
+					<label class="control-label" for="davor">K&uuml;rzel*:</label>
 					<div class="controls">
 						<input name="davor" type="text" value="{$verein.davor}" size="6">
 					</div>
 				</div>
 				<div class="control-group">
-					<label class="control-label" for="name">Name:</label>
+					<label class="control-label" for="name">Name*:</label>
 					<div class="controls">
 						<input name="name" type="text" value="{$verein.name}" size="30">
 						Anzahl Spieler: {$anzahlspieler}
 					</div>
 				</div>				
 				<div class="control-group">
-					<label class="control-label" for="region">Region:</label>
+					<label class="control-label" for="region">Region*:</label>
 					<div class="controls">
 						<select class="form-control" name="region" value="{$verein.region}" class="input-small">
 							<option{if $verein.region == "NB"} selected{/if}>NB</option>
@@ -90,7 +96,7 @@
 				<p>Benutzer:</p>
 				
 				<div class="control-group">
-					<label class="control-label" for="kurz">Benutzer:</label>
+					<label class="control-label" for="kurz">Benutzer*:</label>
 					<div class="controls">
 						<input name="kurz" type="text" value="{$verein.kurz}" size="30">
 					</div>
@@ -103,8 +109,8 @@
 				</div>
 				<div class="control-group">
 					<div class="controls">
-						<button type="submit" class="btn" name="doSubmitEmail" value="1">Speichern</button>
-						{if $admin && $anzahlspieler == 0}
+						<button type="submit" class="btn" name="doSubmit" value="1">Speichern</button>
+						{if $admin && $anzahlspieler == 0 && $verein.id != -1}
 						<button type="submit" class="btn" name="doDelete" value="1">L&ouml;schen</button>
 						{/if}
 					</div>
