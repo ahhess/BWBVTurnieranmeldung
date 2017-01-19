@@ -4,7 +4,6 @@
 	include("funktionen.inc.php");
 	check_login();
 
-
 	//turnier holen
 	$sql="select * from tas_turnier where id=".$_GET["id"];
 	$recordSet = &$conn->Execute($sql);
@@ -32,19 +31,20 @@
 	$recordSetVereine = &$conn->Execute($sqlV);
 	$vereine=$recordSetVereine->GetArray();
 
-
 	printHeader();
 ?>		
     <section id="turniere" class="container content-section text-center ">
         <div class="row">
-            <div>
+            <div class="col-md-4 col-md-offset-1">
 				<h2>Meldungen <?php echo $turnier['name_lang']; ?></h2>
 				
 				<p>am <?php echo $turnier['name_kurz']; ?> in <?php echo $turnier['ort']; ?></p>
 				<p>Hinweis: Nach Ende der Meldefrist kann diese Liste unter Umst&auml;nden nicht mehr aktuell sein. 
 				Kontaktieren Sie in diesem Fall ggf. den Turnierbeauftragten.</p>
 				<p>( Stand: <?php echo date('d.m.Y')." ".date('G:i'); ?>  Uhr )</p>
+            </div>
 
+			<div class="col-md-4 col-md-offset-1">
 				<h4>Bisher online gemeldete Vereine ( <?php echo count($vereine); ?>):</h4>
 				<table class="table table-hover table-condensed">
 					<tbody><?php 
@@ -56,7 +56,10 @@
 					} ?> 
 					</tbody> 
 				</table>
-
+            </div>
+		</div>
+        <div class="row">
+			<div class="col-md-10 col-md-offset-1">
 				<h4>Bisher gemeldete Spieler/innen ( <?php echo count($meldungen); ?>):</h4>
 				<table class="table table-hover table-condensed">
 					<thead>
