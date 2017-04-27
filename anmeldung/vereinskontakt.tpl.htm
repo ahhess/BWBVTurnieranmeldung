@@ -39,10 +39,9 @@
 					<label class="control-label" for="region">Region*:</label>
 					<div class="controls">
 						<select class="form-control" name="region" value="{$verein.region}" class="input-small">
-							<option{if $verein.region == "NB"} selected{/if}>NB</option>
-							<option{if $verein.region == "NW"} selected{/if}>NW</option>
-							<option{if $verein.region == "SB"} selected{/if}>SB</option>
-							<option{if $verein.region == "SW"} selected{/if}>SW</option>
+							{section name=i loop=$regionen}
+							<option{if $verein.region == $regionen[i]} selected{/if}>{$regionen[i]}</option>
+							{/section}
 						</select>
 					</div>
 				</div>

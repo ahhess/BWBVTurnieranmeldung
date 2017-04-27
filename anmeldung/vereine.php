@@ -12,8 +12,10 @@ $ADODB_FETCH_MODE = ADODB_FETCH_ASSOC;
 $region = "NW";
 if ($_SESSION["region"])
 	$region = $_SESSION["region"];
-if ($_POST["region"])
+if ($_POST["region"]){
 	$region = $_POST["region"];
+	$_SESSION["region"] = $region;
+}
 
 if ($_POST["suchen"] && $_POST["q"] != "") {
 	$q = $_POST["q"];
@@ -40,5 +42,6 @@ $smarty->assign('admin',$_SESSION["admin"]);
 $smarty->assign('pwdis',$_GET["pwdis"]);
 $smarty->assign('q',$_POST["q"]);
 $smarty->assign('region',$region);
+$smarty->assign('regionen',$regionen);
 $smarty->display('vereine.tpl.htm');
 ?>

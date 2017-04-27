@@ -85,5 +85,6 @@ $smarty->assign('turnierbeauftragter',$rec);
 $smarty->assign('cnt',$cnt);
 $smarty->assign('admin',$_SESSION["admin"]);
 //$smarty->assign('systemmeldung',$systemmeldung);
+$smarty->assign('regionen',$regionen);
 $smarty->display('turnierbeauftragter.tpl.htm');
 ?>

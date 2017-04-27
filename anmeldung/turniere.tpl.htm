@@ -3,18 +3,13 @@
       <div class="row-fluid">
         <div class="span12">
 			<h2>Turniere</h2>
-			<form name="searchform" class="form-search" method="post">
-				<label class="radio"><input type="radio" name="region" id="regionbw" value="BW" onchange="document.searchform.submit()"
-					{if $region == "BW"} checked{/if}>BW</label>
-				<label class="radio"><input type="radio" name="region" id="regionnb" value="NB" onchange="document.searchform.submit()"
-					{if $region == "NB"} checked{/if}>NB</label>
-				<label class="radio"><input type="radio" name="region" id="regionnw" value="NW" onchange="document.searchform.submit()"
-					{if $region == "NW" || $region == ""} checked{/if}>NW</label>
-				<label class="radio"><input type="radio" name="region" id="regionsb" value="SB" onchange="document.searchform.submit()"
-					{if $region == "SB"} checked{/if}>SB</label>
-				<label class="radio"><input type="radio" name="region" id="regionsw" value="SW" onchange="document.searchform.submit()"
-					{if $region == "SW"} checked{/if}>SW</label>
-			</form>
+			<label class="btn">Region:</label>
+			<div class="btn-group" data-toggle="buttons-radio">
+			{section name=i loop=$regionen}
+				<a class="btn{if $region == $regionen[i]} active{/if}" href="?region={$regionen[i]}">{$regionen[i]}</a>
+			{/section}
+			</div>
+			<p>&nbsp;</p>
 			<table class="table table-hover table-condensed">
 			  <thead>
 				<tr>

@@ -3,6 +3,19 @@
       <div class="row-fluid">
         <div class="span12">
 			<h2>Vereine</h2>
+
+			<form name="searchform" class="form-search" method="post">
+				<label class="btn">Region:</label>
+				<div class="btn-group" data-toggle="buttons-radio">
+					{section name=i loop=$regionen}
+					<button class="btn{if $region == $regionen[i]} active{/if}" onclick="document.searchform.region.value='{$regionen[i]}';document.searchform.submit();">{$regionen[i]}</button>
+					{/section}
+				</div>
+				<input type="hidden" name="region">
+				<input class="search-query" name="q" placeholder="Vereins- oder Spielername" value="{$q}">
+				<button type="submit" class="btn" name="suchen" value="suchen"><i class="icon-search"></i></button>
+			</form>
+			
 			<table class="table table-hover table-condensed">
 			  <thead>
 				<tr>

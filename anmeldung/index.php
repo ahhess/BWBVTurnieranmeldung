@@ -41,6 +41,8 @@ if($_GET['region']){
 		$region=$_SESSION['verein']['region'];
 	}
 }
+$_SESSION["region"] = $region;
+
 $sql="select tas_turnier.*,tas_turnierbeauftragter.vorname as ba_vorname, tas_turnierbeauftragter.nachname as ba_nachname, tas_turnierbeauftragter.strasse as ba_strasse, tas_turnierbeauftragter.plz as ba_plz, tas_turnierbeauftragter.ort as ba_ort, tas_turnierbeauftragter.telefon_priv as ba_telefon_priv, tas_turnierbeauftragter.telefon_gesch as ba_telefon_gesch, tas_turnierbeauftragter.fax as ba_fax, tas_turnierbeauftragter.email as ba_email, tas_turnierbeauftragter.mobil as ba_mobil 
 	FROM tas_turnier
 	JOIN tas_turnierbeauftragter ON tas_turnier.turnierbeauftragter_id=tas_turnierbeauftragter.id 
@@ -133,6 +135,7 @@ $conn->Close();
 $smarty->assign('fehlermeldung',$fehlermeldung);
 $smarty->assign('turniere',$turniere);
 $smarty->assign('turniere_abgelaufen',$turniere_abgelaufen);
+$smarty->assign('region',$region);
 $smarty->assign('regionen',$regionen);
 $smarty->assign('systemmeldung',$systemmeldung);
 $smarty->assign('menuakt','index.php');
