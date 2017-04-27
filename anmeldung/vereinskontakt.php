@@ -12,7 +12,7 @@ $conn = &ADONewConnection('mysql');
 $conn->PConnect($host,$user,$password,$database);
 $ADODB_FETCH_MODE = ADODB_FETCH_ASSOC;
 
-$conn->debug=true;
+//$conn->debug=true;
 //echo("id=".$_POST["id"]."\n");
 
 if ($_POST["doSubmit"]) {
@@ -20,10 +20,11 @@ if ($_POST["doSubmit"]) {
 		if ($_POST["id"] && $_POST["davor"] && $_POST["name"] && $_POST["kurz"]) {
 			$sql="select * from tas_vereine where id=".$_POST["id"]." or (davor='".$_POST["davor"]."' and name='".$_POST["name"]."') or kurz='".$_POST["kurz"]."'";
 			$rs = &$conn->Execute($sql) or die ("Fehler beim pruefen der id/name/benutzer. Bitte Administrator benachrichtigen.");
-			if (isset($rs)) {
-				$verein=$rs->GetArray();
-				$verein=$verein[0];
+			$verein=$rs->GetArray();
+			$verein=$verein[0];
+			if ($verein) {
 				$_POST["id"] = $verein["id"];
+				//echo 'Vereinsnummer:'.$verein["id"].', Name:'.$verein["name"].' oder Benutzer:'.$verein["kurz"].' schon vorhanden!';
 				$systemmeldung='Vereinsnummer, Name oder Benutzer schon vorhanden!';
 			} else {
 				$sql="insert into tas_vereine (id, davor, name, region, kurz, ansprechpartner_strasse, 
