@@ -51,7 +51,7 @@
 					<div class="controls">
 						<select name="turnierbeauftragter_id">
 							{section name=i loop=$turnierbeauftragter}
-							<option value="{$turnierbeauftragter[i].id}"{if $turnierbeauftragter[i].id == $turnier.turnierbeauftragter_id} selected{/if}>{$turnierbeauftragter[i].vorname} {$turnierbeauftragter[i].nachname}</option>
+							<option value="{$turnierbeauftragter[i].id}"{if $turnierbeauftragter[i].id == $turnier.turnierbeauftragter_id} selected{/if}>{$turnierbeauftragter[i].nachname}, {$turnierbeauftragter[i].vorname}</option>
 							{/section}
 						</select>
 					</div>

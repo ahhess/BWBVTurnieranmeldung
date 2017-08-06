@@ -73,7 +73,7 @@ if ($recordSet) {
 	$cnt = $cnt["cnt"];
 }
 
-$sql='SELECT * FROM tas_turnierbeauftragter';
+$sql='SELECT * FROM tas_turnierbeauftragter order by nachname, vorname';
 $recordSet = &$conn->Execute($sql);
 $liste = $recordSet->getArray();
 
