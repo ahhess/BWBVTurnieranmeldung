@@ -88,8 +88,6 @@ if ($_POST["doMeldungSubmit"] && $sendmail == 1 ) {
 
 	// email aufbereiten
 	$absender="FROM: BWBV Turnieranmeldung <no-reply@bwbv.de>";
-	$adresse_turnierbeauftragter=$turnier["ba_vorname"]." ".$turnier["ba_nachname"]."\n".$turnier["ba_telefon_priv"]."\n".$turnier["ba_email"]."\n";
-	$adresse_rueckfrage_an_verein=$_SESSION["verein"]["ansprechpartner_name"]."\n".$_SESSION["verein"]["ansprechpartner_telefon"]."\n".$_SESSION["verein"]["ansprechpartner_email"]."\n";
 	$ueberschrift="Anmeldung: ".$turnier["name_lang"]." am ".$turnier["name_kurz"]." (".$_SESSION["verein"]["davor"]." ".$_SESSION["verein"]["name"].")";
 	$text=$_SESSION["verein"]["name"]." hat soeben gemeldet:\n\n";
 
@@ -102,11 +100,18 @@ if ($_POST["doMeldungSubmit"] && $sendmail == 1 ) {
 			$text.=" - Partner: ".$spieler[$_POST["meldung"][$i]]["partner"];
 		$text.="\n";
 	}
-	$text.="\n\n* = Die Spielklasse wurde vom Eintragenden manuell verändert.\n\nAnmerkung zu der Meldung: \n";
+	$text.="\n\n* = Die Spielklasse wurde vom Eintragenden manuell verändert.\n\n";
+	$text.="Anmerkung zu der Meldung:\n";
 	$text.=$_POST["anmerkung"]?$_POST["anmerkung"]:"- keine Anmerkung gemacht -";
-	$text.="\n\nAnsprechpartner zu dieser Meldung sind:\n\n";
-	$text.="Turnierbeauftragter:\n".$adresse_turnierbeauftragter."\n";
-	$text.="Meldender Verein:\n".$adresse_rueckfrage_an_verein."\n\n";
+	$text.="\n\nTurnierbeauftragter:\n"
+		.$turnier["ba_vorname"]." ".$turnier["ba_nachname"]."\n"
+		.$turnier["ba_telefon_priv"]."\n"
+		.$turnier["ba_email"]."\n\n";
+	$text.=$turnier["ausrichterinfos"]?"Aurichterinfos: ".$turnier["ausrichterinfos"]."\n\n":"";
+	$text.="Meldender Verein:\n"
+		.$_SESSION["verein"]["ansprechpartner_name"]."\n"
+		.$_SESSION["verein"]["ansprechpartner_telefon"]."\n"
+		.$_SESSION["verein"]["ansprechpartner_email"]."\n\n";
 	$text.="Dies ist eine automatisch generierte Infomail. Es gelten die im Onlinemeldesystem aktuell erfassten Meldungen. Bitte nicht an den Absender antworten.\n";
 	$text.="http://www.bwbv.de/turnier/anmeldung\n";
 	
