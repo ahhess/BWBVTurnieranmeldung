@@ -68,10 +68,7 @@ $smarty->assign('datum',date('d.m.Y'));
 $smarty->assign('zeit',date('G:i'));
 $smarty->assign('admin',$_SESSION["admin"]);
 
-if ($_GET["format"] == "csv")
-	$smarty->display('csv.tpl.htm');
-else
-	$smarty->display('anzeige2.tpl.htm');
+$smarty->display('anzeige2.tpl.htm');
 //print_r($meldungen);
 
 $conn->Close(); # optional

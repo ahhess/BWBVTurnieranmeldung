@@ -21,6 +21,7 @@ if ($_POST["doSave"] == "doSave"){
 			name_kurz='".$_POST["name_kurz"]."', 
 			datum=".$datum.", 
 			ort='".$_POST["ort"]."', 
+			ausrichterinfos='".$_POST["ausrichterinfos"]."', 
 			datum_anmelden_ab=".$datum_anmelden_ab.", 
 			datum_anmelden_bis=".$datum_anmelden_bis.", 
 			region='".$_POST["region"]."', 
@@ -30,12 +31,13 @@ if ($_POST["doSave"] == "doSave"){
 		$id = $_POST["id"];
 	} else {
 		$sql="INSERT INTO tas_turnier (
-			name_lang, name_kurz, datum, ort, region, datum_anmelden_ab, datum_anmelden_bis, turnierbeauftragter_id)
+			name_lang, name_kurz, datum, ort, ausrichterinfos, region, datum_anmelden_ab, datum_anmelden_bis, turnierbeauftragter_id)
 			VALUES (
 			'".$_POST["name_lang"]."', 
 			'".$_POST["name_kurz"]."', 
 			".$datum.", 
 			'".$_POST["ort"]."', 
+			'".$_POST["ausrichterinfos"]."', 
 			'".$_POST["region"]."', 
 			".$datum_anmelden_ab.", 
 			".$datum_anmelden_bis.", 

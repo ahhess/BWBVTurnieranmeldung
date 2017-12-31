@@ -67,7 +67,8 @@ CREATE TABLE IF NOT EXISTS `tas_turnier` (
   `ort` varchar(100) COLLATE utf8_unicode_ci NOT NULL DEFAULT '',
   `email_an` varchar(100) COLLATE utf8_unicode_ci NOT NULL DEFAULT '',
   `turnierbeauftragter_id` int(11) DEFAULT NULL,
-  `region` varchar(10) COLLATE utf8_unicode_ci NOT NULL DEFAULT ''
+  `region` varchar(10) COLLATE utf8_unicode_ci NOT NULL DEFAULT '',
+  `ausrichterinfos` varchar(100) COLLATE utf8_unicode_ci NOT NULL DEFAULT ''
 ) ENGINE=MyISAM AUTO_INCREMENT=186 DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
 
 -- --------------------------------------------------------

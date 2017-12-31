@@ -21,6 +21,7 @@
 				  <th>Region</th>
 				  <th>Datum</th>
 				  <th>Ort</th>
+				  <th>Ausrichter-Infos</th>
 				  <th>Meldefrist</th>
 				  <th>Meldungen Verein / Gesamt</th>
 				  <th>Verantw.</th>
@@ -34,6 +35,7 @@
 				  <td>{$turniere[t].region}</td>
 				  <td>{$turniere[t].name_kurz}</td>
 				  <td>{$turniere[t].ort}</td>
+				  <td>{$turniere[t].ausrichterinfos}</td>
 				  <td>{$turniere[t].datum_anmelden_bis|date_format:"%d.%m.%Y"}</td>
 				  <td>{$turniere[t].anzahl_anmeldungen} / {$turniere[t].anmeldungen_gesamt}
 				  </td>
@@ -67,6 +69,7 @@
 				  <th>Region</th>
 				  <th>Datum</th>
 				  <th>Ort</th>
+				  <th>Ausrichter Infos</th>
 				  <th>Meldefrist</th>
 				  <th>Meldungen Verein / Gesamt</th>
 				  <th>Verantw.</th>
@@ -78,6 +81,7 @@
 				  <td>{$turniere_abgelaufen[t].region}</td>
 				  <td>{$turniere_abgelaufen[t].name_kurz}</td>
 				  <td>{$turniere_abgelaufen[t].ort}</td>
+				  <td>{$turniere_abgelaufen[t].ausrichterinfos}</td>
 				  <td>{$turniere_abgelaufen[t].datum_anmelden_bis|date_format:"%d.%m.%Y"}</td>
 				  <td>{$turniere_abgelaufen[t].anzahl_anmeldungen} / {$turniere_abgelaufen[t].anmeldungen_gesamt}
 				  <td>{$turniere_abgelaufen[t].ba_vorname} {$turniere_abgelaufen[t].ba_nachname}</td>
