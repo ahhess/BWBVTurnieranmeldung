@@ -107,7 +107,7 @@ if ($_POST["doMeldungSubmit"] && $sendmail == 1 ) {
 		.$turnier["ba_vorname"]." ".$turnier["ba_nachname"]."\n"
 		.$turnier["ba_telefon_priv"]."\n"
 		.$turnier["ba_email"]."\n\n";
-	$text.=$turnier["ausrichterinfos"]?"Aurichterinfos: ".$turnier["ausrichterinfos"]."\n\n":"";
+	$text.=$turnier["ausrichterinfos"]?"Ausrichterinfos: ".$turnier["ausrichterinfos"]."\n\n":"";
 	$text.="Meldender Verein:\n"
 		.$_SESSION["verein"]["ansprechpartner_name"]."\n"
 		.$_SESSION["verein"]["ansprechpartner_telefon"]."\n"
