@@ -31,7 +31,9 @@ CREATE TABLE IF NOT EXISTS `tas_meldung` (
   `spieler_id` int(11) NOT NULL DEFAULT '0',
   `verein_id` int(11) NOT NULL DEFAULT '0',
   `ak` varchar(4) COLLATE utf8_unicode_ci NOT NULL DEFAULT '',
-  `partner` varchar(100) COLLATE utf8_unicode_ci DEFAULT NULL
+  `partner` varchar(100) COLLATE utf8_unicode_ci DEFAULT NULL,
+  `partner2` varchar(100) COLLATE utf8_unicode_ci DEFAULT NULL,
+  `bemerkung` varchar(100) COLLATE utf8_unicode_ci DEFAULT NULL
 ) ENGINE=MyISAM DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
 
 -- --------------------------------------------------------

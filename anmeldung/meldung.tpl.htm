@@ -2,7 +2,7 @@
 {include file="menu.tpl.htm"}
       <div class="row-fluid">
         <div class="span12">
-			<h3>Teilnehmermeldung für {$verein.davor} {$verein.name}</h3>
+			<h3>Teilnehmermeldung fï¿½r {$verein.davor} {$verein.name}</h3>
 
 			{if $fehlermeldung}<div class="alert"><strong>{$fehlermeldung}</strong></div>{/if}
 			{if $systemmeldung}<div class="alert alert-success"><strong>{$systemmeldung}</strong></div>{/if}
@@ -63,7 +63,9 @@
 						  <th>Geburtsdatum</th>
 						  <th>Passnummer</th>
 						  <th>Spielklasse</th>
-						  <th>Partner*</th>
+						  <th>Doppelpartner</th>
+						  <th>Mixedpartner</th>
+						  <th>Bemerkung</th>
 						</thead>
 						<tbody>
 							{section name=zeile loop=$spieler} 
@@ -85,6 +87,8 @@
 								</select>
 							  </td>
 							  <td><input name="partner[{$spieler[zeile].id}]" id="partner[{$spieler[zeile].id}]" value="{$spieler[zeile].partner}" type="text" class="input-xlarge"></td>
+							  <td><input name="partner2[{$spieler[zeile].id}]" id="partner2[{$spieler[zeile].id}]" value="{$spieler[zeile].partner2}" type="text" class="input-xlarge"></td>
+							  <td><input name="bemerkung[{$spieler[zeile].id}]" id="bemerkung[{$spieler[zeile].id}]" value="{$spieler[zeile].bemerkung}" type="text" class="input-xlarge"></td>
 							</tr>
 							{/section} 
 						</tbody>
@@ -94,10 +98,10 @@
 				<div class="row-fluid">
 					<button class="btn btn-success" name="doMeldungSubmit" value="doMeldungSubmit">Meldung speichern</button>
 					<p>&nbsp;</p>
-					<p>*) Bei Doppel-/Mixedmeldungen in der Spalte "Partner" den/die jeweiligen Partnernamen eintragen (geht auch einfach mit Copy+Paste).
+					<p>*) Bei Doppel-/Mixedmeldungen in der Spalte "Doppel- bzw Mixedpartner" den jeweiligen Partnernamen eintragen (geht auch einfach mit Copy+Paste).
 					Vereinsfremde Partner bitte mit Verein angeben. 
 					"frei" bei Freimeldung eintragen. 
-					Alle Spieler müssen trotzdem in ihrer Zeile in der ersten Spalte "angehakt" sein.<br>
+					Alle Spieler mï¿½ssen trotzdem in ihrer Zeile in der ersten Spalte "angehakt" sein.<br>
 					Bitte Extra-Hinweis, wenn ein Spieler zwar Doppel und/oder Mixed, aber kein Einzel spielen will.</p>
 				</div>
 
