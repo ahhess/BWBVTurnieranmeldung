@@ -1,5 +1,5 @@
 <?php
-// Anzeige der Spieleranmeldungen für ein bestimmtes Turnier
+// Anzeige der Spieleranmeldungen fï¿½r ein bestimmtes Turnier
 session_start();
 include("config.inc.php");
 include("funktionen.inc.php");
@@ -35,12 +35,13 @@ $turniere=$recordSet->GetArray();
 $turnier=$turniere[0];
 
 //meldungen holen
-$sql='select tas_spieler.*, tas_vereine.davor, tas_vereine.name as verein, tas_meldung.partner as partner, tas_meldung.ak as ak 
+$sql='select tas_spieler.*, tas_vereine.davor, tas_vereine.name as verein, 
+	tas_meldung.partner, tas_meldung.partner2, tas_meldung.bemerkung, tas_meldung.ak as ak 
 	from tas_meldung,tas_spieler,tas_vereine
 	where tas_meldung.spieler_id=tas_spieler.id 
 	and tas_meldung.turnier_id='.$_GET["id"].' 
 	and tas_meldung.verein_id=tas_vereine.id
-	order by tas_meldung.ak asc, tas_spieler.geschlecht asc, tas_vereine.name, tas_vereine.davor, tas_meldung.partner, tas_spieler.nachname';
+	order by tas_meldung.ak asc, tas_spieler.geschlecht asc, tas_vereine.name, tas_vereine.davor, tas_spieler.nachname, tas_spieler.vorname';
 $recordSetSpieler = &$conn->Execute($sql);
 $meldungen=$recordSetSpieler->GetArray();
 

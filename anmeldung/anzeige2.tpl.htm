@@ -33,7 +33,9 @@
 					<th>Jahrgang</th>
 					<th>Altersklasse</th>
 					<th>Geschlecht</th>
-					<th>Partner</th>
+					<th>Doppelpartner</th>
+					<th>Mixedpartner</th>
+					<th>Bemerkung</th>
 				</tr>
 			  </thead>
 			  <tbody>
@@ -47,6 +49,8 @@
 					<td>{$meldungen[spieler].ak}</td>
 					<td>{$meldungen[spieler].geschlecht}</td>
 					<td>{$meldungen[spieler].partner}</td>
+					<td>{$meldungen[spieler].partner2}</td>
+					<td>{$meldungen[spieler].bemerkung}</td>
 				</tr>
 				{if $meldungen[spieler.index_next].ak ne $meldungen[spieler].ak}
 				<tr>
@@ -58,6 +62,8 @@
 					<td>---</td>
 					<td>---</td>
 					<td></td>
+					<td></td>
+					<td></td>
 				</tr>
 				{elseif $meldungen[spieler.index_next].geschlecht ne $meldungen[spieler].geschlecht}
 				<tr>
@@ -68,6 +74,8 @@
 					<td></td>
 					<td></td>
 					<td>---</td>
+					<td></td>
+					<td></td>
 					<td></td>
 				</tr>
 			    {/if}
