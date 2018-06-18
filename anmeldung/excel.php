@@ -1,5 +1,5 @@
 <?php
-// Aufbereitung Excel-Datei mit den Spieleranmeldungen für ein bestimmtes Turnier
+// Aufbereitung Excel-Datei mit den Spieleranmeldungen fï¿½r ein bestimmtes Turnier
 session_start();
 include("config.inc.php");
 include("../adodb/adodb.inc.php");
@@ -23,12 +23,12 @@ $turnier=$turnier[0];
 
 // spielermeldungen holen
 $sql='select tas_spieler.*, tas_vereine.davor, tas_vereine.name as verein, 
-	tas_meldung.verein_id, tas_meldung.ak as ak, tas_meldung.partner as partner 
+	tas_meldung.verein_id, tas_meldung.ak, tas_meldung.partner, tas_meldung.partner2, tas_meldung.bemerkung 
 	from tas_meldung, tas_spieler, tas_vereine
 	where tas_meldung.turnier_id='.$_GET["id"].' 
 	and tas_meldung.spieler_id=tas_spieler.id 
 	and tas_meldung.verein_id=tas_vereine.id 
-	order by tas_meldung.ak, tas_spieler.geschlecht, tas_vereine.name, tas_vereine.davor, tas_meldung.partner, tas_spieler.nachname';
+	order by tas_meldung.ak, tas_spieler.geschlecht, tas_vereine.name, tas_vereine.davor, tas_spieler.nachname, tas_spieler.vorname';
 	
 $recordSetSpieler = &$conn->Execute($sql) or die("SQL Error");
 $meldungen=$recordSetSpieler->GetArray();
@@ -60,12 +60,12 @@ function getBoeDatum($geb) {
 }
 
 $header1=$turnier["name_lang"]." am ".$turnier["name_kurz"];
-$header2="Teilnehmerübersicht Stand ".date("d.m.Y - H:i");
+$header2="Teilnehmerï¿½bersicht Stand ".date("d.m.Y - H:i");
 
 if ($debug) {
 	echo("<h1>".$header1."</h1>");
 	echo("<h2>".$header2."</h2>");
-	echo("<table border='1'><tr><td>Spieler-ID<td>Nachname<td>Vorname<td>Verein<td>Geburtstag<td>AK<td>Geschlecht<td>Partner");
+	echo("<table border='1'><tr><td>Spieler-ID<td>Nachname<td>Vorname<td>Verein<td>Geburtstag<td>AK<td>Geschlecht<td>Doppelpartner<td>Mixedpartner<td>Bemerkung");
 } else {
 	// Creating a workbook
 	require_once 'Spreadsheet/Excel/Writer.php';
@@ -79,7 +79,7 @@ if ($debug) {
 	$workbook->send('bwbv_turniermeldung_'.$turnier["id"].'_'.$turnier["datum"].'.xls');
 
 	// Creating a worksheet Teilnehmeruebersicht
-	$worksheet =& $workbook->addWorksheet('Teilnehmerübersicht');
+	$worksheet =& $workbook->addWorksheet('Teilnehmerï¿½bersicht');
 	$worksheet->setHeader($header2);
 	$worksheet->setFooter($header1);
 
@@ -98,7 +98,9 @@ if ($debug) {
 	$worksheet->write($r, $c++, "Geburtstag", $fett);
 	$worksheet->write($r, $c++, "AK", $fett);
 	$worksheet->write($r, $c++, "Geschlecht", $fett);
-	$worksheet->write($r, $c++, "Partner", $fett);
+	$worksheet->write($r, $c++, "Doppelpartner", $fett);
+	$worksheet->write($r, $c++, "Mixedpartner", $fett);
+	$worksheet->write($r, $c++, "Bemerkung", $fett);
 }
 
 // Spielerdaten
@@ -114,6 +116,8 @@ for ($i=0;$i<count($meldungen);$i++) {
 		echo("<td>".$meldungen[$i]["ak"]);
 		echo("<td>".$meldungen[$i]["geschlecht"]);
 		echo("<td>".$meldungen[$i]["partner"]);
+		echo("<td>".$meldungen[$i]["partner2"]);
+		echo("<td>".$meldungen[$i]["bemerkung"]);
 	} else {
 		$worksheet->write($r, $c++, $meldungen[$i]["passnummer"]);
 		$worksheet->write($r, $c++, $meldungen[$i]["nachname"]);
@@ -123,6 +127,8 @@ for ($i=0;$i<count($meldungen);$i++) {
 		$worksheet->write($r, $c++, $meldungen[$i]["ak"]);
 		$worksheet->write($r, $c++, $meldungen[$i]["geschlecht"]);
 		$worksheet->write($r, $c++, $meldungen[$i]["partner"]);
+		$worksheet->write($r, $c++, $meldungen[$i]["partner2"]);
+		$worksheet->write($r, $c++, $meldungen[$i]["bemerkung"]);
 	}
 }
 	

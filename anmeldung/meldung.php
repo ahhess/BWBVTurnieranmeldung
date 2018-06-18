@@ -20,10 +20,11 @@ if ($_POST["doMeldungSubmit"]) {
 	$rs = &$conn->Execute("delete from tas_vereinsmeldung where verein_id=$vid AND turnier_id=$tid");
 	$rs = &$conn->Execute("delete from tas_meldung where verein_id=$vid AND turnier_id=$tid");
 	if (count ($_POST['meldung']) )	{
-		$sql='insert into tas_meldung (turnier_id,spieler_id,verein_id,ak,partner) VALUES ';
+		$sql='insert into tas_meldung (turnier_id,spieler_id,verein_id,ak,partner,partner2,bemerkung) VALUES ';
 		for ($i=0;$i<count($_POST['meldung']);$i++) {
 			$spid=$_POST['meldung'][$i];
-			$sql.='('.$tid.','.$spid.','.$vid.',"'.$_POST['spk'][$spid].'","'.$_POST['partner'][$spid].'"),';
+			$sql.='('.$tid.','.$spid.','.$vid.',"'.$_POST['spk'][$spid].'","'
+				.$_POST['partner'][$spid].'","'.$_POST['partner2'][$spid].'","'.$_POST['bemerkung'][$spid].'"),';
 		}
 		$sql=substr($sql,0,strlen($sql)-1);
 		$rs = &$conn->Execute($sql);
@@ -60,7 +61,7 @@ if ($recordSet) {
 }
 
 // turnieranmeldungen mit spielerdaten  holen
-$sql='select tas_spieler.*,tas_meldung.ak,tas_meldung.turnier_id,tas_meldung.partner
+$sql='select tas_spieler.*,tas_meldung.ak,tas_meldung.turnier_id,tas_meldung.partner,tas_meldung.partner2,tas_meldung.bemerkung
 	FROM tas_spieler 
 	LEFT OUTER JOIN tas_meldung 
 		ON tas_spieler.id=tas_meldung.spieler_id 
@@ -100,10 +101,14 @@ if ($_POST['doMeldungSubmit'] && $sendmail == 1) {
 			$spielklasseVeraendert="*";
 		$text.=$spieler[$_POST['meldung'][$i]]['nachname'].", ".$spieler[$_POST['meldung'][$i]]['vorname']." - ".$_POST['spk'][$_POST['meldung'][$i]].$spielklasseVeraendert." - ".$spieler[$_POST['meldung'][$i]]['geburtstag'];
 		if ($spieler[$_POST['meldung'][$i]]['partner'])
-			$text.=" - Partner: ".$spieler[$_POST['meldung'][$i]]['partner'];
+			$text.=" - Doppelpartner: ".$spieler[$_POST['meldung'][$i]]['partner'];
+		if ($spieler[$_POST['meldung'][$i]]['partner2'])
+			$text.=" - Mixedpartner: ".$spieler[$_POST['meldung'][$i]]['partner2'];
+		if ($spieler[$_POST['meldung'][$i]]['bemerkung'])
+			$text.=" - Bemerkung: ".$spieler[$_POST['meldung'][$i]]['bemerkung'];
 		$text.="\n";
 	}
-	$text.="\n\n* = Die Spielklasse wurde vom Eintragenden manuell verändert.\n\n";
+	$text.="\n\n* = Die Spielklasse wurde vom Eintragenden manuell verï¿½ndert.\n\n";
 	$text.="Anmerkung zu der Meldung:\n";
 	$text.=$_POST['anmerkung']?$_POST['anmerkung']:"- keine Anmerkung gemacht -";
 	$text.="\n\nTurnierbeauftragter:\n"
@@ -135,7 +140,7 @@ if ($_POST['doMeldungSubmit'] && $sendmail == 1) {
 			}
 		}
 	} else {
-		die("Noch keine Email zur Benachrichtigung eingetragen. Schnell in die <a href='vereinskontakt.php'>Vereinskontaktdaten </a>, Emailadresse eintragen und Meldung noch einmal tätigen!!!");
+		die("Noch keine Email zur Benachrichtigung eingetragen. Schnell in die <a href='vereinskontakt.php'>Vereinskontaktdaten </a>, Emailadresse eintragen und Meldung noch einmal tï¿½tigen!!!");
 	}
 	// email an die zusatzperson aus tas_turnier.email_an
 	if ($turnier['email_an']) {
