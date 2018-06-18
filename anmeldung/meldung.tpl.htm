@@ -2,7 +2,7 @@
 {include file="menu.tpl.htm"}
       <div class="row-fluid">
         <div class="span12">
-			<h3>Teilnehmermeldung f�r {$verein.davor} {$verein.name}</h3>
+			<h3>Teilnehmermeldung f&uuml;r {$verein.davor} {$verein.name}</h3>
 
 			{if $fehlermeldung}<div class="alert"><strong>{$fehlermeldung}</strong></div>{/if}
 			{if $systemmeldung}<div class="alert alert-success"><strong>{$systemmeldung}</strong></div>{/if}
@@ -98,11 +98,13 @@
 				<div class="row-fluid">
 					<button class="btn btn-success" name="doMeldungSubmit" value="doMeldungSubmit">Meldung speichern</button>
 					<p>&nbsp;</p>
-					<p>*) Bei Doppel-/Mixedmeldungen in der Spalte "Doppel- bzw Mixedpartner" den jeweiligen Partnernamen eintragen (geht auch einfach mit Copy+Paste).
-					Vereinsfremde Partner bitte mit Verein angeben. 
-					"frei" bei Freimeldung eintragen. 
-					Alle Spieler m�ssen trotzdem in ihrer Zeile in der ersten Spalte "angehakt" sein.<br>
-					Bitte Extra-Hinweis, wenn ein Spieler zwar Doppel und/oder Mixed, aber kein Einzel spielen will.</p>
+					<p>Hinweise:
+					<br>Bei Doppel-/Mixedmeldungen in der Spalte "Doppel- bzw. Mixedpartner" den jeweiligen Partnernamen eintragen. 
+					<br>Vereinsfremde Partner bitte mit Verein angeben. 
+					<br>Bei Freimeldung bitte "frei" eintragen. 
+					<br>Bitte Extra-Hinweis, wenn ein Spieler zwar Doppel und/oder Mixed, aber kein Einzel spielen will.
+					<br>Die gemeldeten Spieler m&uuml;ssen immer in ihrer Zeile in der ersten Spalte "angehakt" sein.
+					</p>
 				</div>
 
 				<input type="hidden" name="tid" value="{$turnier.id}">
