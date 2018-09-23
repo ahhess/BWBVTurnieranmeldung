@@ -1,5 +1,5 @@
 <?php
-// Aufbereitung Excel-Datei mit den Spieleranmeldungen f�r ein bestimmtes Turnier
+// Aufbereitung Excel-Datei mit den Spieleranmeldungen fuer ein bestimmtes Turnier
 session_start();
 include("config.inc.php");
 include("../adodb/adodb.inc.php");
@@ -60,7 +60,7 @@ function getBoeDatum($geb) {
 }
 
 $header1=$turnier["name_lang"]." am ".$turnier["name_kurz"];
-$header2="Teilnehmer�bersicht Stand ".date("d.m.Y - H:i");
+$header2="Teilnehmeruebersicht Stand ".date("d.m.Y - H:i");
 
 if ($debug) {
 	echo("<h1>".$header1."</h1>");
@@ -79,7 +79,7 @@ if ($debug) {
 	$workbook->send('bwbv_turniermeldung_'.$turnier["id"].'_'.$turnier["datum"].'.xls');
 
 	// Creating a worksheet Teilnehmeruebersicht
-	$worksheet =& $workbook->addWorksheet('Teilnehmer�bersicht');
+	$worksheet =& $workbook->addWorksheet('Teilnehmeruebersicht');
 	$worksheet->setHeader($header2);
 	$worksheet->setFooter($header1);
 
