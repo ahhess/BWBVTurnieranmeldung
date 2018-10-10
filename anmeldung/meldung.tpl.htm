@@ -77,7 +77,7 @@
 							  <td>{if $spieler[zeile].passnummer!=""}{$spieler[zeile].passnummer}{else}<a href="editieren.php">nachtragen</a>{/if}</td>
 							  <td>
 								<select class="input-small" name=spk[{$spieler[zeile].id}] id="spk[{$spieler[zeile].id}]">
-									<option value="U9"  {if $spieler[zeile].ak=="U9"} SELECTED{elseif $spieler[zeile].spielklasse=="U9"}SELECTED{/if}> U&nbsp;9 {if $spieler[zeile].geschlecht=="m"}JE{else}ME{/if}</option>
+									<option value="U09" {if $spieler[zeile].ak=="U09"}SELECTED{elseif $spieler[zeile].spielklasse=="U09"}SELECTED{/if}> U09 {if $spieler[zeile].geschlecht=="m"}JE{else}ME{/if}</option>
 									<option value="U11" {if $spieler[zeile].ak=="U11"}SELECTED{elseif $spieler[zeile].ak=="" AND $spieler[zeile].spielklasse=="U11"}SELECTED{/if}> U11 {if $spieler[zeile].geschlecht=="m"}JE{else}ME{/if}</option>
 									<option value="U13" {if $spieler[zeile].ak=="U13"}SELECTED{elseif $spieler[zeile].ak=="" AND $spieler[zeile].spielklasse=="U13"}SELECTED{/if}> U13 {if $spieler[zeile].geschlecht=="m"}JE{else}ME{/if}</option>
 									<option value="U15" {if $spieler[zeile].ak=="U15"}SELECTED{elseif $spieler[zeile].ak=="" AND $spieler[zeile].spielklasse=="U15"}SELECTED{/if}> U15 {if $spieler[zeile].geschlecht=="m"}JE{else}ME{/if}</option>
