@@ -56,8 +56,8 @@ function date_german2mysql($datum) {
 	}	
 }
 
-// für smarty
-$spielklasse["U9"]="U9";
+// fï¿½r smarty
+$spielklasse["U09"]="U09";
 $spielklasse["U11"]="U11";
 $spielklasse["U13"]="U13";
 $spielklasse["U15"]="U15";
