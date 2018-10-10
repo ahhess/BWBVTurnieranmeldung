@@ -55,10 +55,6 @@ for ($i=0;$i<count($meldungen);$i++) {
 	$spieler[$verein2index[$vn]][]=$i;
 }
 
-function getBoeDatum($geb) {
-	return substr($geb,8,2).'.'.substr($geb,5,2).'.'.substr($geb,2,2);
-}
-
 function getJahrgang($geb) {
 	return substr($geb,0,4);
 }
