@@ -99,7 +99,7 @@ if ($_POST['doMeldungSubmit'] && $sendmail == 1) {
 		$spielklasseVeraendert="";
 		if (spielklasse_berechnen($spieler[$_POST['meldung'][$i]]['geburtstag']) != $_POST['spk'][$_POST['meldung'][$i]]) 
 			$spielklasseVeraendert="*";
-		$text.=$spieler[$_POST['meldung'][$i]]['nachname'].", ".$spieler[$_POST['meldung'][$i]]['vorname']." - ".$_POST['spk'][$_POST['meldung'][$i]].$spielklasseVeraendert." - ".$spieler[$_POST['meldung'][$i]]['geburtstag'];
+		$text.=$spieler[$_POST['meldung'][$i]]['nachname'].", ".$spieler[$_POST['meldung'][$i]]['vorname']." - ".$_POST['spk'][$_POST['meldung'][$i]].$spielklasseVeraendert." - ".substr($spieler[$_POST['meldung'][$i]]['geburtstag'],0,4);
 		if ($spieler[$_POST['meldung'][$i]]['partner'])
 			$text.=" - Doppelpartner: ".$spieler[$_POST['meldung'][$i]]['partner'];
 		if ($spieler[$_POST['meldung'][$i]]['partner2'])
