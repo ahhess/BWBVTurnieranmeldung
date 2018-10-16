@@ -60,7 +60,7 @@
 						  <th>&nbsp;</th>
 						  <th>Nachname</th>
 						  <th>Vorname</th>
-						  <th>Geburtsdatum</th>
+						  <th>Jahrgang</th>
 						  <th>Passnummer</th>
 						  <th>Spielklasse</th>
 						  <th>Doppelpartner</th>
@@ -73,7 +73,7 @@
 							  <td><input name="meldung[]" type="checkbox" id="meldung[]" value="{$spieler[zeile].id}" {if $spieler[zeile].turnier_id==$turnier.id}CHECKED{/if}></td>
 							  <td>{$spieler[zeile].nachname}</td>
 							  <td>{$spieler[zeile].vorname}</td>
-							  <td>{$spieler[zeile].geburtstag|date_format:"%d.%m.%Y"}</td>
+							  <td>{$spieler[zeile].geburtstag|date_format:"%Y"}</td>
 							  <td>{if $spieler[zeile].passnummer!=""}{$spieler[zeile].passnummer}{else}<a href="editieren.php">nachtragen</a>{/if}</td>
 							  <td>
 								<select class="input-small" name=spk[{$spieler[zeile].id}] id="spk[{$spieler[zeile].id}]">

@@ -55,8 +55,8 @@ for ($i=0;$i<count($meldungen);$i++) {
 	$spieler[$verein2index[$vn]][]=$i;
 }
 
-function getBoeDatum($geb) {
-	return substr($geb,8,2).'.'.substr($geb,5,2).'.'.substr($geb,2,2);
+function getJahrgang($geb) {
+	return substr($geb,0,4);
 }
 
 $header1=$turnier["name_lang"]." am ".$turnier["name_kurz"];
@@ -65,7 +65,7 @@ $header2="Teilnehmeruebersicht Stand ".date("d.m.Y - H:i");
 if ($debug) {
 	echo("<h1>".$header1."</h1>");
 	echo("<h2>".$header2."</h2>");
-	echo("<table border='1'><tr><td>Spieler-ID<td>Nachname<td>Vorname<td>Verein<td>Geburtstag<td>AK<td>Geschlecht<td>Doppelpartner<td>Mixedpartner<td>Bemerkung");
+	echo("<table border='1'><tr><td>Spieler-ID<td>Nachname<td>Vorname<td>Verein<td>Jahrgang<td>AK<td>Geschlecht<td>Doppelpartner<td>Mixedpartner<td>Bemerkung");
 } else {
 	// Creating a workbook
 	require_once 'Spreadsheet/Excel/Writer.php';
@@ -95,7 +95,7 @@ if ($debug) {
 	$worksheet->write($r, $c++, "Nachname", $fett);
 	$worksheet->write($r, $c++, "Vorname", $fett);
 	$worksheet->write($r, $c++, "Verein", $fett);
-	$worksheet->write($r, $c++, "Geburtstag", $fett);
+	$worksheet->write($r, $c++, "Jahrgang", $fett);
 	$worksheet->write($r, $c++, "AK", $fett);
 	$worksheet->write($r, $c++, "Geschlecht", $fett);
 	$worksheet->write($r, $c++, "Doppelpartner", $fett);
@@ -112,7 +112,7 @@ for ($i=0;$i<count($meldungen);$i++) {
 		echo("<td>".$meldungen[$i]["nachname"]);
 		echo("<td>".$meldungen[$i]["vorname"]);
 		echo("<td>".$meldungen[$i]["davor"]." ".$meldungen[$i]["verein"]);
-		echo("<td>".getBoeDatum($meldungen[$i]["geburtstag"]));
+		echo("<td>".getJahrgang($meldungen[$i]["geburtstag"]));
 		echo("<td>".$meldungen[$i]["ak"]);
 		echo("<td>".$meldungen[$i]["geschlecht"]);
 		echo("<td>".$meldungen[$i]["partner"]);
@@ -123,7 +123,7 @@ for ($i=0;$i<count($meldungen);$i++) {
 		$worksheet->write($r, $c++, $meldungen[$i]["nachname"]);
 		$worksheet->write($r, $c++, $meldungen[$i]["vorname"]);
 		$worksheet->write($r, $c++, $meldungen[$i]["davor"]." ".$meldungen[$i]["verein"]);
-		$worksheet->write($r, $c++, getBoeDatum($meldungen[$i]["geburtstag"]));
+		$worksheet->write($r, $c++, getJahrgang($meldungen[$i]["geburtstag"]));
 		$worksheet->write($r, $c++, $meldungen[$i]["ak"]);
 		$worksheet->write($r, $c++, $meldungen[$i]["geschlecht"]);
 		$worksheet->write($r, $c++, $meldungen[$i]["partner"]);
