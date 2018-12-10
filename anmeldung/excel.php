@@ -88,16 +88,16 @@ if ($debug) {
 	$worksheet->write($r++, 0, $header1, $fett);
 	$worksheet->write($r++, 0, $header2, $fett);
 
-	// Uberschrift Spielerdaten
+	// Uberschrift Spielerdaten: SpielerID, Name, Vorname, Geschlecht, Geb, Verein
 	$r++;
 	$c=0;
-	$worksheet->write($r, $c++, "Spieler-ID", $fett);
-	$worksheet->write($r, $c++, "Nachname", $fett);
+	$worksheet->write($r, $c++, "SpielerID", $fett);
+	$worksheet->write($r, $c++, "Name", $fett);
 	$worksheet->write($r, $c++, "Vorname", $fett);
-	$worksheet->write($r, $c++, "Verein", $fett);
-	$worksheet->write($r, $c++, "Geburtstag", $fett);
-	$worksheet->write($r, $c++, "AK", $fett);
 	$worksheet->write($r, $c++, "Geschlecht", $fett);
+	$worksheet->write($r, $c++, "Geb", $fett);
+	$worksheet->write($r, $c++, "Verein", $fett);
+	$worksheet->write($r, $c++, "AK", $fett);
 	$worksheet->write($r, $c++, "Doppelpartner", $fett);
 	$worksheet->write($r, $c++, "Mixedpartner", $fett);
 	$worksheet->write($r, $c++, "Bemerkung", $fett);
@@ -111,10 +111,10 @@ for ($i=0;$i<count($meldungen);$i++) {
 		echo("<tr><td>".$meldungen[$i]["passnummer"]);
 		echo("<td>".$meldungen[$i]["nachname"]);
 		echo("<td>".$meldungen[$i]["vorname"]);
-		echo("<td>".$meldungen[$i]["davor"]." ".$meldungen[$i]["verein"]);
-		echo("<td>".getBoeDatum($meldungen[$i]["geburtstag"]));
-		echo("<td>".$meldungen[$i]["ak"]);
 		echo("<td>".$meldungen[$i]["geschlecht"]);
+		echo("<td>".getBoeDatum($meldungen[$i]["geburtstag"]));
+		echo("<td>".$meldungen[$i]["davor"]." ".$meldungen[$i]["verein"]);
+		echo("<td>".$meldungen[$i]["ak"]);
 		echo("<td>".$meldungen[$i]["partner"]);
 		echo("<td>".$meldungen[$i]["partner2"]);
 		echo("<td>".$meldungen[$i]["bemerkung"]);
@@ -122,10 +122,10 @@ for ($i=0;$i<count($meldungen);$i++) {
 		$worksheet->write($r, $c++, $meldungen[$i]["passnummer"]);
 		$worksheet->write($r, $c++, $meldungen[$i]["nachname"]);
 		$worksheet->write($r, $c++, $meldungen[$i]["vorname"]);
-		$worksheet->write($r, $c++, $meldungen[$i]["davor"]." ".$meldungen[$i]["verein"]);
-		$worksheet->write($r, $c++, getBoeDatum($meldungen[$i]["geburtstag"]));
-		$worksheet->write($r, $c++, $meldungen[$i]["ak"]);
 		$worksheet->write($r, $c++, $meldungen[$i]["geschlecht"]);
+		$worksheet->write($r, $c++, getBoeDatum($meldungen[$i]["geburtstag"]));
+		$worksheet->write($r, $c++, $meldungen[$i]["davor"]." ".$meldungen[$i]["verein"]);
+		$worksheet->write($r, $c++, $meldungen[$i]["ak"]);
 		$worksheet->write($r, $c++, $meldungen[$i]["partner"]);
 		$worksheet->write($r, $c++, $meldungen[$i]["partner2"]);
 		$worksheet->write($r, $c++, $meldungen[$i]["bemerkung"]);
