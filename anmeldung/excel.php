@@ -22,7 +22,7 @@ if (count($turnier)==0) die("TURNIER EXISTIERT NICHT!");
 $turnier=$turnier[0];
 
 // spielermeldungen holen
-$sql='select tas_spieler.*, tas_vereine.davor, tas_vereine.name as verein, 
+$sql='select tas_spieler.*, tas_vereine.davor, tas_vereine.name as verein, tas_vereine.region,  
 	tas_meldung.verein_id, tas_meldung.ak, tas_meldung.partner, tas_meldung.partner2, tas_meldung.bemerkung 
 	from tas_meldung, tas_spieler, tas_vereine
 	where tas_meldung.turnier_id='.$_GET["id"].' 
@@ -65,7 +65,7 @@ $header2="Teilnehmeruebersicht Stand ".date("d.m.Y - H:i");
 if ($debug) {
 	echo("<h1>".$header1."</h1>");
 	echo("<h2>".$header2."</h2>");
-	echo("<table border='1'><tr><td>Spieler-ID<td>Nachname<td>Vorname<td>Verein<td>Geburtstag<td>AK<td>Geschlecht<td>Doppelpartner<td>Mixedpartner<td>Bemerkung");
+	echo("<table border='1'><tr><td>Spieler-ID<td>Nachname<td>Vorname<td>Geschlecht<td>Geburtstag<td>Verein<td>Bezirk<td>AK<td>Doppelpartner<td>Mixedpartner<td>Bemerkung");
 } else {
 	// Creating a workbook
 	require_once 'Spreadsheet/Excel/Writer.php';
@@ -88,7 +88,7 @@ if ($debug) {
 	$worksheet->write($r++, 0, $header1, $fett);
 	$worksheet->write($r++, 0, $header2, $fett);
 
-	// Uberschrift Spielerdaten: SpielerID, Name, Vorname, Geschlecht, Geb, Verein
+	// Uberschrift Spielerdaten: SpielerID, Name, Vorname, Geschlecht, Geb, Verein, Bezirk, AK, Doppelpartner, Mixedpartner, Bemerkung
 	$r++;
 	$c=0;
 	$worksheet->write($r, $c++, "SpielerID", $fett);
@@ -97,6 +97,7 @@ if ($debug) {
 	$worksheet->write($r, $c++, "Geschlecht", $fett);
 	$worksheet->write($r, $c++, "Geb", $fett);
 	$worksheet->write($r, $c++, "Verein", $fett);
+	$worksheet->write($r, $c++, "Bezirk", $fett);
 	$worksheet->write($r, $c++, "AK", $fett);
 	$worksheet->write($r, $c++, "Doppelpartner", $fett);
 	$worksheet->write($r, $c++, "Mixedpartner", $fett);
@@ -114,6 +115,7 @@ for ($i=0;$i<count($meldungen);$i++) {
 		echo("<td>".$meldungen[$i]["geschlecht"]);
 		echo("<td>".getBoeDatum($meldungen[$i]["geburtstag"]));
 		echo("<td>".$meldungen[$i]["davor"]." ".$meldungen[$i]["verein"]);
+		echo("<td>".$meldungen[$i]["region"]);
 		echo("<td>".$meldungen[$i]["ak"]);
 		echo("<td>".$meldungen[$i]["partner"]);
 		echo("<td>".$meldungen[$i]["partner2"]);
@@ -125,6 +127,7 @@ for ($i=0;$i<count($meldungen);$i++) {
 		$worksheet->write($r, $c++, $meldungen[$i]["geschlecht"]);
 		$worksheet->write($r, $c++, getBoeDatum($meldungen[$i]["geburtstag"]));
 		$worksheet->write($r, $c++, $meldungen[$i]["davor"]." ".$meldungen[$i]["verein"]);
+		$worksheet->write($r, $c++, $meldungen[$i]["region"]);
 		$worksheet->write($r, $c++, $meldungen[$i]["ak"]);
 		$worksheet->write($r, $c++, $meldungen[$i]["partner"]);
 		$worksheet->write($r, $c++, $meldungen[$i]["partner2"]);
