@@ -61,6 +61,16 @@
 					</div>
 				</div>
 				<div class="control-group">
+					<label class="control-label" for="meldeliste">Meldeliste:</label>
+{*					<div class="controls"><input name="meldeliste" type="text" value="{$turnier.meldeliste}" class="input-small"></div>
+*}					<div class="controls">
+						<select name="meldeliste" class="input-small">
+							<option value="" {if $turnier.meldeliste == ""} selected{/if}> </option>
+							<option value="N" {if $turnier.meldeliste == "N"} selected{/if}>N</option>
+						</select>
+					</div>
+				</div>
+				<div class="control-group">
 					<label class="control-label">Anzahl Meldungen:</label>
 					<div class="controls">{$cnt}</div>
 				</div>

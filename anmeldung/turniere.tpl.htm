@@ -31,16 +31,16 @@
 				  <td>{$liste[i].name_lang}</td>
 				  <td>{$liste[i].datum_anmelden_ab|date_format:"%d.%m.%Y"}</td>
 				  <td>{$liste[i].datum_anmelden_bis|date_format:"%d.%m.%Y"}</td>
-				  {*<td>{$liste[i].email_an}</td>*}
-				  <td>{$liste[i].nachname}, {$liste[i].vorname}</td>
+{*				  <td>{$liste[i].email_an}</td>
+*}				  <td>{$liste[i].nachname}, {$liste[i].vorname}</td>
 				  <td>{$liste[i].region}</td>
 				  <td>{$liste[i].meldungen}</td>
 				  <td>
 					<div class="btn-toolbar">
 						<div class="btn-group">
 							<a class="btn btn-mini" href="turnier.php?id={$liste[i].id}"><i class="icon-pencil"></i></a>
-							<a class="btn btn-mini" href="anzeige.php?id={$liste[i].id}" >Meldeliste</i></a>
-							<a class="btn btn-mini" href="excel.php?id={$liste[i].id}" >Excel</i></a>
+							<a class="btn btn-mini" href="anzeige.php?id={$liste[i].id}" >Meldeliste {$liste[i].meldeliste}</a>
+							<a class="btn btn-mini" href="excel.php?id={$liste[i].id}" >Excel</a>
 						</div>
 					</div>
 				  </td>

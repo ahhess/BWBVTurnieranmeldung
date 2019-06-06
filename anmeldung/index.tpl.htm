@@ -44,9 +44,7 @@
 					<div class="btn-toolbar">
 						<div class="btn-group">
 							<a class="btn" href="#" onclick="document.meldungform.tid.value='{$turniere[t].id}';document.meldungform.submit()">Anmeldung</a>
-						{if $$turniere[t].meldeliste != "N"}
-							<a class="btn" href="anzeige.php?id={$turniere[t].id}">Meldeliste</a>
-						{/if}
+							{if $turniere[t].meldeliste != "N"}<a class="btn" href="anzeige.php?id={$turniere[t].id}">Meldeliste</a>{/if}
 					{*		<a class="btn" href="excel.php?id={$turniere[t].id}">Excel</a>
 							<a class="btn" href="anzeige.php?format=csv&id={$turniere[t].id}" target="_blank">CSV</a>
 					*}	</div>
@@ -90,9 +88,7 @@
 				  <td>
 					<div class="btn-toolbar">
 						<div class="btn-group">
-						{if $$turniere_abgelaufen[t].meldeliste != "N"}
-							<a class="btn" href="anzeige.php?id={$turniere_abgelaufen[t].id}">Meldeliste</a>
-						{/if}
+							{if $turniere_abgelaufen[t].meldeliste != "N"}<a class="btn" href="anzeige.php?id={$turniere_abgelaufen[t].id}">Meldeliste</a>{/if}
 					{*		<a class="btn" href="excel.php?id={$turniere_abgelaufen[t].id}">Excel</a>
 							<a class="btn" href="anzeige.php?format=csv&id={$turniere_abgelaufen[t].id}" target="_blank">CSV</a>
 					*}	</div>
