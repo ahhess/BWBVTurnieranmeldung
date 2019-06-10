@@ -4,6 +4,7 @@
 --
 -- Host: rdbms
 -- Erstellungszeit: 11. Jan 2015 um 19:46
+-- Update: 05. Jun 2019
 -- Server Version: 5.5.37-log
 -- PHP-Version: 5.3.27
 
@@ -70,7 +71,8 @@ CREATE TABLE IF NOT EXISTS `tas_turnier` (
   `email_an` varchar(100) COLLATE utf8_unicode_ci NOT NULL DEFAULT '',
   `turnierbeauftragter_id` int(11) DEFAULT NULL,
   `region` varchar(10) COLLATE utf8_unicode_ci NOT NULL DEFAULT '',
-  `ausrichterinfos` varchar(100) COLLATE utf8_unicode_ci NOT NULL DEFAULT ''
+  `ausrichterinfos` varchar(100) COLLATE utf8_unicode_ci NOT NULL DEFAULT '',
+  `meldelliste` char(1) COLLATE utf8_unicode_ci NOT NULL DEFAULT ''
 ) ENGINE=MyISAM AUTO_INCREMENT=186 DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
 
 -- --------------------------------------------------------
