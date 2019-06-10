@@ -1,0 +1,73 @@
+entity Meldung {
+  turnier_id Long,
+  spieler_id Long,
+  verein_id Long,
+  ak String,
+  partner String,
+  partner2 String,
+  bemerkung String
+}
+
+entity Spieler {
+  id Long,
+  vorname String,
+  nachname String,
+  geschlecht String,
+  geburtstag Date,
+  passnummer String,
+  id_vereine Long,
+  bemerkung String
+} 
+
+entity Turnier {
+  id Long,
+  name_lang String,
+  name_kurz String,
+  datum_anmelden_ab Date,
+  datum_anmelden_bis Date,
+  datum Date,
+  ort String,
+  email_an String,
+  turnierbeauftragter_id Long,
+  region String,
+  ausrichterinfos String,
+  meldeliste String
+}
+
+entity Turnierbeauftragter {
+  id Long,
+  nachname String,
+  vorname String,
+  strasse String,
+  plz String,
+  ort String,
+  telefon_priv String,
+  telefon_gesch String,
+  mobil String,
+  fax String,
+  email String,
+  passwort String,
+  region String
+}
+
+entity Vereine {
+  id Long,
+  davor String,
+  name String,
+  kurz String,
+  passwort String,
+  region String,
+  ansprechpartner_email String,
+  ansprechpartner_name String,
+  ansprechpartner_strasse String,
+  ansprechpartner_plz_ort String,
+  ansprechpartner_telefon String,
+  ansprechpartner_mobil String,
+  ansprechpartner_bemerkung String
+} 
+
+entity Vereinsmeldung {
+  turnier_id Long,
+  verein_id Long,
+  anmerkung String
+}
