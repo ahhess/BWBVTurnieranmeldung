@@ -16,10 +16,16 @@
 				<p>Verein:</p>
 				
 				<div class="control-group">
-					<label class="control-label" for="id">Nr.*:</label>
+					<label class="control-label" for="id">ID:</label>
 					<div class="controls">
-						<input name="id" type="text" size="6" {if $verein.id != -1} value="{$verein.id}" readonly>{else}>
-						<input name="neu" type="hidden" value="true">{/if}
+						<input name="id" type="text" size="6"  value="{$verein.id}" readonly>
+						{if $verein.id == -1}<input name="neu" type="hidden" value="true">{/if}
+					</div>
+				</div>
+				<div class="control-group">
+					<label class="control-label" for="vereinsnr">Nr.*:</label>
+					<div class="controls">
+						<input name="vereinsnr" type="text" size="10" value="{$verein.vereinsnr}">
 					</div>
 				</div>
 				<div class="control-group">
