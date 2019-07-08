@@ -17,24 +17,26 @@ $ADODB_FETCH_MODE = ADODB_FETCH_ASSOC;
 
 if ($_POST["doSubmit"]) {
 	if ($_POST["neu"]) {
-		if ($_POST["id"] && $_POST["davor"] && $_POST["name"] && $_POST["kurz"]) {
-			$sql="select * from tas_vereine where id=".$_POST["id"]." or (davor='".$_POST["davor"]."' and name='".$_POST["name"]."') or kurz='".$_POST["kurz"]."'";
-			$rs = &$conn->Execute($sql) or die ("Fehler beim pruefen der id/name/benutzer. Bitte Administrator benachrichtigen.");
+		if ($_POST["vereinsnr"] && $_POST["davor"] && $_POST["name"] && $_POST["kurz"]) {
+			$sql="select * from tas_vereine where vereinsnr='".$_POST["vereinsnr"]."' or (davor='".$_POST["davor"]."' and name='".$_POST["name"]."') or kurz='".$_POST["kurz"]."'";
+			$rs = &$conn->Execute($sql) or die ("Fehler beim pruefen der vereinsnr/name/benutzer. Bitte Administrator benachrichtigen.");
 			$verein=$rs->GetArray();
 			$verein=$verein[0];
 			if ($verein) {
 				$_POST["id"] = $verein["id"];
-				//echo 'Vereinsnummer:'.$verein["id"].', Name:'.$verein["name"].' oder Benutzer:'.$verein["kurz"].' schon vorhanden!';
+				//echo 'Vereinvereinsnr:'.$verein["vereinsnr"].', Name:'.$verein["name"].' oder Benutzer:'.$verein["kurz"].' schon vorhanden!';
 				$systemmeldung='Vereinsnummer, Name oder Benutzer schon vorhanden!';
 			} else {
-				$sql="insert into tas_vereine (id, davor, name, region, kurz, ansprechpartner_strasse, 
+				$sql="insert into tas_vereine (vereinsnr, davor, name, region, kurz, ansprechpartner_strasse, 
 					ansprechpartner_plz_ort, ansprechpartner_telefon, ansprechpartner_mobil, ansprechpartner_email, 
 					ansprechpartner_name, ansprechpartner_bemerkung";
+				// id wird per auto_incfrement vergeben.
 				// passwort nur, wenn gefuellt (wird in anzeige nicht vorbelegt)
 				if ($_POST["passwort"]) {
 					$sql=$sql.", passwort";
 				}
-				$sql=$sql.") values (".$_POST["id"].", 
+				$sql=$sql.") values (
+					'".$_POST["vereinsnr"]."', 
 					'".$_POST["davor"]."', 
 					'".$_POST["name"]."', 
 					'".$_POST["region"]."', 
@@ -52,31 +54,51 @@ if ($_POST["doSubmit"]) {
 				$sql=$sql.")";
 				$rs = &$conn->Execute($sql) or die ("Fehler beim Angelegen. Bitte Administrator benachrichtigen.");
 				$systemmeldung='Daten wurden angelegt.';
+
+				// auto_incremented id anhand vereinsnr einlesen
+				$sql="select id from tas_vereine where vereinsnr='".$_POST["vereinsnr"]."'";
+				$rs = &$conn->Execute($sql) or die ("Fehler beim einlesen der vereinsnr. Bitte Administrator benachrichtigen.");
+				$verein=$rs->GetArray();
+				$verein=$verein[0];
+				if ($verein)
+					$_POST["id"] = $verein["id"];
+				else 
+					$systemmeldung="Fehler beim einlesen der vereinsnr. Bitte Administrator benachrichtigen.";
 			}
 		} else {
 			$_POST["id"] = -1;
 			$systemmeldung='Vereinsnr., Kuerzel, Name und Benutzer muessen eingegeben werden!';
 		}
 	} else {
-		$sql="UPDATE tas_vereine SET 
-			davor='".$_POST["davor"]."', 
-			name='".$_POST["name"]."', 
-			region='".$_POST["region"]."', 
-			kurz='".$_POST["kurz"]."',
-			ansprechpartner_strasse='".$_POST["ansprechpartner_strasse"]."', 
-			ansprechpartner_plz_ort='".$_POST["ansprechpartner_plz_ort"]."', 
-			ansprechpartner_telefon='".$_POST["ansprechpartner_telefon"]."', 
-			ansprechpartner_mobil='".$_POST["ansprechpartner_mobil"]."', 
-			ansprechpartner_email='".$_POST["ansprechpartner_email"]."', 
-			ansprechpartner_name='".$_POST["ansprechpartner_name"]."', 
-			ansprechpartner_bemerkung='".$_POST["ansprechpartner_bemerkung"]."' ";
-		// passwort nur updaten, wenn gefuellt (wird in anzeige nicht vorbelegt)
-		if ($_POST["passwort"]) {
-			$sql=$sql.",passwort='".$_POST["passwort"]."' ";
+		$sql="select * from tas_vereine where id <> ".$_POST["id"] 
+			." and (vereinsnr='".$_POST["vereinsnr"]."' or (davor='".$_POST["davor"]."' and name='".$_POST["name"]."') or kurz='".$_POST["kurz"]."')";
+		$rs = &$conn->Execute($sql) or die ("Fehler beim pruefen der vereinsnr/name/benutzer. Bitte Administrator benachrichtigen.");
+		$verein=$rs->GetArray();
+		$verein=$verein[0];
+		if ($verein) {
+			$systemmeldung='Vereinsnummer, Name oder Benutzer schon vorhanden!';
+		} else {
+			$sql="UPDATE tas_vereine SET 
+				vereinsnr='".$_POST["vereinsnr"]."', 
+				davor='".$_POST["davor"]."', 
+				name='".$_POST["name"]."', 
+				region='".$_POST["region"]."', 
+				kurz='".$_POST["kurz"]."',
+				ansprechpartner_strasse='".$_POST["ansprechpartner_strasse"]."', 
+				ansprechpartner_plz_ort='".$_POST["ansprechpartner_plz_ort"]."', 
+				ansprechpartner_telefon='".$_POST["ansprechpartner_telefon"]."', 
+				ansprechpartner_mobil='".$_POST["ansprechpartner_mobil"]."', 
+				ansprechpartner_email='".$_POST["ansprechpartner_email"]."', 
+				ansprechpartner_name='".$_POST["ansprechpartner_name"]."', 
+				ansprechpartner_bemerkung='".$_POST["ansprechpartner_bemerkung"]."' ";
+			// passwort nur updaten, wenn gefuellt (wird in anzeige nicht vorbelegt)
+			if ($_POST["passwort"]) {
+				$sql=$sql.",passwort='".$_POST["passwort"]."' ";
+			}
+			$sql=$sql." WHERE id=".$_POST["id"];
+			$rs = &$conn->Execute($sql) or die ("Fehler beim Speichern. Bitte Administrator benachrichtigen.");
+			$systemmeldung='Daten wurden gespeichert.';
 		}
-		$sql=$sql." WHERE id=".$_POST["id"];
-		$rs = &$conn->Execute($sql) or die ("Fehler beim Speichern. Bitte Administrator benachrichtigen.");
-		$systemmeldung='Daten wurden gespeichert.';
 	}
 }
 

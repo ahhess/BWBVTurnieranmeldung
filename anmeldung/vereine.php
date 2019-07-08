@@ -17,6 +17,13 @@ if ($_POST["region"]){
 	$_SESSION["region"] = $region;
 }
 
+if ($_SESSION["vq"])
+	$q = $_SESSION["vq"];
+if ($_POST["q"]){
+	$q = $_POST["q"];
+	$_SESSION["vq"] = $q;
+}
+
 if ($_POST["suchen"] && $_POST["q"] != "") {
 	$q = $_POST["q"];
 	$sql="SELECT DISTINCT tas_vereine.* FROM tas_vereine
