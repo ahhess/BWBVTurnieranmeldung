@@ -25,7 +25,7 @@ $sql="select tas_meldung.partner, tas_meldung.partner2, tas_meldung.bemerkung, t
     join tas_spieler on tas_meldung.spieler_id=tas_spieler.id
     join tas_turnier on tas_turnier.id = tas_meldung.turnier_id 
     where tas_meldung.verein_id=$vnr
-	order by tas_turnier.datum, tas_spieler.nachname, tas_spieler.vorname";
+	order by tas_turnier.datum desc, tas_spieler.nachname, tas_spieler.vorname";
 $recordSet = &$conn->Execute($sql);
 $meldungen = $recordSet->GetArray();
 
