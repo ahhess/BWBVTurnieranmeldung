@@ -40,8 +40,9 @@
 				  <td>
 					<div class="btn-toolbar">
 						<div class="btn-group">
-							<a class="btn btn-mini" href="#" onclick="document.vereinform.id.value='{$liste[i].id}';document.vereinform.submit()"><i class="icon-pencil"></i></a>
-							<a class="btn btn-mini" href="#" onclick="document.editform.id.value='{$liste[i].id}';document.editform.submit()"><i class="icon-user"></i></a>
+							<a class="btn btn-mini" href="#" onclick="document.vereinform.id.value='{$liste[i].id}';document.vereinform.submit()" title="Bearbeiten"><i class="icon-pencil"></i></a>
+							<a class="btn btn-mini" href="#" onclick="document.editform.id.value='{$liste[i].id}';document.editform.submit()" title="Spieler"><i class="icon-user"></i></a>
+							<a class="btn btn-mini" href="vmeld.php?id={$liste[i].id}" title="Meldungen"><i class="icon-list"></i></a>
 						</div>
 					</div>
 				  </td>

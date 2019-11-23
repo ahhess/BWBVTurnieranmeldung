@@ -1,0 +1,53 @@
+{include file="header.tpl.htm" title="Vereinsmeldungen"}
+{if $admin}
+	{include file="admin_menu.tpl.htm"}
+{else}
+	{include file="menu.tpl.htm"}
+{/if}
+      <div class="row-fluid">
+        <div class="span12">
+			<h3>Vereinsmeldungen f&uuml;r {$verein.davor} {$verein.name}</h3>
+            {assign var=tid_alt value=0}
+            {section name=i loop=$meldungen}
+                {if $meldungen[i].turnier_id != $tid_alt}
+                    {if $tid_alt != 0 }
+                            </tbody>
+                        </table>                    
+                    {/if}
+                    {assign var=tid_alt value=$meldungen[i].turnier_id}
+            
+                    <h4>{$meldungen[i].name_kurz}: {$meldungen[i].name_lang} in {$meldungen[i].ort}</h4>
+                    
+                    <table class="table table-hover table-condensed">
+                        <thead>
+                            <tr>
+                                <th>Nachname</th>
+                                <th>Vorname</th>
+                                <th>Altersklasse</th>
+                                <th>Geschlecht</th>
+                                <th>Passnr.</th>
+                                <th>Jahrgang</th>
+                                <th>Doppelpartner</th>
+                                <th>Mixedpartner</th>
+                                <th>Bemerkung</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                {/if}
+                            <tr>
+                                <td>{$meldungen[i].nachname}</td>
+                                <td>{$meldungen[i].vorname}</td>
+                                <td>{$meldungen[i].ak}</td>
+                                <td>{$meldungen[i].geschlecht}</td>
+                                <td>{$meldungen[i].passnummer}</td>
+                                <td>{$meldungen[i].geburtstag|date_format:"%Y"}</td>
+                                <td>{$meldungen[i].partner}</td>
+                                <td>{$meldungen[i].partner2}</td>
+                                <td>{$meldungen[i].bemerkung}</td>
+                            </tr>
+            {/section}
+                </tbody>
+            </table>
+        </div>
+    </div>
+    {include file="footer.tpl.htm"}
