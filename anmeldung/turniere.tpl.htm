@@ -38,10 +38,12 @@
 				  <td>
 					<div class="btn-toolbar">
 						<div class="btn-group">
-							<a class="btn btn-mini" href="turnier.php?id={$liste[i].id}"><i class="icon-pencil"></i></a>
-							<a class="btn btn-mini{if $liste[i].meldeliste == 'N'} btn-warning{else} btn-success{/if}" href="anzeige.php?id={$liste[i].id}"><i class="icon-list"></i></a>
-							<a class="btn btn-mini" href="excel.php?id={$liste[i].id}"><i class="icon-th"></i></a>
-							<a class="btn btn-mini" href="contactsexcel.php?id={$liste[i].id}"><i class="icon-share"></i></a>
+							<a class="btn btn-mini" href="turnier.php?id={$liste[i].id}" title="Bearbeiten"><i class="icon-pencil"></i></a>
+							<a class="btn btn-mini{if $liste[i].meldeliste == 'N'} btn-warning" title="Meldeliste ausgeblendet"
+								{else} btn-success" title="Meldeliste"{/if} 
+								href="anzeige.php?id={$liste[i].id}"><i class="icon-list"></i></a>
+							<a class="btn btn-mini" href="excel.php?id={$liste[i].id}" title="Excel-Export"><i class="icon-th"></i></a>
+							<a class="btn btn-mini" href="contactsexcel.php?id={$liste[i].id}" title="Kontakte-Export"><i class="icon-share"></i></a>
 						</div>
 					</div>
 				  </td>
