@@ -61,13 +61,13 @@
 					</div>
 				</div>
 				<div class="control-group">
-					<label class="control-label" for="meldeliste">Meldeliste:</label>
-{*					<div class="controls"><input name="meldeliste" type="text" value="{$turnier.meldeliste}" class="input-small"></div>
-*}					<div class="controls">
+					<label class="control-label" for="meldeliste">Meldeliste anzeigen:</label>
+					<div class="controls">
 						<select name="meldeliste" class="input-small">
 							<option{if $turnier.meldeliste != ""} selected{/if}>J</option>
 							<option{if $turnier.meldeliste == "N"} selected{/if}>N</option>
 						</select>
+						<i class="icon-warning-sign"></i> Bei Auswahl "N" k&ouml;nnen die Vereine die Meldeliste nicht anzeigen.
 					</div>
 				</div>
 				<div class="control-group">
